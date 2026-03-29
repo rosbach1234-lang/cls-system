@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CLS — Clear Leadership Systems | Aviation Ground Operations</title>
+<meta name="description" content="CLS delivers aviation ground operations consulting and CBT training. Built from 10+ years of frontline experience. For handling companies, airports, and airlines worldwide.">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="CLS — Clear Leadership Systems">
+<meta property="og:description" content="Aviation Ground Operations Consulting & CBT Platform. Built from the inside. Delivered worldwide.">
+<meta property="og:type" content="website">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  --ink:#0a0f1a; --ink2:#111827; --ink3:#1e2d40;
+  --blue:#1d4ed8; --blue2:#2563eb; --blue3:#3b82f6;
+  --accent:#f59e0b; --red:#ef4444; --green:#22c55e;
+  --stone:#f8f7f4; --border:#e5e2db; --muted:#6b7280;
+  --white:#ffffff;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',sans-serif;background:var(--white);color:var(--ink);overflow-x:hidden;}
+
+/* ── UTILITIES ── */
+.container{max-width:1160px;margin:0 auto;padding:0 32px;}
+.tag{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--blue3);}
+.section-title{font-family:'Syne',sans-serif;font-size:clamp(28px,4vw,46px);font-weight:800;color:var(--ink);line-height:1.15;letter-spacing:-1px;}
+.section-sub{font-size:16px;color:var(--muted);line-height:1.75;max-width:560px;}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;transition:.3s;background:rgba(10,15,26,0.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.06);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px;}
+.nav-logo{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;color:var(--white);letter-spacing:-1px;text-decoration:none;}
+.nav-logo span{color:var(--blue3);}
+.nav-links{display:flex;align-items:center;gap:32px;}
+.nav-link{color:rgba(255,255,255,0.55);font-size:13px;font-weight:500;text-decoration:none;transition:.2s;letter-spacing:0.2px;}
+.nav-link:hover{color:var(--white);}
+.nav-cta{background:var(--blue2);color:var(--white);padding:9px 22px;font-size:13px;font-weight:600;text-decoration:none;letter-spacing:0.3px;transition:.2s;}
+.nav-cta:hover{background:var(--blue);}
+
+/* ── HERO ── */
+.hero{min-height:100vh;background:var(--ink);display:flex;align-items:center;position:relative;overflow:hidden;padding:120px 0 80px;}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(29,78,216,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(29,78,216,0.04) 1px,transparent 1px);background-size:60px 60px;}
+.hero-glow{position:absolute;top:20%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(29,78,216,0.12) 0%,transparent 70%);pointer-events:none;}
+.hero-content{position:relative;z-index:1;max-width:820px;}
+.hero-eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:24px;}
+.hero-eyebrow-line{width:32px;height:2px;background:var(--blue3);}
+.hero-eyebrow-text{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--blue3);}
+.hero h1{font-family:'Syne',sans-serif;font-size:clamp(38px,6vw,72px);font-weight:800;color:var(--white);line-height:1.05;letter-spacing:-2px;margin-bottom:24px;}
+.hero h1 .accent{color:var(--blue3);}
+.hero-desc{font-size:17px;color:rgba(255,255,255,0.55);line-height:1.75;max-width:560px;margin-bottom:40px;}
+.hero-actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+.btn-primary{background:var(--blue2);color:var(--white);padding:14px 32px;font-size:14px;font-weight:600;text-decoration:none;letter-spacing:0.3px;transition:.2s;display:inline-block;}
+.btn-primary:hover{background:var(--blue);}
+.btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.7);padding:14px 28px;font-size:14px;font-weight:500;text-decoration:none;transition:.2s;display:inline-block;}
+.btn-ghost:hover{border-color:rgba(255,255,255,0.5);color:var(--white);}
+.hero-stats{display:flex;gap:40px;margin-top:64px;padding-top:40px;border-top:1px solid rgba(255,255,255,0.08);flex-wrap:wrap;}
+.hero-stat .num{font-family:'JetBrains Mono',monospace;font-size:32px;font-weight:500;color:var(--white);}
+.hero-stat .lbl{font-size:11px;color:rgba(255,255,255,0.35);margin-top:4px;text-transform:uppercase;letter-spacing:1.5px;}
+
+/* ── MARQUEE ── */
+.marquee-wrap{background:var(--blue2);padding:14px 0;overflow:hidden;}
+.marquee-track{display:flex;gap:0;animation:marquee 25s linear infinite;width:max-content;}
+.marquee-item{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.7);padding:0 40px;white-space:nowrap;}
+.marquee-dot{color:rgba(255,255,255,0.35);}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* ── PROBLEM SECTION ── */
+.problem{padding:112px 0;background:var(--stone);}
+.problem-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+.problem-visual{position:relative;}
+.problem-card-stack{display:flex;flex-direction:column;gap:8px;}
+.prob-card{background:var(--white);border:1px solid var(--border);padding:18px 22px;display:flex;align-items:flex-start;gap:14px;border-left:3px solid;}
+.prob-card .pc-icon{font-size:18px;flex-shrink:0;margin-top:2px;}
+.prob-card h4{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:3px;}
+.prob-card p{font-size:11.5px;color:var(--muted);line-height:1.55;}
+.cost-badge{background:var(--ink);color:var(--white);padding:20px 24px;margin-top:12px;display:flex;align-items:center;justify-content:space-between;}
+.cost-badge .cb-num{font-family:'JetBrains Mono',monospace;font-size:24px;color:var(--accent);}
+.cost-badge .cb-txt{font-size:11px;color:rgba(255,255,255,0.5);text-align:right;line-height:1.6;}
+
+/* ── SOLUTION ── */
+.solution{padding:112px 0;background:var(--white);}
+.sol-header{text-align:center;margin-bottom:64px;}
+.sol-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);}
+.sol-item{background:var(--white);padding:36px 28px;}
+.sol-num{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--blue3);margin-bottom:16px;display:block;}
+.sol-item h3{font-family:'Syne',sans-serif;font-size:17px;font-weight:700;color:var(--ink);margin-bottom:10px;line-height:1.3;}
+.sol-item p{font-size:12.5px;color:var(--muted);line-height:1.7;}
+.sol-price{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--blue2);margin-top:20px;font-weight:500;}
+
+/* ── CBT PLATFORM ── */
+.platform{padding:112px 0;background:var(--ink);position:relative;overflow:hidden;}
+.platform::before{content:'';position:absolute;top:-100px;right:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(29,78,216,0.08) 0%,transparent 70%);}
+.platform-header{margin-bottom:56px;}
+.programs-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:1px;background:rgba(255,255,255,0.06);margin-bottom:40px;}
+.prog-tile{background:var(--ink2);padding:20px 16px;position:relative;transition:.2s;}
+.prog-tile:hover{background:var(--ink3);}
+.prog-tile .pt-code{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--blue3);margin-bottom:8px;display:block;}
+.prog-tile .pt-title{font-size:12px;font-weight:600;color:var(--white);line-height:1.4;margin-bottom:auto;}
+.prog-tile .pt-level{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-top:16px;display:block;}
+.prog-tile .pt-new{position:absolute;top:10px;right:10px;background:var(--red);color:var(--white);font-size:7px;font-weight:700;padding:2px 6px;letter-spacing:0.5px;}
+.lv-op{color:var(--blue3);}
+.lv-sup{color:var(--accent);}
+.lv-mgmt{color:#a78bfa;}
+.lv-exec{color:var(--red);}
+.platform-features{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+.pf-item{border:1px solid rgba(255,255,255,0.08);padding:22px;}
+.pf-item h4{font-size:13px;font-weight:600;color:var(--white);margin-bottom:6px;}
+.pf-item p{font-size:11.5px;color:rgba(255,255,255,0.4);line-height:1.6;}
+
+/* ── RANDOMIZATION FEATURE ── */
+.random-section{padding:80px 0;background:var(--blue2);}
+.random-inner{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
+.random-visual{background:rgba(0,0,0,0.2);padding:28px;border:1px solid rgba(255,255,255,0.15);}
+.rv-label{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:12px;}
+.rv-q{font-size:13px;color:var(--white);font-weight:500;padding:10px 14px;background:rgba(255,255,255,0.06);border-left:2px solid var(--accent);margin-bottom:6px;}
+.rv-arrow{text-align:center;color:rgba(255,255,255,0.3);font-size:18px;margin:8px 0;}
+.rv-q.scrambled{border-left-color:var(--green);background:rgba(34,197,94,0.08);}
+.random-text h2{font-family:'Syne',sans-serif;font-size:32px;font-weight:800;color:var(--white);margin-bottom:16px;letter-spacing:-0.5px;}
+.random-text p{font-size:14px;color:rgba(255,255,255,0.7);line-height:1.75;margin-bottom:20px;}
+.rv-point{display:flex;gap:10px;align-items:flex-start;margin-bottom:10px;}
+.rv-point .rp-dot{width:6px;height:6px;background:var(--accent);margin-top:7px;flex-shrink:0;}
+.rv-point p{font-size:13px;color:rgba(255,255,255,0.75);line-height:1.6;}
+
+/* ── FRAMEWORK ── */
+.framework{padding:112px 0;background:var(--stone);}
+.fw-header{margin-bottom:56px;}
+.fw-blocks{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+.fw-block{background:var(--white);border:1px solid var(--border);padding:24px;position:relative;}
+.fw-block::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.fw-block-letter{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:10px;display:block;}
+.fw-block h3{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:6px;line-height:1.3;}
+.fw-block p{font-size:11px;color:var(--muted);line-height:1.6;}
+.fw-block .fw-mods{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--blue3);margin-top:12px;display:block;}
+.fw-new{position:absolute;top:14px;right:14px;background:var(--red);color:var(--white);font-size:7px;font-weight:700;padding:2px 6px;}
+
+/* ── PROTECTION ── */
+.protection{padding:80px 0;background:var(--ink);}
+.prot-inner{display:grid;grid-template-columns:1fr 1fr;gap:60px;}
+.prot-text h2{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:var(--white);margin-bottom:16px;}
+.prot-text p{font-size:13.5px;color:rgba(255,255,255,0.5);line-height:1.75;margin-bottom:20px;}
+.prot-items{display:flex;flex-direction:column;gap:10px;}
+.prot-item{display:flex;gap:12px;align-items:flex-start;padding:14px 18px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);}
+.pi-icon{font-size:16px;flex-shrink:0;}
+.pi-text h4{font-size:12px;font-weight:600;color:var(--white);margin-bottom:3px;}
+.pi-text p{font-size:11px;color:rgba(255,255,255,0.4);line-height:1.5;}
+
+/* ── CONTACT ── */
+.contact{padding:112px 0;background:var(--white);}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;}
+.contact-form{background:var(--stone);padding:40px;}
+.cf-field{margin-bottom:18px;}
+.cf-field label{display:block;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+.cf-field input,.cf-field select,.cf-field textarea{width:100%;background:var(--white);border:1px solid var(--border);padding:12px 14px;font-size:14px;font-family:'Inter',sans-serif;color:var(--ink);outline:none;transition:.2s;resize:none;}
+.cf-field input:focus,.cf-field select:focus,.cf-field textarea:focus{border-color:var(--blue2);}
+.cf-field select option{background:var(--white);}
+.btn-submit{width:100%;background:var(--ink);color:var(--white);border:none;padding:14px;font-size:14px;font-weight:600;letter-spacing:0.5px;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s;}
+.btn-submit:hover{background:var(--blue2);}
+.contact-info h2{font-family:'Syne',sans-serif;font-size:36px;font-weight:800;color:var(--ink);margin-bottom:20px;letter-spacing:-0.5px;}
+.contact-info p{font-size:14px;color:var(--muted);line-height:1.75;margin-bottom:32px;}
+.contact-blocks{display:flex;flex-direction:column;gap:16px;}
+.cb-item{padding:20px 24px;border:1px solid var(--border);}
+.cb-item .cb-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--blue3);margin-bottom:6px;}
+.cb-item .cb-val{font-size:14px;font-weight:600;color:var(--ink);}
+.cb-item .cb-sub{font-size:12px;color:var(--muted);margin-top:3px;}
+
+/* ── FOOTER ── */
+footer{background:var(--ink);padding:48px 0 24px;}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:40px;}
+.footer-logo{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;color:var(--white);letter-spacing:-1px;margin-bottom:12px;}
+.footer-logo span{color:var(--blue3);}
+.footer-desc{font-size:12.5px;color:rgba(255,255,255,0.35);line-height:1.7;}
+.footer-col h4{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:16px;}
+.footer-col a,.footer-col p{display:block;font-size:12.5px;color:rgba(255,255,255,0.45);text-decoration:none;margin-bottom:8px;transition:.15s;}
+.footer-col a:hover{color:var(--white);}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.06);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:gap;}
+.footer-copy{font-size:11.5px;color:rgba(255,255,255,0.2);}
+.footer-legal{display:flex;gap:24px;}
+.footer-legal a{font-size:11.5px;color:rgba(255,255,255,0.2);text-decoration:none;transition:.15s;}
+.footer-legal a:hover{color:rgba(255,255,255,0.5);}
+
+/* ── COPYRIGHT WATERMARK ── */
+.copyright-bar{background:rgba(29,78,216,0.12);border:1px solid rgba(29,78,216,0.2);padding:12px 20px;margin-bottom:32px;display:flex;align-items:center;gap:12px;}
+.copyright-bar span{font-size:11px;color:rgba(255,255,255,0.4);line-height:1.6;}
+.copyright-bar strong{color:rgba(255,255,255,0.7);}
+
+@media(max-width:900px){
+  .problem-grid,.random-inner,.contact-grid,.prot-inner,.footer-top{grid-template-columns:1fr;}
+  .sol-grid{grid-template-columns:1fr 1fr;}
+  .programs-grid{grid-template-columns:repeat(3,1fr);}
+  .fw-blocks{grid-template-columns:1fr 1fr;}
+  .platform-features{grid-template-columns:1fr 1fr;}
+  .hero-stats{gap:24px;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">CL<span>S</span></a>
+      <div class="nav-links">
+        <a href="#solution" class="nav-link">Solutions</a>
+        <a href="#platform" class="nav-link">CBT Platform</a>
+        <a href="#framework" class="nav-link">Framework</a>
+        <a href="#contact" class="nav-link">Contact</a>
+        <a href="CLS_CBT_Platform.html" class="nav-cta">Access Platform →</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <div class="hero-eyebrow-line"></div>
+        <span class="hero-eyebrow-text">Clear Leadership Systems · Aviation Ground Operations</span>
+      </div>
+      <h1>The gap between<br>your <span class="accent">operations manual</span><br>and the ramp.</h1>
+      <p class="hero-desc">CLS delivers structured consulting and Computer Based Training for aviation ground handling — built from 10+ years of frontline operational experience. Not theory. Reality.</p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn-primary">Request an Audit →</a>
+        <a href="CLS_CBT_Platform.html" class="btn-ghost">Access CBT Platform</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="num">10+</div>
+          <div class="lbl">Years Operational</div>
+        </div>
+        <div class="hero-stat">
+          <div class="num">14</div>
+          <div class="lbl">CBT Programs</div>
+        </div>
+        <div class="hero-stat">
+          <div class="num">40+</div>
+          <div class="lbl">Framework Modules</div>
+        </div>
+        <div class="hero-stat">
+          <div class="num">€50K</div>
+          <div class="lbl">Avg Missloading Cost</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">GROUND HANDLING CONSULTING <span class="marquee-dot">·</span></span>
+    <span class="marquee-item">SUPERVISOR DEVELOPMENT <span class="marquee-dot">·</span></span>
+    <span class="marquee-item">CBT PLATFORM <span class="marquee-dot">·</span></span>
+    <span class="marquee-item">OPERATIONAL REALITY AUDIT <span class="marquee-dot">·</span></span>
+    <span class="marquee-item">HUMAN FACTORS TRAINING <span class="marquee-dot">·</span></span>
+    <span class="marquee-item">SAFETY MANAGEMENT SYSTEMS <span class="marquee-dot">·</span></span>
+    <span class="marquee-item">DEFICIENCY ANALYTICS <span class="marquee-dot">·</span></span>
+    <span class="marquee-item">AVIATION SECURITY COMPLIANCE <span class="marquee-dot">·</span></span>
+    <span class="marquee-item">GROUND HANDLING CONSULTING <span class="marquee-dot">·</span></span>
+    <span class="marquee-item">SUPERVISOR DEVELOPMENT <span class="marquee-dot">·</span></span>
+    <span class="marquee-item">CBT PLATFORM <span class="marquee-dot">·</span></span>
+    <span class="marquee-item">OPERATIONAL REALITY AUDIT <span class="marquee-dot">·</span></span>
+    <span class="marquee-item">HUMAN FACTORS TRAINING <span class="marquee-dot">·</span></span>
+    <span class="marquee-item">SAFETY MANAGEMENT SYSTEMS <span class="marquee-dot">·</span></span>
+    <span class="marquee-item">DEFICIENCY ANALYTICS <span class="marquee-dot">·</span></span>
+    <span class="marquee-item">AVIATION SECURITY COMPLIANCE <span class="marquee-dot">·</span></span>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<section class="problem" id="problem">
+  <div class="container">
+    <div class="problem-grid">
+      <div>
+        <div class="tag" style="margin-bottom:16px;">The Problem</div>
+        <h2 class="section-title" style="margin-bottom:20px;">Your operation runs on experience.<br>Experience isn't scalable.</h2>
+        <p class="section-sub" style="margin-bottom:32px;">Ground handling operations worldwide rely on manual processes, fragmented communication, and supervisors promoted without leadership training. The result is predictable — and preventable.</p>
+        <a href="#solution" class="btn-primary" style="font-size:13px;">How CLS fixes this →</a>
+      </div>
+      <div class="problem-visual">
+        <div class="problem-card-stack">
+          <div class="prob-card" style="border-left-color:#ef4444;">
+            <div class="pc-icon">⚠</div>
+            <div>
+              <h4>Supervisors promoted without leadership training</h4>
+              <p>Best ramp agents become supervisors with a 2-week course. No structured development. Predictable results.</p>
+            </div>
+          </div>
+          <div class="prob-card" style="border-left-color:#ef4444;">
+            <div class="pc-icon">📡</div>
+            <div>
+              <h4>Communication architecture failure</h4>
+              <p>Missing confirmation loops, incomplete handovers, language gaps. Every incident has a communication component.</p>
+            </div>
+          </div>
+          <div class="prob-card" style="border-left-color:#f59e0b;">
+            <div class="pc-icon">🔄</div>
+            <div>
+              <h4>Normalization of Deviation</h4>
+              <p>Shortcuts become the standard. Risk blindness develops gradually — invisible until a triggering event.</p>
+            </div>
+          </div>
+          <div class="prob-card" style="border-left-color:#6b7280;">
+            <div class="pc-icon">📉</div>
+            <div>
+              <h4>No structured CBT exists for this industry</h4>
+              <p>Every company builds training inconsistently, expensively, without aviation-specific human factors expertise.</p>
+            </div>
+          </div>
+        </div>
+        <div class="cost-badge">
+          <div>
+            <div class="cb-num">€10K–50K</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:3px;">per missloading event</div>
+          </div>
+          <div class="cb-txt">One prevented incident<br>covers the full audit cost</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTION -->
+<section class="solution" id="solution">
+  <div class="container">
+    <div class="sol-header">
+      <div class="tag" style="margin-bottom:16px;">What CLS Delivers</div>
+      <h2 class="section-title">Four products. One system.</h2>
+    </div>
+    <div class="sol-grid">
+      <div class="sol-item">
+        <span class="sol-num">01</span>
+        <h3>Operational Reality Audit</h3>
+        <p>On-site or remote gap analysis between documented procedures and what actually happens on the ramp. Delivers a ranked action plan — not a report that sits on a shelf.</p>
+        <div class="sol-price">€2,500 – €8,000</div>
+      </div>
+      <div class="sol-item" style="background:var(--stone);">
+        <span class="sol-num">02</span>
+        <h3>CBT Platform Subscription</h3>
+        <p>14 programs covering all organizational levels from Ramp Agent to CEO. Module-locked progression, 2-attempt limit, 180-day lockout, randomized questions, certificates.</p>
+        <div class="sol-price">€150 – €500 / user / year</div>
+      </div>
+      <div class="sol-item">
+        <span class="sol-num">03</span>
+        <h3>Supervisor Leadership Program</h3>
+        <p>Structured 10-module development path from ramp agent to effective supervisor. Measurable milestones. Remote or on-site delivery. Group and individual formats.</p>
+        <div class="sol-price">€500 – €1,500 / participant</div>
+      </div>
+      <div class="sol-item" style="background:var(--stone);">
+        <span class="sol-num">04</span>
+        <h3>Analytics & Deficiency Reporting</h3>
+        <p>Every quiz attempt generates topic-level deficiency data. HR and management see exactly where individuals and teams are weak — before incidents occur.</p>
+        <div class="sol-price">€5,000 – €25,000 / year</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CBT PLATFORM -->
+<section class="platform" id="platform">
+  <div class="container" style="position:relative;z-index:1;">
+    <div class="platform-header">
+      <div class="tag" style="color:var(--blue3);margin-bottom:16px;">CBT Platform</div>
+      <h2 class="section-title" style="color:var(--white);margin-bottom:12px;">Every role. Every level.<br>One platform.</h2>
+      <p class="section-sub" style="color:rgba(255,255,255,0.4);">14 programs covering the complete organizational hierarchy — from trainee to executive. Bilingual (EN/DE). Fully locked module progression.</p>
+    </div>
+    <div class="programs-grid">
+      <div class="prog-tile"><span class="pt-code">CBT-RA</span><div class="pt-title">Ramp Agent Core Training</div><span class="pt-level lv-op">Operational · 8 Modules</span></div>
+      <div class="prog-tile"><span class="pt-code">CBT-LM</span><div class="pt-title">Loading Master / Load Control</div><span class="pt-level lv-op">Operational · 6 Modules</span></div>
+      <div class="prog-tile"><span class="pt-code">CBT-CS</span><div class="pt-title">Check-in & Service Agent</div><span class="pt-level lv-op">Operational · 5 Modules</span></div>
+      <div class="prog-tile"><span class="pt-code">CBT-TE</span><div class="pt-title">Trainee Experience (0–90 days)</div><span class="pt-level lv-op">Operational · 5 Modules</span></div>
+      <div class="prog-tile"><span class="pt-code">CBT-RS</span><div class="pt-title">Ramp Supervisor Development</div><span class="pt-level lv-sup">Supervisory · 10 Modules</span></div>
+      <div class="prog-tile"><span class="pt-code">CBT-TC</span><div class="pt-title">Turnaround Coordinator</div><span class="pt-level lv-sup">Supervisory · 6 Modules</span></div>
+      <div class="prog-tile"><span class="pt-code">CBT-DM</span><div class="pt-title">Duty Manager Program</div><span class="pt-level lv-mgmt">Management · 10 Modules</span></div>
+      <div class="prog-tile"><span class="pt-code">CBT-SM</span><div class="pt-title">Station Manager Program</div><span class="pt-level lv-mgmt">Management · 8 Modules</span></div>
+      <div class="prog-tile"><span class="pt-code">CBT-TR</span><div class="pt-title">Trainer & Training Dept.</div><span class="pt-level lv-mgmt">Management · 7 Modules</span></div>
+      <div class="prog-tile"><span class="pt-code">CBT-HR</span><div class="pt-title">Human Resources Aviation</div><span class="pt-level lv-mgmt">Management · 6 Modules</span></div>
+      <div class="prog-tile"><span class="pt-code">CBT-EX</span><div class="pt-title">Executive Leadership</div><span class="pt-level lv-exec">Executive · 8 Modules</span></div>
+      <div class="prog-tile" style="position:relative;"><div class="pt-new">NEW</div><span class="pt-code">CBT-SC</span><div class="pt-title">Security & Safety Compliance</div><span class="pt-level lv-exec" style="color:#f87171;">Security · 6 Modules</span></div>
+      <div class="prog-tile" style="position:relative;"><div class="pt-new">NEW</div><span class="pt-code">CBT-PR</span><div class="pt-title">PR & Brand Management</div><span class="pt-level lv-exec" style="color:#a78bfa;">Management · 6 Modules</span></div>
+      <div class="prog-tile"><span class="pt-code">CBT-AL</span><div class="pt-title">Airline Operations Integration</div><span class="pt-level lv-mgmt">Management · 7 Modules</span></div>
+    </div>
+    <div class="platform-features">
+      <div class="pf-item">
+        <h4>🔒 2-Attempt Limit</h4>
+        <p>Maximum 2 attempts per module. Fail twice → 180-day lockout. No shortcuts. This is aviation.</p>
+      </div>
+      <div class="pf-item">
+        <h4>🎲 Randomized Questions</h4>
+        <p>Every retake draws from a larger pool with different sequence. Prevents memorization. Forces understanding.</p>
+      </div>
+      <div class="pf-item">
+        <h4>🌐 EN / DE Bilingual</h4>
+        <p>Full German and English throughout. Language toggle on every page. Global-ready from day one.</p>
+      </div>
+      <div class="pf-item">
+        <h4>📊 Deficiency Analytics</h4>
+        <p>Topic-level scoring on every attempt. Management dashboard shows team weak spots before incidents occur.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RANDOMIZATION FEATURE HIGHLIGHT -->
+<section class="random-section">
+  <div class="container">
+    <div class="random-inner">
+      <div class="random-visual">
+        <div class="rv-label">Attempt 1 — Question Sequence</div>
+        <div class="rv-q">Q1: What is the primary precursor to most incidents?</div>
+        <div class="rv-q">Q2: Define Normalization of Deviation.</div>
+        <div class="rv-q">Q3: Dubletten scenario refers to...</div>
+        <div class="rv-q">Q4: The 8-Minute Briefing includes...</div>
+        <div class="rv-q">Q5: Cognitive overload is caused by...</div>
+        <div class="rv-arrow">↓ RETAKE ↓</div>
+        <div class="rv-label">Attempt 2 — Questions Randomized from Pool</div>
+        <div class="rv-q scrambled">Q1: Loss of situational awareness leads to...</div>
+        <div class="rv-q scrambled">Q2: Explain the development chain of deviation.</div>
+        <div class="rv-q scrambled">Q3: Effective briefing creates...</div>
+        <div class="rv-q scrambled">Q4: FOD control is critical because...</div>
+        <div class="rv-q scrambled">Q5: What does the severity matrix prioritize?</div>
+      </div>
+      <div class="random-text">
+        <h2>Retake. Different questions. Every time.</h2>
+        <p>The CLS quiz engine draws from a question pool per topic — not a fixed list. On every retake, questions are randomly selected and reordered. Answer positions are shuffled. Memorizing the sequence doesn't work.</p>
+        <div class="rv-point"><div class="rp-dot"></div><p>Questions drawn randomly from topic pool per section</p></div>
+        <div class="rv-point"><div class="rp-dot"></div><p>Answer order shuffled on every attempt</p></div>
+        <div class="rv-point"><div class="rp-dot"></div><p>Pool expands as new content is added</p></div>
+        <div class="rv-point"><div class="rp-dot"></div><p>Previous attempt answers never shown during retake</p></div>
+        <div class="rv-point"><div class="rp-dot"></div><p>Deficiency analysis tracks which topics fail across attempts</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FRAMEWORK -->
+<section class="framework" id="framework">
+  <div class="container">
+    <div class="fw-header">
+      <div class="tag" style="margin-bottom:16px;">CLS Framework</div>
+      <h2 class="section-title" style="margin-bottom:16px;">8 Blocks. 40+ Modules.<br>One complete system.</h2>
+      <p class="section-sub">The complete knowledge architecture for aviation ground handling leadership — from human factors to executive PR strategy.</p>
+    </div>
+    <div class="fw-blocks">
+      <div class="fw-block" style="--bc:var(--blue2);">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--blue2);"></div>
+        <span class="fw-block-letter">BLOCK A · MOD 01–05</span>
+        <h3>Human Factors</h3>
+        <p>Cognitive overload, situational awareness, normalization of deviation, stress under pressure, workload architecture.</p>
+        <span class="fw-mods">5 modules · Operational</span>
+      </div>
+      <div class="fw-block">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:#1e3a5f;"></div>
+        <span class="fw-block-letter">BLOCK B · MOD 06–10</span>
+        <h3>Leadership & Supervision</h3>
+        <p>Leadership gap, supervisor development, controlling & KPIs, staff analysis, briefing standards, error culture.</p>
+        <span class="fw-mods">5 modules · Supervisory</span>
+      </div>
+      <div class="fw-block">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:#0d9488;"></div>
+        <span class="fw-block-letter">BLOCK C · MOD 11–15</span>
+        <h3>Communication</h3>
+        <p>Communication architecture, miscommunication sources, language barriers, cross-departmental, digital systems.</p>
+        <span class="fw-mods">5 modules · Operational</span>
+      </div>
+      <div class="fw-block">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:#d97706;"></div>
+        <span class="fw-block-letter">BLOCK D · MOD 16–20</span>
+        <h3>Operational Systems</h3>
+        <p>SOPs vs. reality, turnaround management, IROPS, multi-airline environment, load planning & weight & balance.</p>
+        <span class="fw-mods">5 modules · Operational</span>
+      </div>
+      <div class="fw-block">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:#ea580c;"></div>
+        <span class="fw-block-letter">BLOCK E · MOD 21–25</span>
+        <h3>Technology & Future</h3>
+        <p>AI & automation readiness, digital twin operations, autonomous GSE, green operations, data standardization.</p>
+        <span class="fw-mods">5 modules · Management</span>
+      </div>
+      <div class="fw-block">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:#6b7280;"></div>
+        <span class="fw-block-letter">BLOCK F · MOD 26–28</span>
+        <h3>Consulting Framework</h3>
+        <p>Operational Reality Audit methodology, CLS consulting approach, Aviation Experience Platform product line.</p>
+        <span class="fw-mods">3 modules · Executive</span>
+      </div>
+      <div class="fw-block" style="position:relative;">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:#ef4444;"></div>
+        <div class="fw-new">NEW</div>
+        <span class="fw-block-letter">BLOCK G · MOD 29–34</span>
+        <h3>Safety, Security & Regulatory</h3>
+        <p>Airside authority, runway safety, airport security, compliance, aviation law, incident reporting, root cause analysis.</p>
+        <span class="fw-mods">6 modules · All levels</span>
+      </div>
+      <div class="fw-block" style="position:relative;">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:#7c3aed;"></div>
+        <div class="fw-new">NEW</div>
+        <span class="fw-block-letter">BLOCK H · MOD 35–40</span>
+        <h3>PR, Social Media & Brand</h3>
+        <p>Corporate communication, crisis comms, social media strategy, brand management, awards, stakeholder relations.</p>
+        <span class="fw-mods">6 modules · Management</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- IP PROTECTION SECTION -->
+<section class="protection">
+  <div class="container">
+    <div class="prot-inner">
+      <div class="prot-text">
+        <div class="tag" style="margin-bottom:16px;">Intellectual Property</div>
+        <h2>Protected. Yours alone.</h2>
+        <p>All CLS content, methodologies, frameworks, module structures, quiz systems, and platform architecture are proprietary intellectual property. Unauthorized reproduction, distribution, or adaptation is prohibited.</p>
+        <div class="copyright-bar">
+          <span>🔒</span>
+          <span><strong>© 2025 CLS — Clear Leadership Systems.</strong> All rights reserved. Unauthorized use, reproduction, or distribution of any CLS content, training materials, frameworks, or methodologies — in whole or in part — is strictly prohibited and subject to legal action.</span>
+        </div>
+      </div>
+      <div class="prot-items">
+        <div class="prot-item">
+          <div class="pi-icon">©</div>
+          <div class="pi-text">
+            <h4>Copyright Protection</h4>
+            <p>All 40+ modules, quiz questions, content, and frameworks are copyrighted. Automatic protection from date of creation.</p>
+          </div>
+        </div>
+        <div class="prot-item">
+          <div class="pi-icon">🚫</div>
+          <div class="pi-text">
+            <h4>No Reproduction</h4>
+            <p>Copying, extracting, or adapting CLS content for internal or commercial use without written license is prohibited.</p>
+          </div>
+        </div>
+        <div class="prot-item">
+          <div class="pi-icon">🔐</div>
+          <div class="pi-text">
+            <h4>Access Control</h4>
+            <p>Platform access is personal and non-transferable. Sharing credentials is a violation of terms and will result in account termination.</p>
+          </div>
+        </div>
+        <div class="prot-item">
+          <div class="pi-icon">⚖</div>
+          <div class="pi-text">
+            <h4>Licensed Use Only</h4>
+            <p>Enterprise licenses available for organizational deployment. All use outside licensed agreements is subject to legal action under Austrian and international copyright law.</p>
+          </div>
+        </div>
+        <div class="prot-item">
+          <div class="pi-icon">™</div>
+          <div class="pi-text">
+            <h4>Trademark Notice</h4>
+            <p>CLS, Clear Leadership Systems, and all associated program names (CBT-RA, CBT-RS, etc.) are proprietary designations of CLS — Clear Leadership Systems.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="tag" style="margin-bottom:16px;">Get in Touch</div>
+        <h2>One conversation.<br>That's all it takes.</h2>
+        <p>Whether you're a handling company looking for an Operational Reality Audit, an airline interested in the CBT platform, or a training organization exploring licensing — start with a 30-minute call.</p>
+        <div class="contact-blocks">
+          <div class="cb-item">
+            <div class="cb-label">For Handling Companies</div>
+            <div class="cb-val">Operational Reality Audit</div>
+            <div class="cb-sub">Free 60-min discovery session → concrete output guaranteed</div>
+          </div>
+          <div class="cb-item">
+            <div class="cb-label">For Airlines</div>
+            <div class="cb-val">CBT-AL Program + Analytics</div>
+            <div class="cb-sub">Handler performance gap analysis + per-seat licensing</div>
+          </div>
+          <div class="cb-item">
+            <div class="cb-label">Enterprise Licensing</div>
+            <div class="cb-val">White-label & multi-company deployment</div>
+            <div class="cb-sub">500+ user organizations · Custom pricing available</div>
+          </div>
+          <div class="cb-item">
+            <div class="cb-label">Direct Contact</div>
+            <div class="cb-val">ops@cls-system.com</div>
+            <div class="cb-sub">Response within 24 hours · EN / DE / AT</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="contact-form">
+          <div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--ink);margin-bottom:24px;">Request an Audit or Demo</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div class="cf-field"><label>First Name</label><input type="text" placeholder="Max"></div>
+            <div class="cf-field"><label>Last Name</label><input type="text" placeholder="Mustermann"></div>
+          </div>
+          <div class="cf-field"><label>Company Email</label><input type="email" placeholder="name@company.com"></div>
+          <div class="cf-field"><label>Company & Role</label><input type="text" placeholder="Fraport Ground Services · Ops Manager"></div>
+          <div class="cf-field">
+            <label>Inquiry Type</label>
+            <select>
+              <option>Operational Reality Audit</option>
+              <option>CBT Platform Access</option>
+              <option>Supervisor Leadership Program</option>
+              <option>Enterprise License</option>
+              <option>Partnership / Advisory</option>
+            </select>
+          </div>
+          <div class="cf-field"><label>Message (optional)</label><textarea rows="3" placeholder="Tell us briefly what you're dealing with..."></textarea></div>
+          <button class="btn-submit" onclick="handleSubmit(event)">SEND REQUEST →</button>
+          <div style="margin-top:12px;font-size:11px;color:var(--muted);">By submitting you agree to the CLS Privacy Policy. Your data is never sold or shared with third parties.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">CL<span>S</span></div>
+        <p class="footer-desc">Clear Leadership Systems — Aviation Ground Operations Consulting & CBT Platform. Built from 10+ years of frontline operational experience at Vienna International Airport. Delivered worldwide.</p>
+        <div style="margin-top:20px;padding:12px 16px;border:1px solid rgba(255,255,255,0.08);display:inline-block;">
+          <div style="font-size:9px;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,0.3);">© 2025 CLS · ALL RIGHTS RESERVED</div>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <a href="#solution">Operational Reality Audit</a>
+        <a href="CLS_CBT_Platform.html">CBT Platform</a>
+        <a href="#solution">Supervisor Program</a>
+        <a href="#solution">Analytics & Reporting</a>
+      </div>
+      <div class="footer-col">
+        <h4>CBT Programs</h4>
+        <p>CBT-RA · Ramp Agent</p>
+        <p>CBT-RS · Supervisor</p>
+        <p>CBT-DM · Duty Manager</p>
+        <p>CBT-EX · Executive</p>
+        <p>+ 10 more programs</p>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <p>ops@cls-system.com</p>
+        <p>airlines@cls-system.com</p>
+        <p>partners@cls-system.com</p>
+        <p style="margin-top:12px;">Vienna, Austria · Worldwide</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2025 CLS — Clear Leadership Systems. All intellectual property rights reserved. Unauthorized reproduction prohibited.</div>
+      <div class="footer-legal">
+        <a href="CLS_Legal.html">Legal Notice</a>
+        <a href="CLS_Legal.html#privacy">Privacy Policy</a>
+        <a href="CLS_Legal.html#terms">Terms of Use</a>
+        <a href="CLS_Legal.html#copyright">Copyright</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+function handleSubmit(e) {
+  e.preventDefault();
+  const btn = e.target;
+  btn.textContent = 'REQUEST SENT ✓';
+  btn.style.background = '#16a34a';
+  btn.disabled = true;
+  setTimeout(()=>{btn.textContent='SEND REQUEST →';btn.style.background='';btn.disabled=false;},4000);
+}
+// Smooth scroll for nav links
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const target=document.querySelector(a.getAttribute('href'));
+    if(target){e.preventDefault();target.scrollIntoView({behavior:'smooth',block:'start'});}
+  });
+});
+</script>
+</body>
+</html>
