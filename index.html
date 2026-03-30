@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CLS — Complete Platform</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
+:root{
+  --ink:#0d1117;--blue:#1a56db;--blue2:#1e40af;--green:#16a34a;
+  --red:#dc2626;--orange:#ea580c;--gold:#d97706;--purple:#7c3aed;
+  --teal:#0d9488;--stone:#f5f4f1;--border:#e2e0da;--muted:#6b7280;--white:#fff;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--stone);color:var(--ink);}
+
+/* NAV */
+.nav{background:var(--ink);height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;border-bottom:2px solid var(--blue);position:sticky;top:0;z-index:100;}
+.nav-logo{font-size:20px;font-weight:700;color:#fff;}
+.nav-logo span{color:var(--blue);}
+.nav-right{display:flex;align-items:center;gap:8px;}
+.lang-btns{display:flex;gap:2px;}
+.lang-btn{background:rgba(255,255,255,0.08);border:none;color:#9ca3af;padding:4px 8px;font-size:10px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;letter-spacing:0.5px;}
+.lang-btn.active{background:var(--blue);color:#fff;}
+.nav-tabs{display:flex;gap:2px;margin:0 12px;}
+.nav-tab{background:transparent;border:none;color:#6b7280;padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.nav-tab.active{background:var(--blue);color:#fff;}
+
+/* SCREENS */
+.screen{display:none;min-height:100vh;}
+.screen.active{display:block;}
+
+/* LOGIN */
+#screen-login{background:linear-gradient(135deg,#0d1117 0%,#1c2333 100%);display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px;}
+.login-box{width:100%;max-width:420px;}
+.login-logo{text-align:center;margin-bottom:32px;}
+.login-logo .big{font-size:72px;font-weight:700;color:#fff;letter-spacing:-3px;line-height:1;}
+.login-logo .big span{color:var(--blue);}
+.login-logo .tag{font-size:10px;letter-spacing:3px;color:#4b5563;text-transform:uppercase;margin-top:4px;}
+.login-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);padding:32px;}
+.login-card h2{color:#fff;font-size:17px;font-weight:700;margin-bottom:4px;}
+.login-card p{color:#6b7280;font-size:12px;margin-bottom:24px;}
+.field{margin-bottom:14px;}
+.field label{display:block;font-size:10px;font-weight:700;letter-spacing:1.5px;color:#9ca3af;margin-bottom:5px;text-transform:uppercase;}
+.field input,.field select{width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:#fff;padding:11px 13px;font-size:13px;font-family:'DM Sans',sans-serif;outline:none;}
+.field input::placeholder{color:#374151;}
+.field input:focus{border-color:var(--blue);}
+.field select option{background:#1c2333;}
+.btn-login{width:100%;background:var(--blue);color:#fff;border:none;padding:13px;font-size:13px;font-weight:700;letter-spacing:0.5px;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:6px;}
+.btn-login:hover{background:var(--blue2);}
+.login-switch{text-align:center;margin-top:16px;font-size:12px;color:#6b7280;}
+.login-switch a{color:var(--blue);cursor:pointer;}
+.demo-box{margin-top:20px;padding:14px;border:1px solid rgba(245,158,11,0.25);background:rgba(245,158,11,0.04);}
+.demo-box .dt{font-size:9px;font-weight:700;letter-spacing:2px;color:#d97706;margin-bottom:6px;}
+.demo-cred{font-size:11px;color:#9ca3af;font-family:'DM Mono',monospace;margin-bottom:3px;}
+
+/* APP */
+#screen-app{display:block;}
+.page{display:none;max-width:1100px;margin:0 auto;padding:28px 20px;}
+.page.active{display:block;}
+
+/* DASHBOARD */
+.dash-welcome{margin-bottom:24px;}
+.dash-tag{font-size:9px;font-weight:700;letter-spacing:3px;color:var(--blue);margin-bottom:6px;text-transform:uppercase;}
+.dash-title{font-size:26px;font-weight:700;color:var(--ink);}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px;}
+.stat{background:var(--white);border:1px solid var(--border);padding:18px;border-top:3px solid var(--blue);}
+.stat.g{border-top-color:var(--green);}
+.stat.r{border-top-color:var(--red);}
+.stat.p{border-top-color:var(--purple);}
+.stat-n{font-size:30px;font-weight:700;font-family:'DM Mono',monospace;}
+.stat-l{font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-top:3px;}
+
+/* PROGRAMS */
+.prog-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.prog-card{background:var(--white);border:1px solid var(--border);padding:20px;cursor:pointer;transition:.15s;border-left:4px solid var(--blue);}
+.prog-card:hover{border-color:var(--blue);transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,0,0,0.08);}
+.prog-tag{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:2px 8px;display:inline-block;margin-bottom:8px;}
+.tag-op{background:#dbeafe;color:#1e40af;}
+.tag-sup{background:#fef3c7;color:#92400e;}
+.tag-mgmt{background:#ede9fe;color:#5b21b6;}
+.tag-exec{background:#fee2e2;color:#991b1b;}
+.prog-title{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:4px;}
+.prog-desc{font-size:11.5px;color:var(--muted);line-height:1.6;margin-bottom:12px;}
+.prog-footer{display:flex;justify-content:space-between;align-items:center;}
+.prog-mods{font-size:11px;color:var(--muted);font-family:'DM Mono',monospace;}
+.btn-enroll{background:var(--ink);color:#fff;border:none;padding:6px 14px;font-size:11px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.btn-enrolled{background:transparent;border:1px solid var(--green);color:var(--green);padding:6px 14px;font-size:11px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;}
+
+/* PRICING */
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px;}
+.price-card{background:var(--white);border:1px solid var(--border);padding:28px 22px;text-align:center;position:relative;}
+.price-card.featured{border:2px solid var(--blue);transform:scale(1.02);}
+.price-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--blue);color:#fff;font-size:10px;font-weight:700;padding:3px 14px;letter-spacing:1px;}
+.price-name{font-size:13px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;}
+.price-amount{font-size:42px;font-weight:700;font-family:'DM Mono',monospace;color:var(--ink);line-height:1;}
+.price-period{font-size:12px;color:var(--muted);margin-bottom:20px;}
+.price-features{list-style:none;margin-bottom:24px;text-align:left;}
+.price-features li{font-size:12px;color:var(--ink);padding:6px 0;border-bottom:1px solid var(--border);}
+.price-features li::before{content:'✓  ';color:var(--green);font-weight:700;}
+.btn-price{width:100%;background:var(--ink);color:#fff;border:none;padding:12px;font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.price-card.featured .btn-price{background:var(--blue);}
+.duration-tabs{display:flex;gap:2px;background:var(--white);border:1px solid var(--border);padding:4px;margin-bottom:24px;width:fit-content;}
+.dur-btn{background:transparent;border:none;padding:8px 16px;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;color:var(--muted);}
+.dur-btn.active{background:var(--ink);color:#fff;}
+.enterprise-box{background:var(--ink);padding:28px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;}
+.eb-title{font-size:18px;font-weight:700;color:#fff;margin-bottom:6px;}
+.eb-desc{font-size:12px;color:#8aaccb;line-height:1.7;}
+.btn-enterprise{background:var(--gold);color:var(--ink);border:none;padding:12px 28px;font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;}
+
+/* ANALYTICS */
+.analytics-grid{display:grid;grid-template-columns:2fr 1fr;gap:16px;}
+.card{background:var(--white);border:1px solid var(--border);margin-bottom:16px;}
+.card-header{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
+.card-title{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink);}
+.card-body{padding:18px;}
+
+/* SECURITY */
+.security-status{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;}
+.sec-item{background:var(--white);border:1px solid var(--border);padding:16px;}
+.sec-icon{font-size:24px;margin-bottom:8px;}
+.sec-label{font-size:11px;font-weight:700;color:var(--ink);margin-bottom:3px;}
+.sec-status{font-size:10px;font-weight:700;}
+.sec-ok{color:var(--green);}
+.sec-warn{color:var(--orange);}
+
+/* QUIZ */
+.quiz-wrap{max-width:680px;margin:0 auto;}
+.quiz-header{background:var(--ink);padding:20px 24px;}
+.quiz-type{font-size:9px;font-weight:700;letter-spacing:3px;color:var(--blue);}
+.quiz-counter{font-size:12px;color:#9ca3af;font-family:'DM Mono',monospace;float:right;}
+.quiz-progress{background:rgba(255,255,255,0.1);height:3px;margin-top:10px;}
+.quiz-bar{height:3px;background:var(--blue);transition:.3s;}
+.quiz-body{background:var(--white);padding:28px;}
+.quiz-topic{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--blue);margin-bottom:10px;}
+.quiz-q{font-size:16px;font-weight:600;color:var(--ink);line-height:1.55;margin-bottom:24px;}
+.options{display:flex;flex-direction:column;gap:8px;}
+.option{display:flex;align-items:flex-start;gap:12px;padding:13px 16px;border:1.5px solid var(--border);cursor:pointer;transition:.15s;}
+.option:hover:not(.revealed){border-color:var(--ink);}
+.option.selected{border-color:var(--ink);background:var(--stone);}
+.option.correct{border-color:var(--green);background:#f0fdf4;}
+.option.wrong{border-color:var(--red);background:#fef2f2;}
+.opt-letter{width:26px;height:26px;background:var(--stone);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;}
+.option.selected .opt-letter{background:var(--ink);color:#fff;}
+.option.correct .opt-letter{background:var(--green);color:#fff;}
+.option.wrong .opt-letter{background:var(--red);color:#fff;}
+.opt-text{font-size:13px;color:var(--ink);line-height:1.5;padding-top:3px;}
+.expl-box{margin-top:16px;padding:14px;background:var(--stone);border-left:3px solid var(--blue);}
+.expl-lbl{font-size:9px;font-weight:700;letter-spacing:2px;color:var(--blue);margin-bottom:4px;}
+.expl-text{font-size:12.5px;color:var(--ink);line-height:1.65;}
+.quiz-footer{background:#f9f8f5;border:1px solid var(--border);border-top:none;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;}
+.btn-submit{background:var(--blue);color:#fff;border:none;padding:10px 24px;font-size:12px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.btn-submit:disabled{opacity:.4;cursor:not-allowed;}
+.btn-next{background:var(--ink);color:#fff;border:none;padding:10px 20px;font-size:12px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;}
+
+/* PROFILE */
+.profile-grid{display:grid;grid-template-columns:280px 1fr;gap:20px;}
+.profile-card{background:var(--white);border:1px solid var(--border);padding:24px;}
+.prof-avatar{width:72px;height:72px;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;margin:0 auto 14px;}
+.prof-name{font-size:17px;font-weight:700;text-align:center;color:var(--ink);}
+.prof-role{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--blue);text-align:center;margin-top:3px;}
+.prof-company{font-size:12px;color:var(--muted);text-align:center;margin-top:2px;}
+.prof-stats{margin-top:18px;border-top:1px solid var(--border);padding-top:14px;}
+.ps-row{display:flex;justify-content:space-between;padding:7px 0;font-size:12px;border-bottom:1px solid var(--border);}
+.ps-l{color:var(--muted);}
+.ps-r{font-weight:600;font-family:'DM Mono',monospace;}
+.cert-list{display:flex;flex-direction:column;gap:8px;}
+.cert-item{background:var(--stone);border:1px solid var(--border);padding:12px 14px;display:flex;justify-content:space-between;align-items:center;}
+.ci-title{font-size:12px;font-weight:600;color:var(--ink);}
+.ci-code{font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;margin-top:2px;}
+.ci-score{font-size:18px;font-weight:700;color:var(--green);font-family:'DM Mono',monospace;}
+
+/* SECURITY PWD */
+.pwd-timer{background:var(--ink);padding:20px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;}
+.pwd-timer .pt-label{font-size:10px;font-weight:700;letter-spacing:2px;color:var(--blue);}
+.pwd-timer .pt-days{font-size:36px;font-weight:700;font-family:'DM Mono',monospace;color:#fff;}
+.pwd-timer .pt-sub{font-size:11px;color:#8aaccb;}
+.pwd-warning{background:#fef2f2;border:1px solid #fecaca;border-left:4px solid var(--red);padding:14px 18px;margin-bottom:16px;}
+
+/* TOAST */
+.toast{position:fixed;bottom:20px;right:20px;background:var(--ink);color:#fff;padding:10px 18px;font-size:12px;font-weight:500;z-index:9999;transform:translateY(60px);opacity:0;transition:.3s;}
+.toast.show{transform:translateY(0);opacity:1;}
+.toast.green{background:var(--green);}
+
+/* RESULT */
+.result-hero{padding:40px;text-align:center;}
+.result-hero.pass{background:linear-gradient(135deg,#064e3b,#065f46);}
+.result-hero.fail{background:linear-gradient(135deg,#7f1d1d,#991b1b);}
+.result-score{font-size:88px;font-weight:700;color:#fff;font-family:'DM Mono',monospace;line-height:1;}
+.result-verdict{font-size:18px;font-weight:700;color:rgba(255,255,255,0.85);margin-top:6px;}
+.result-sub{font-size:12px;color:rgba(255,255,255,0.5);margin-top:4px;}
+.cert-badge{display:inline-block;border:1px solid rgba(255,255,255,0.3);background:rgba(255,255,255,0.08);padding:8px 18px;margin-top:16px;}
+.cb-lbl{font-size:9px;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,0.5);}
+.cb-code{font-size:12px;font-family:'DM Mono',monospace;color:#fff;margin-top:2px;}
+
+@media(max-width:700px){
+  .stats-grid,.prog-grid,.pricing-grid,.security-status,.analytics-grid,.profile-grid{grid-template-columns:1fr;}
+  .price-card.featured{transform:none;}
+  .enterprise-box{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+<div class="toast" id="toast"></div>
+
+<!-- ══ LOGIN SCREEN ══════════════════════════════════════════ -->
+<div class="screen active" id="screen-login">
+  <div class="login-box">
+    <div class="login-logo">
+      <div class="big">CL<span>S</span></div>
+      <div class="tag">Clear Leadership Systems</div>
+    </div>
+    <div class="login-card" id="auth-card">
+      <h2 id="auth-title">Sign in</h2>
+      <p id="auth-sub">Aviation Ground Operations · CBT Platform</p>
+
+      <div id="reg-extra" style="display:none;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+          <div class="field"><label id="l-fn">First Name</label><input id="reg-fn" type="text" placeholder="Max"></div>
+          <div class="field"><label id="l-ln">Last Name</label><input id="reg-ln" type="text" placeholder="Mustermann"></div>
+        </div>
+        <div class="field">
+          <label id="l-role">Role</label>
+          <select id="reg-role">
+            <option value="ramp_agent">Ramp Agent</option>
+            <option value="loading_master">Loading Master</option>
+            <option value="checkin_agent">Check-in Agent</option>
+            <option value="supervisor">Ramp Supervisor</option>
+            <option value="duty_manager">Duty Manager</option>
+            <option value="station_manager">Station Manager</option>
+            <option value="trainer">Trainer</option>
+            <option value="hr_manager">HR Manager</option>
+            <option value="ceo">CEO / Director</option>
+          </select>
+        </div>
+        <div class="field"><label id="l-co">Company</label><input id="reg-co" type="text" placeholder="Handling GmbH"></div>
+      </div>
+
+      <div class="field"><label id="l-em">Company Email</label><input id="auth-email" type="email" placeholder="name@company.com"></div>
+      <div class="field"><label id="l-pw">Password</label><input id="auth-pw" type="password" placeholder="••••••••"></div>
+
+      <button class="btn-login" onclick="handleAuth()" id="auth-btn">SIGN IN</button>
+      <div class="login-switch"><span id="sw-text">No account? </span><a onclick="toggleMode()" id="sw-link">Create one</a></div>
+    </div>
+    <div class="demo-box">
+      <div class="dt">DEMO CREDENTIALS</div>
+      <div class="demo-cred" onclick="fillDemo('supervisor@fraport.de','demo123')" style="cursor:pointer;">supervisor@fraport.de / demo123</div>
+      <div class="demo-cred" onclick="fillDemo('ceo@menzies.com','demo123')" style="cursor:pointer;">ceo@menzies.com / demo123</div>
+      <div class="demo-cred" onclick="fillDemo('trainer@swissport.com','demo123')" style="cursor:pointer;">trainer@swissport.com / demo123</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ APP SCREEN ════════════════════════════════════════════ -->
+<div class="screen" id="screen-app">
+  <nav class="nav">
+    <div class="nav-logo">CL<span>S</span></div>
+    <div class="nav-tabs">
+      <button class="nav-tab active" onclick="showPage('dashboard')">Dashboard</button>
+      <button class="nav-tab" onclick="showPage('programs')">Programs</button>
+      <button class="nav-tab" onclick="showPage('pricing')">Pricing</button>
+      <button class="nav-tab" onclick="showPage('analytics')">Analytics</button>
+      <button class="nav-tab" onclick="showPage('profile')">Profile</button>
+      <button class="nav-tab" onclick="showPage('security')">Security</button>
+    </div>
+    <div class="nav-right">
+      <div class="lang-btns" id="lang-btns"></div>
+      <button class="lang-btn" style="background:var(--red);color:#fff;margin-left:8px;" onclick="logout()">OUT</button>
+    </div>
+  </nav>
+
+  <!-- DASHBOARD -->
+  <div class="page active" id="page-dashboard">
+    <div class="dash-welcome">
+      <div class="dash-tag">CLS · CLEAR LEADERSHIP SYSTEMS</div>
+      <div class="dash-title" id="dash-welcome">Welcome back</div>
+      <div style="font-size:13px;color:var(--muted);margin-top:3px;" id="dash-sub"></div>
+    </div>
+    <div class="stats-grid">
+      <div class="stat"><div class="stat-n" id="s1">0</div><div class="stat-l" id="sl1">Programs</div></div>
+      <div class="stat g"><div class="stat-n" id="s2">0</div><div class="stat-l" id="sl2">Passed</div></div>
+      <div class="stat r"><div class="stat-n" id="s3">0</div><div class="stat-l" id="sl3">Certificates</div></div>
+      <div class="stat p"><div class="stat-n" id="s4">—</div><div class="stat-l" id="sl4">Avg Score</div></div>
+    </div>
+    <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink);margin-bottom:14px;" id="lbl-progs">MY PROGRAMS</div>
+    <div class="prog-grid" id="dash-progs"></div>
+  </div>
+
+  <!-- PROGRAMS -->
+  <div class="page" id="page-programs">
+    <div class="dash-tag">CBT PROGRAM CATALOG</div>
+    <div class="dash-title" id="cat-title" style="margin-bottom:20px;">All Programs</div>
+    <div id="prog-catalog"></div>
+  </div>
+
+  <!-- PRICING -->
+  <div class="page" id="page-pricing">
+    <div class="dash-tag">PRICING</div>
+    <div class="dash-title" style="margin-bottom:8px;" id="price-title">Flexible Plans</div>
+    <div style="font-size:13px;color:var(--muted);margin-bottom:20px;" id="price-sub">For individuals, teams and enterprises</div>
+
+    <div class="duration-tabs">
+      <button class="dur-btn active" onclick="setDuration('monthly',this)" id="d-mon">Monthly</button>
+      <button class="dur-btn" onclick="setDuration('6months',this)" id="d-6m">6 Months</button>
+      <button class="dur-btn" onclick="setDuration('yearly',this)" id="d-1y">Yearly −15%</button>
+      <button class="dur-btn" onclick="setDuration('2years',this)" id="d-2y">2 Years −25%</button>
+    </div>
+
+    <div class="pricing-grid" id="pricing-cards"></div>
+
+    <div class="enterprise-box">
+      <div>
+        <div class="eb-title" id="ent-title">Enterprise & Airlines</div>
+        <div class="eb-desc" id="ent-desc">Custom pricing for Fraport, Swissport, Menzies, dnata and major airlines. Volume licensing, white-label options, dedicated support, compliance reporting, SCORM export.</div>
+      </div>
+      <button class="btn-enterprise" onclick="showToast('Enterprise-Anfrage gesendet! Wir melden uns in 24h.','green')">CONTACT US</button>
+    </div>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="page" id="page-quiz">
+    <div class="quiz-wrap">
+      <div class="quiz-header">
+        <span class="quiz-type" id="quiz-type-lbl">SECTION QUIZ</span>
+        <span class="quiz-counter" id="quiz-ctr">1 / 5</span>
+        <div class="quiz-progress"><div class="quiz-bar" id="quiz-bar" style="width:20%"></div></div>
+      </div>
+      <div class="quiz-body">
+        <div class="quiz-topic" id="quiz-topic"></div>
+        <div class="quiz-q" id="quiz-q"></div>
+        <div class="options" id="quiz-opts"></div>
+        <div class="expl-box" id="quiz-expl" style="display:none;">
+          <div class="expl-lbl" id="expl-lbl">EXPLANATION</div>
+          <div class="expl-text" id="expl-text"></div>
+        </div>
+      </div>
+      <div class="quiz-footer">
+        <button class="btn-next" onclick="showPage('programs')" id="quiz-back">← Back</button>
+        <button class="btn-submit" onclick="quizAction()" id="quiz-action">Submit</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="page" id="page-results">
+    <div class="quiz-wrap">
+      <div class="result-hero" id="result-hero">
+        <div class="result-score" id="res-score">0%</div>
+        <div class="result-verdict" id="res-verdict">—</div>
+        <div class="result-sub" id="res-sub"></div>
+        <div id="res-cert"></div>
+      </div>
+      <div style="padding:20px;background:var(--white);border:1px solid var(--border);">
+        <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;color:var(--ink);margin-bottom:14px;" id="lbl-review">QUESTION REVIEW</div>
+        <div id="res-review"></div>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:16px;">
+        <button style="flex:1;background:var(--stone);border:1px solid var(--border);color:var(--ink);padding:12px;font-size:12px;font-weight:700;cursor:pointer;" onclick="showPage('programs')">← Programs</button>
+        <button style="flex:1;background:var(--green);border:none;color:#fff;padding:12px;font-size:12px;font-weight:700;cursor:pointer;" id="res-next" onclick="showPage('profile')">My Certificates →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ANALYTICS -->
+  <div class="page" id="page-analytics">
+    <div class="dash-tag">ANALYTICS</div>
+    <div class="dash-title" style="margin-bottom:20px;" id="ana-title">Performance Analytics</div>
+    <div class="analytics-grid">
+      <div>
+        <div class="card">
+          <div class="card-header"><div class="card-title" id="ana-scores">SCORE HISTORY</div></div>
+          <div class="card-body"><div id="score-chart" style="height:140px;display:flex;align-items:flex-end;gap:6px;"></div></div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title" id="ana-def">TOPIC DEFICIENCIES</div></div>
+          <div class="card-body"><div id="def-chart"></div></div>
+        </div>
+      </div>
+      <div>
+        <div class="card">
+          <div class="card-header"><div class="card-title" id="ana-cert">CERTIFICATES</div></div>
+          <div class="card-body"><div id="ana-cert-list"></div></div>
+        </div>
+        <div class="card" style="margin-top:16px;">
+          <div class="card-header"><div class="card-title" id="ana-rec">RECENT ATTEMPTS</div></div>
+          <div class="card-body"><div id="ana-recent"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROFILE -->
+  <div class="page" id="page-profile">
+    <div class="dash-tag">PROFILE</div>
+    <div class="dash-title" style="margin-bottom:20px;" id="prof-title">My Profile</div>
+    <div class="profile-grid">
+      <div class="profile-card">
+        <div class="prof-avatar" id="prof-av">—</div>
+        <div class="prof-name" id="prof-name">—</div>
+        <div class="prof-role" id="prof-role">—</div>
+        <div class="prof-company" id="prof-co">—</div>
+        <div class="prof-stats">
+          <div class="ps-row"><span class="ps-l" id="lbl-exp">Experience</span><span class="ps-r" id="prof-exp">—</span></div>
+          <div class="ps-row"><span class="ps-l" id="lbl-dept">Department</span><span class="ps-r" id="prof-dept">—</span></div>
+          <div class="ps-row"><span class="ps-l" id="lbl-joined">Member Since</span><span class="ps-r" id="prof-joined">—</span></div>
+          <div class="ps-row"><span class="ps-l" id="lbl-plan">Plan</span><span class="ps-r" id="prof-plan" style="color:var(--blue);">—</span></div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;color:var(--ink);margin-bottom:12px;" id="lbl-certs">MY CERTIFICATES</div>
+        <div class="cert-list" id="prof-certs"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECURITY -->
+  <div class="page" id="page-security">
+    <div class="dash-tag">SECURITY CENTER</div>
+    <div class="dash-title" style="margin-bottom:20px;" id="sec-title">Account Security</div>
+
+    <div class="pwd-timer" id="pwd-timer">
+      <div>
+        <div class="pt-label">PASSWORD ROTATION REQUIRED IN</div>
+        <div class="pt-days" id="pwd-days">47</div>
+        <div class="pt-sub">days · Mandatory every 60 days</div>
+      </div>
+      <div style="text-align:right;">
+        <button style="background:var(--blue);color:#fff;border:none;padding:10px 20px;font-size:12px;font-weight:700;cursor:pointer;" onclick="showToast('Password change initiated','green')">CHANGE NOW</button>
+      </div>
+    </div>
+
+    <div class="security-status">
+      <div class="sec-item">
+        <div class="sec-icon">🔐</div>
+        <div class="sec-label">Password Strength</div>
+        <div class="sec-status sec-ok">● STRONG</div>
+      </div>
+      <div class="sec-item">
+        <div class="sec-icon">🛡</div>
+        <div class="sec-label">Session Encryption</div>
+        <div class="sec-status sec-ok">● JWT ACTIVE</div>
+      </div>
+      <div class="sec-item">
+        <div class="sec-icon">🔄</div>
+        <div class="sec-label">Auto-Rotation</div>
+        <div class="sec-status sec-ok">● ENABLED (60 days)</div>
+      </div>
+      <div class="sec-item">
+        <div class="sec-icon">🌐</div>
+        <div class="sec-label">HTTPS</div>
+        <div class="sec-status sec-ok">● ACTIVE</div>
+      </div>
+      <div class="sec-item">
+        <div class="sec-icon">🚫</div>
+        <div class="sec-label">Brute Force Protection</div>
+        <div class="sec-status sec-ok">● ACTIVE (5 attempts)</div>
+      </div>
+      <div class="sec-item">
+        <div class="sec-icon">📋</div>
+        <div class="sec-label">Access Log</div>
+        <div class="sec-status sec-ok">● MONITORING</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-title">Recent Login Activity</div></div>
+      <div class="card-body">
+        <div id="login-log"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ════════════════════════════════════════════════════════════
+// TRANSLATIONS — 6 LANGUAGES
+// ════════════════════════════════════════════════════════════
+const LANG = {
+  en:{
+    welcome:'Welcome back', programs:'Programs Enrolled', passed:'Modules Passed',
+    certs:'Certificates', avg:'Avg Score', myprogs:'MY PROGRAMS',
+    catalog:'All Programs', pricing:'Flexible Plans',
+    priceSubtitle:'For individuals, teams and enterprises',
+    analytics:'Performance Analytics', profile:'My Profile',
+    security:'Account Security', scores:'SCORE HISTORY',
+    deficiencies:'TOPIC DEFICIENCIES', myCerts:'MY CERTIFICATES',
+    recent:'RECENT ATTEMPTS', exp:'Experience', dept:'Department',
+    joined:'Member Since', plan:'Plan', certTitle:'CERTIFICATE ISSUED',
+    pass:'MODULE PASSED ✓', fail:'QUIZ FAILED', attLeft:'Attempts left',
+    review:'QUESTION REVIEW', enterprise:'Enterprise & Airlines',
+    entDesc:'Custom pricing for Fraport, Swissport, Menzies, dnata and major airlines.',
+  },
+  de:{
+    welcome:'Willkommen zurück', programs:'Eingeschrieben', passed:'Bestanden',
+    certs:'Zertifikate', avg:'Ø Score', myprogs:'MEINE PROGRAMME',
+    catalog:'Alle Programme', pricing:'Flexible Pläne',
+    priceSubtitle:'Für Einzelpersonen, Teams und Unternehmen',
+    analytics:'Leistungsanalyse', profile:'Mein Profil',
+    security:'Kontosicherheit', scores:'BEWERTUNGSVERLAUF',
+    deficiencies:'THEMENDEFIZITE', myCerts:'MEINE ZERTIFIKATE',
+    recent:'LETZTE VERSUCHE', exp:'Erfahrung', dept:'Abteilung',
+    joined:'Mitglied seit', plan:'Plan', certTitle:'ZERTIFIKAT AUSGESTELLT',
+    pass:'MODUL BESTANDEN ✓', fail:'QUIZ NICHT BESTANDEN', attLeft:'Verbleibende Versuche',
+    review:'FRAGENÜBERSICHT', enterprise:'Enterprise & Airlines',
+    entDesc:'Individuelle Preise für Fraport, Swissport, Menzies, dnata und große Airlines.',
+  },
+  fr:{
+    welcome:'Bienvenue', programs:'Programmes inscrits', passed:'Modules réussis',
+    certs:'Certificats', avg:'Score moyen', myprogs:'MES PROGRAMMES',
+    catalog:'Catalogue des programmes', pricing:'Plans flexibles',
+    priceSubtitle:'Pour les particuliers, équipes et entreprises',
+    analytics:'Analyses de performance', profile:'Mon profil',
+    security:'Sécurité du compte', scores:'HISTORIQUE DES SCORES',
+    deficiencies:'DÉFICITS THÉMATIQUES', myCerts:'MES CERTIFICATS',
+    recent:'TENTATIVES RÉCENTES', exp:'Expérience', dept:'Département',
+    joined:'Membre depuis', plan:'Plan', certTitle:'CERTIFICAT ÉMIS',
+    pass:'MODULE RÉUSSI ✓', fail:'QUIZ ÉCHOUÉ', attLeft:'Tentatives restantes',
+    review:'RÉVISION DES QUESTIONS', enterprise:'Entreprise & Airlines',
+    entDesc:'Tarifs personnalisés pour Fraport, Swissport, Menzies, dnata et grandes compagnies.',
+  },
+  es:{
+    welcome:'Bienvenido', programs:'Programas inscritos', passed:'Módulos aprobados',
+    certs:'Certificados', avg:'Puntuación media', myprogs:'MIS PROGRAMAS',
+    catalog:'Catálogo de programas', pricing:'Planes flexibles',
+    priceSubtitle:'Para individuos, equipos y empresas',
+    analytics:'Análisis de rendimiento', profile:'Mi perfil',
+    security:'Seguridad de cuenta', scores:'HISTORIAL DE PUNTUACIONES',
+    deficiencies:'DÉFICITS TEMÁTICOS', myCerts:'MIS CERTIFICADOS',
+    recent:'INTENTOS RECIENTES', exp:'Experiencia', dept:'Departamento',
+    joined:'Miembro desde', plan:'Plan', certTitle:'CERTIFICADO EMITIDO',
+    pass:'MÓDULO APROBADO ✓', fail:'QUIZ FALLIDO', attLeft:'Intentos restantes',
+    review:'REVISIÓN DE PREGUNTAS', enterprise:'Empresa y Aerolíneas',
+    entDesc:'Precios personalizados para Fraport, Swissport, Menzies, dnata y grandes aerolíneas.',
+  },
+  ru:{
+    welcome:'Добро пожаловать', programs:'Программы', passed:'Пройдено',
+    certs:'Сертификаты', avg:'Средний балл', myprogs:'МОИ ПРОГРАММЫ',
+    catalog:'Каталог программ', pricing:'Гибкие планы',
+    priceSubtitle:'Для частных лиц, команд и предприятий',
+    analytics:'Аналитика', profile:'Профиль',
+    security:'Безопасность', scores:'ИСТОРИЯ ОЦЕНОК',
+    deficiencies:'ДЕФИЦИТЫ ПО ТЕМАМ', myCerts:'МОИ СЕРТИФИКАТЫ',
+    recent:'ПОСЛЕДНИЕ ПОПЫТКИ', exp:'Опыт', dept:'Отдел',
+    joined:'Участник с', plan:'План', certTitle:'СЕРТИФИКАТ ВЫДАН',
+    pass:'МОДУЛЬ ПРОЙДЕН ✓', fail:'ТЕСТ НЕ ПРОЙДЕН', attLeft:'Осталось попыток',
+    review:'РАЗБОР ВОПРОСОВ', enterprise:'Предприятия и Авиакомпании',
+    entDesc:'Индивидуальные цены для Fraport, Swissport, Menzies, dnata.',
+  },
+  ar:{
+    welcome:'مرحباً', programs:'البرامج المسجلة', passed:'الوحدات المجتازة',
+    certs:'الشهادات', avg:'متوسط الدرجات', myprogs:'برامجي',
+    catalog:'كتالوج البرامج', pricing:'خطط مرنة',
+    priceSubtitle:'للأفراد والفرق والشركات',
+    analytics:'تحليلات الأداء', profile:'ملفي الشخصي',
+    security:'أمان الحساب', scores:'سجل الدرجات',
+    deficiencies:'نقاط الضعف', myCerts:'شهاداتي',
+    recent:'المحاولات الأخيرة', exp:'الخبرة', dept:'القسم',
+    joined:'عضو منذ', plan:'الخطة', certTitle:'تم إصدار الشهادة',
+    pass:'اجتزت الوحدة ✓', fail:'لم تجتز الاختبار', attLeft:'المحاولات المتبقية',
+    review:'مراجعة الأسئلة', enterprise:'المؤسسات والشركات',
+    entDesc:'أسعار مخصصة لفرانكفورت وسويس بورت ومينزيس.',
+  },
+};
+
+let currentLang = 'en';
+const LANGS = ['en','de','fr','es','ru','ar'];
+
+function T(key){ return LANG[currentLang][key] || LANG.en[key] || key; }
+
+function buildLangBtns(){
+  const c = document.getElementById('lang-btns');
+  c.innerHTML = LANGS.map(l=>`<button class="lang-btn ${l===currentLang?'active':''}" onclick="setLang('${l}')">${l.toUpperCase()}</button>`).join('');
+}
+
+function setLang(l){
+  currentLang = l;
+  document.documentElement.dir = l==='ar'?'rtl':'ltr';
+  buildLangBtns();
+  refreshText();
+}
+
+function refreshText(){
+  const u = STATE.user;
+  if(!u) return;
+  document.getElementById('dash-welcome').textContent = `${T('welcome')}, ${u.first}`;
+  document.getElementById('sl1').textContent = T('programs');
+  document.getElementById('sl2').textContent = T('passed');
+  document.getElementById('sl3').textContent = T('certs');
+  document.getElementById('sl4').textContent = T('avg');
+  document.getElementById('lbl-progs').textContent = T('myprogs');
+  document.getElementById('cat-title').textContent = T('catalog');
+  document.getElementById('price-title').textContent = T('pricing');
+  document.getElementById('price-sub').textContent = T('priceSubtitle');
+  document.getElementById('ana-title').textContent = T('analytics');
+  document.getElementById('ana-scores').textContent = T('scores');
+  document.getElementById('ana-def').textContent = T('deficiencies');
+  document.getElementById('ana-cert').textContent = T('myCerts');
+  document.getElementById('ana-rec').textContent = T('recent');
+  document.getElementById('prof-title').textContent = T('profile');
+  document.getElementById('sec-title').textContent = T('security');
+  document.getElementById('lbl-exp').textContent = T('exp');
+  document.getElementById('lbl-dept').textContent = T('dept');
+  document.getElementById('lbl-joined').textContent = T('joined');
+  document.getElementById('lbl-plan').textContent = T('plan');
+  document.getElementById('lbl-certs').textContent = T('myCerts');
+  document.getElementById('ent-title').textContent = T('enterprise');
+  document.getElementById('ent-desc').textContent = T('entDesc');
+  renderPricing();
+}
+
+// ════════════════════════════════════════════════════════════
+// STATE & DATA
+// ════════════════════════════════════════════════════════════
+const DEMO_USERS = [
+  {id:1,email:'supervisor@fraport.de',pw:'demo123',first:'Thomas',last:'Weber',role:'supervisor',company:'Fraport Ground Services',dept:'Ramp Operations',exp:7,plan:'Professional'},
+  {id:2,email:'ceo@menzies.com',pw:'demo123',first:'Sarah',last:'Mitchell',role:'ceo',company:'Menzies Aviation',dept:'Executive',exp:20,plan:'Enterprise'},
+  {id:3,email:'trainer@swissport.com',pw:'demo123',first:'Klaus',last:'Schneider',role:'trainer',company:'Swissport',dept:'Training',exp:12,plan:'Professional'},
+];
+
+const PROGRAMS = [
+  {code:'CBT-RA',level:'operational',modules:8,en:{title:'Ramp Agent Core',desc:'Complete ramp operations training including GSE, loading, pushback and emergency procedures.'},de:{title:'Ramp Agent Grundausbildung',desc:'Vollständige Rampenausbildung inkl. GSE, Laden, Pushback und Notfallverfahren.'}},
+  {code:'CBT-RS',level:'supervisory',modules:10,en:{title:'Ramp Supervisor Development',desc:'Leadership, controlling, staff analysis, briefing standards and IROPS management.'},de:{title:'Ramp Supervisor Entwicklung',desc:'Führung, Controlling, Mitarbeiteranalyse, Briefing-Standards und IROPS.'}},
+  {code:'CBT-DM',level:'management',modules:10,en:{title:'Duty Manager Program',desc:'Operational control, crisis decisions, KPI management and regulatory compliance.'},de:{title:'Duty Manager Programm',desc:'Betriebssteuerung, Krisenentscheidung, KPI-Management und Compliance.'}},
+  {code:'CBT-EX',level:'executive',modules:8,en:{title:'Executive Leadership',desc:'For CEOs and Directors: systemic risk, safety culture, strategic cost analysis.'},de:{title:'Executive Leadership',desc:'Für CEOs: Systemisches Risiko, Sicherheitskultur, strategische Kostenanalyse.'}},
+  {code:'CBT-SC',level:'management',modules:6,en:{title:'Security & Safety Compliance',desc:'ICAO/EASA compliance, airside authority, incident reporting and SMS fundamentals.'},de:{title:'Sicherheits-Compliance',desc:'ICAO/EASA-Compliance, Airside-Autorität, Vorfallsberichte und SMS.'}},
+  {code:'CBT-PR',level:'management',modules:6,en:{title:'PR & Brand Management',desc:'Corporate communication, crisis comms, social media strategy and brand management.'},de:{title:'PR & Markenmanagement',desc:'Unternehmenskommunikation, Krisenkommunikation, Social Media und Marke.'}},
+];
+
+const QUIZ_QUESTIONS = [
+  {id:1,topic:'Human Factors',en:{q:'When an error reaches the aircraft, this primarily indicates:',opts:['Individual agent negligence','Equipment failure','System and leadership failure — the system did not catch the error','Bad weather conditions'],correct:2,exp:'Error is a system output. When errors reach the aircraft, the system failed — not the individual.'},de:{q:'Wenn ein Fehler das Flugzeug erreicht, zeigt dies primär:',opts:['Individuelle Nachlässigkeit des Agenten','Geräteausfall','System- und Führungsversagen — das System hat den Fehler nicht abgefangen','Schlechtes Wetter'],correct:2,exp:'Fehler sind ein Systemergebnis. Wenn Fehler das Flugzeug erreichen, hat das System versagt.'}},
+  {id:2,topic:'Normalization of Deviation',en:{q:'Normalization of Deviation is best described as:',opts:['A sudden decision to violate procedure','A formal management-approved change','The gradual organizational process by which non-standard practices become accepted as normal','A temporary workaround during equipment shortage'],correct:2,exp:'Key: it is GRADUAL and ORGANIZATIONAL. This is what makes it dangerous — it develops slowly and disappears from awareness.'},de:{q:'Normalisierung von Abweichungen wird am besten beschrieben als:',opts:['Eine plötzliche Entscheidung Verfahren zu verletzen','Eine formal genehmigte Änderung','Der schrittweise organisatorische Prozess durch den nicht-standardmäßige Praktiken als normal akzeptiert werden','Ein temporärer Workaround'],correct:2,exp:'Entscheidend: sie ist SCHRITTWEISE und ORGANISATORISCH — das macht sie gefährlich.'}},
+  {id:3,topic:'Briefing Standards',en:{q:'The PRIMARY goal of a pre-shift briefing is:',opts:['Reading all delayed flights in detail','Distributing written materials','Creating shared situational awareness and alignment — not just information transfer','Conducting performance reviews'],correct:2,exp:'ALIGNMENT is the goal. Every agent must leave knowing what matters today and why. Silence is not understanding.'},de:{q:'Das PRIMÄRE Ziel eines Vor-Schicht-Briefings ist:',opts:['Alle Delays vorlesen','Schriftliche Materialien verteilen','Gemeinsames Situationsbewusstsein schaffen — nicht nur Informationsübertragung','Leistungsüberprüfungen durchführen'],correct:2,exp:'AUSRICHTUNG ist das Ziel. Jeder Agent muss wissen was heute wichtig ist. Stille ist kein Verständnis.'}},
+  {id:4,topic:'Leadership',en:{q:'The CLS Staff Capability Analysis assesses agents across which five dimensions?',opts:['Speed, accuracy, punctuality, sickness rate, complaints','Technical competence, communication quality, stress resilience, team orientation, leadership potential','Physical fitness, language skills, experience years, salary grade, attendance','Equipment proficiency, radio skill, loading speed, documentation, feedback'],correct:1,exp:'The 5 dimensions provide a holistic picture enabling optimal deployment and targeted development.'},de:{q:'Die CLS Mitarbeiteranalyse bewertet in welchen fünf Dimensionen?',opts:['Geschwindigkeit, Genauigkeit, Pünktlichkeit, Krankheitsrate, Beschwerden','Technische Kompetenz, Kommunikationsqualität, Stressresilienz, Teamorientierung, Führungspotenzial','Körperliche Fitness, Sprachkenntnisse, Erfahrungsjahre, Gehaltsstufe, Anwesenheit','Gerätebeherrschung, Funkfähigkeit, Ladegeschwindigkeit, Dokumentation, Feedback'],correct:1,exp:'Die 5 Dimensionen liefern ein ganzheitliches Bild für optimalen Einsatz und gezielte Entwicklung.'}},
+  {id:5,topic:'Cognitive Performance',en:{q:'Loss of Situational Awareness is MOST commonly triggered by:',opts:['Equipment malfunction','Overload, interruption, or fatigue — or a combination of all three','New airline procedures','Weather conditions'],correct:1,exp:'SA is lost when the cognitive system is overwhelmed (overload), the attention flow is broken (interruption), or capacity is reduced (fatigue).'},de:{q:'Verlust des Situationsbewusstseins wird AM HÄUFIGSTEN ausgelöst durch:',opts:['Geräteausfall','Überlastung, Unterbrechung oder Erschöpfung — oder eine Kombination','Neue Airline-Verfahren','Wetterbedingungen'],correct:1,exp:'SA geht verloren bei Überlastung, Unterbrechung oder Erschöpfung — alles davon ist im Rampenbetrieb endemisch.'}},
+];
+
+// Pricing data
+const PRICES = {
+  monthly:    {starter:29,  pro:79,   enterprise:'Custom'},
+  '6months':  {starter:24,  pro:65,   enterprise:'Custom'},
+  yearly:     {starter:19,  pro:59,   enterprise:'Custom'},
+  '2years':   {starter:15,  pro:49,   enterprise:'Custom'},
+};
+
+let currentDuration = 'monthly';
+
+const STATE = {
+  user: null,
+  enrollments: new Set(),
+  attempts: [],
+  certificates: [],
+  quizState: null,
+};
+
+// ════════════════════════════════════════════════════════════
+// AUTH
+// ════════════════════════════════════════════════════════════
+let authMode = 'login';
+
+function toggleMode(){
+  authMode = authMode==='login'?'register':'login';
+  const isReg = authMode==='register';
+  document.getElementById('auth-title').textContent = isReg?'Create account':'Sign in';
+  document.getElementById('auth-sub').textContent = isReg?'Use your company email':'Aviation Ground Operations · CBT Platform';
+  document.getElementById('reg-extra').style.display = isReg?'block':'none';
+  document.getElementById('auth-btn').textContent = isReg?'CREATE ACCOUNT':'SIGN IN';
+  document.getElementById('sw-text').textContent = isReg?'Already have an account? ':'No account? ';
+  document.getElementById('sw-link').textContent = isReg?'Sign in':'Create one';
+}
+
+function fillDemo(email,pw){
+  document.getElementById('auth-email').value=email;
+  document.getElementById('auth-pw').value=pw;
+}
+
+function handleAuth(){
+  const email = document.getElementById('auth-email').value.trim();
+  const pw = document.getElementById('auth-pw').value;
+  if(!email||!pw){showToast('Please fill in all fields','');return;}
+
+  if(authMode==='login'){
+    const demo = DEMO_USERS.find(u=>u.email===email&&u.pw===pw);
+    if(demo){ loginUser(demo); return; }
+    if(email.includes('@')&&!['gmail','yahoo','hotmail'].some(d=>email.includes(d))){
+      const u={id:Date.now(),email,first:email.split('@')[0],last:'',role:'ramp_agent',company:email.split('@')[1]?.split('.')[0]||'Company',dept:'Operations',exp:0,plan:'Starter'};
+      loginUser(u);
+    } else { showToast('Invalid credentials',''); }
+  } else {
+    const fn=document.getElementById('reg-fn').value.trim();
+    const ln=document.getElementById('reg-ln').value.trim();
+    const role=document.getElementById('reg-role').value;
+    const co=document.getElementById('reg-co').value.trim();
+    if(!fn||!co){showToast('Please fill all required fields','');return;}
+    if(['gmail','yahoo','hotmail'].some(d=>email.includes(d))){showToast('Please use your company email','');return;}
+    loginUser({id:Date.now(),email,first:fn,last:ln,role,company:co,dept:'Operations',exp:0,plan:'Starter'});
+  }
+}
+
+function loginUser(u){
+  STATE.user=u;
+  // Auto-enroll based on role
+  if(['ramp_agent','loading_master'].includes(u.role)) STATE.enrollments.add('CBT-RA');
+  if(['supervisor'].includes(u.role)){STATE.enrollments.add('CBT-RA');STATE.enrollments.add('CBT-RS');}
+  if(['ceo','director'].includes(u.role)) STATE.enrollments.add('CBT-EX');
+  document.getElementById('screen-login').classList.remove('active');
+  document.getElementById('screen-app').classList.add('active');
+  buildLangBtns();
+  showPage('dashboard');
+  showToast(`Welcome, ${u.first}!`,'green');
+}
+
+function logout(){
+  STATE.user=null;
+  document.getElementById('screen-app').classList.remove('active');
+  document.getElementById('screen-login').classList.add('active');
+  document.getElementById('screen-login').style.display='flex';
+}
+
+// ════════════════════════════════════════════════════════════
+// NAVIGATION
+// ════════════════════════════════════════════════════════════
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  const page=document.getElementById('page-'+id);
+  if(page) page.classList.add('active');
+  const tabs=document.querySelectorAll('.nav-tab');
+  const pages=['dashboard','programs','pricing','analytics','profile','security'];
+  const idx=pages.indexOf(id);
+  if(tabs[idx]) tabs[idx].classList.add('active');
+  renderPage(id);
+  window.scrollTo(0,0);
+}
+
+function renderPage(id){
+  const u=STATE.user;
+  if(!u) return;
+  if(id==='dashboard') renderDashboard();
+  else if(id==='programs') renderPrograms();
+  else if(id==='pricing') renderPricing();
+  else if(id==='analytics') renderAnalytics();
+  else if(id==='profile') renderProfile();
+  else if(id==='security') renderSecurity();
+  refreshText();
+}
+
+// ════════════════════════════════════════════════════════════
+// DASHBOARD
+// ════════════════════════════════════════════════════════════
+function renderDashboard(){
+  const u=STATE.user;
+  const passedCount=STATE.attempts.filter(a=>a.passed).length;
+  const scores=STATE.attempts.map(a=>a.score);
+  const avg=scores.length?Math.round(scores.reduce((s,v)=>s+v,0)/scores.length):null;
+  document.getElementById('dash-welcome').textContent=`${T('welcome')}, ${u.first}`;
+  document.getElementById('dash-sub').textContent=u.role.replace(/_/g,' ').toUpperCase()+' · '+u.company;
+  document.getElementById('s1').textContent=STATE.enrollments.size;
+  document.getElementById('s2').textContent=passedCount;
+  document.getElementById('s3').textContent=STATE.certificates.length;
+  document.getElementById('s4').textContent=avg!==null?avg+'%':'—';
+
+  const enrolled=PROGRAMS.filter(p=>STATE.enrollments.has(p.code));
+  document.getElementById('dash-progs').innerHTML=enrolled.length?enrolled.map(p=>progCard(p,true)).join(''):
+    `<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--muted);font-size:13px;">No programs enrolled yet. <a href="#" onclick="showPage('programs')" style="color:var(--blue);">Browse catalog →</a></div>`;
+}
+
+function progCard(p,enrolled){
+  const d=p[currentLang]||p.en;
+  const lvlMap={operational:'tag-op',supervisory:'tag-sup',management:'tag-mgmt',executive:'tag-exec'};
+  return `<div class="prog-card" onclick="showPage('programs')">
+    <span class="prog-tag ${lvlMap[p.level]||'tag-op'}">${p.level.toUpperCase()}</span>
+    <div class="prog-title">${d.title}</div>
+    <div class="prog-desc">${d.desc}</div>
+    <div class="prog-footer">
+      <div class="prog-mods">${p.modules} modules</div>
+      ${enrolled
+        ?`<button class="btn-enrolled" onclick="event.stopPropagation();startQuiz('${p.code}')">CONTINUE →</button>`
+        :`<button class="btn-enroll" onclick="event.stopPropagation();enroll('${p.code}')">ENROLL</button>`
+      }
+    </div>
+  </div>`;
+}
+
+// ════════════════════════════════════════════════════════════
+// PROGRAMS
+// ════════════════════════════════════════════════════════════
+function renderPrograms(){
+  const levels=['operational','supervisory','management','executive'];
+  const labels={operational:'OPERATIONAL',supervisory:'SUPERVISORY',management:'MANAGEMENT',executive:'EXECUTIVE'};
+  document.getElementById('prog-catalog').innerHTML=levels.map(lvl=>{
+    const progs=PROGRAMS.filter(p=>p.level===lvl);
+    return `<div style="margin-bottom:24px;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:2px;color:var(--muted);margin-bottom:10px;">${labels[lvl]}</div>
+      <div class="prog-grid">${progs.map(p=>progCard(p,STATE.enrollments.has(p.code))).join('')}</div>
+    </div>`;
+  }).join('');
+}
+
+function enroll(code){
+  STATE.enrollments.add(code);
+  showToast(currentLang==='de'?'Erfolgreich eingeschrieben!':'Enrolled successfully!','green');
+  renderPrograms();
+}
+
+// ════════════════════════════════════════════════════════════
+// QUIZ ENGINE
+// ════════════════════════════════════════════════════════════
+function startQuiz(progCode){
+  // Shuffle questions — different every time
+  const shuffled=shuffleArray([...QUIZ_QUESTIONS]).slice(0,5).map(q=>{
+    const lang=q[currentLang]||q.en;
+    const optIndices=shuffleArray([0,1,2,3].slice(0,lang.opts.length));
+    return {
+      ...q,
+      shuffled_opts:optIndices.map(i=>lang.opts[i]),
+      new_correct:optIndices.indexOf(lang.correct),
+      _q:lang.q,_exp:lang.exp,
+    };
+  });
+
+  STATE.quizState={
+    progCode,questions:shuffled,current:0,
+    answers:{},revealed:false,startTime:Date.now(),
+  };
+  showPage('quiz');
+  renderQuiz();
+}
+
+function shuffleArray(arr){
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+
+function renderQuiz(){
+  const qs=STATE.quizState;
+  const q=qs.questions[qs.current];
+  const total=qs.questions.length;
+  const pct=((qs.current+1)/total)*100;
+
+  document.getElementById('quiz-type-lbl').textContent='MODULE QUIZ';
+  document.getElementById('quiz-ctr').textContent=`${qs.current+1} / ${total}`;
+  document.getElementById('quiz-bar').style.width=pct+'%';
+  document.getElementById('quiz-topic').textContent=q.topic;
+  document.getElementById('quiz-q').textContent=q._q;
+
+  const letters=['A','B','C','D'];
+  document.getElementById('quiz-opts').innerHTML=q.shuffled_opts.map((opt,i)=>{
+    let cls='option';
+    if(qs.revealed){
+      if(i===q.new_correct) cls+=' correct';
+      else if(qs.answers[q.id]===i&&i!==q.new_correct) cls+=' wrong';
+      cls+=' revealed';
+    } else if(qs.answers[q.id]===i) cls+=' selected';
+    return `<div class="${cls}" onclick="selectOpt(${q.id},${i})">
+      <div class="opt-letter">${letters[i]}</div>
+      <div class="opt-text">${opt}</div>
+    </div>`;
+  }).join('');
+
+  const explEl=document.getElementById('quiz-expl');
+  if(qs.revealed){
+    explEl.style.display='block';
+    const correct=qs.answers[q.id]===q.new_correct;
+    document.getElementById('expl-lbl').textContent=correct?'✓ CORRECT':'✗ INCORRECT';
+    document.getElementById('expl-text').textContent=q._exp;
+  } else { explEl.style.display='none'; }
+
+  const actionBtn=document.getElementById('quiz-action');
+  if(!qs.revealed){
+    actionBtn.textContent='Submit';
+    actionBtn.disabled=qs.answers[q.id]===undefined;
+    actionBtn.onclick=revealAnswer;
+  } else {
+    const isLast=qs.current===total-1;
+    actionBtn.textContent=isLast?'Finish ✓':'Next →';
+    actionBtn.disabled=false;
+    actionBtn.onclick=isLast?finishQuiz:nextQuestion;
+  }
+  document.getElementById('quiz-back').textContent='← '+( currentLang==='de'?'Zurück':'Back');
+}
+
+function quizAction(){}
+function selectOpt(qId,idx){
+  if(STATE.quizState.revealed) return;
+  STATE.quizState.answers[qId]=idx;
+  renderQuiz();
+}
+function revealAnswer(){STATE.quizState.revealed=true;renderQuiz();}
+function nextQuestion(){STATE.quizState.current++;STATE.quizState.revealed=false;renderQuiz();}
+
+function finishQuiz(){
+  const qs=STATE.quizState;
+  let correct=0;
+  const review=qs.questions.map(q=>{
+    const userAns=qs.answers[q.id];
+    const isCorrect=userAns===q.new_correct;
+    if(isCorrect) correct++;
+    return {q:q._q,correct:isCorrect,correctOpt:q.shuffled_opts[q.new_correct],userOpt:userAns!==undefined?q.shuffled_opts[userAns]:'-'};
+  });
+
+  const score=Math.round((correct/qs.questions.length)*100);
+  const passed=score>=80;
+  const timeTaken=Math.round((Date.now()-qs.startTime)/1000);
+
+  STATE.attempts.push({progCode:qs.progCode,score,passed,date:new Date().toISOString()});
+
+  let certCode=null;
+  if(passed){
+    certCode=`CLS-${qs.progCode}-U${STATE.user.id}-${Date.now().toString(36).toUpperCase()}`;
+    STATE.certificates.push({code:certCode,progCode:qs.progCode,score,issued:new Date().toISOString()});
+  }
+
+  // Render results
+  const hero=document.getElementById('result-hero');
+  hero.className='result-hero '+(passed?'pass':'fail');
+  document.getElementById('res-score').textContent=score+'%';
+  document.getElementById('res-verdict').textContent=T(passed?'pass':'fail');
+  document.getElementById('res-sub').textContent=`${correct}/${qs.questions.length} correct · ${timeTaken}s`;
+  document.getElementById('res-cert').innerHTML=certCode?`<div class="cert-badge"><div class="cb-lbl">${T('certTitle')}</div><div class="cb-code">${certCode}</div></div>`:'';
+  document.getElementById('lbl-review').textContent=T('review');
+  document.getElementById('res-review').innerHTML=review.map(r=>`
+    <div style="border-left:4px solid ${r.correct?'var(--green)':'var(--red)'};padding:10px 14px;margin-bottom:8px;background:var(--stone);">
+      <div style="font-size:12px;font-weight:600;color:var(--ink);margin-bottom:4px;">${r.q}</div>
+      <div style="font-size:11px;color:${r.correct?'var(--green)':'var(--red)'};">${r.correct?'✓':'✗'} ${r.userOpt}</div>
+      ${!r.correct?`<div style="font-size:11px;color:var(--green);">✓ ${r.correctOpt}</div>`:''}
+    </div>`).join('');
+
+  showPage('results');
+  if(passed) showToast('🏆 '+(currentLang==='de'?'Zertifikat ausgestellt!':'Certificate issued!'),'green');
+}
+
+// ════════════════════════════════════════════════════════════
+// PRICING
+// ════════════════════════════════════════════════════════════
+function setDuration(d,btn){
+  currentDuration=d;
+  document.querySelectorAll('.dur-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderPricing();
+}
+
+function renderPricing(){
+  const p=PRICES[currentDuration];
+  const plans=[
+    {name:'Starter',price:p.starter,badge:null,features:['1 CBT Program','5 Modules','Basic Certificate','Email Support'],color:'var(--ink)'},
+    {name:'Professional',price:p.pro,badge:'MOST POPULAR',features:['All 14 Programs','Unlimited Modules','Premium Certificates','Analytics Dashboard','Priority Support','EN/DE/FR/ES'],color:'var(--blue)',featured:true},
+    {name:'Enterprise',price:p.enterprise,badge:null,features:['Unlimited Users','Custom Programs','Company Analytics','Legal Compliance Reports','Dedicated Manager','All 6 Languages','White-label Option'],color:'var(--gold)'},
+  ];
+  document.getElementById('pricing-cards').innerHTML=plans.map(plan=>`
+    <div class="price-card ${plan.featured?'featured':''}">
+      ${plan.badge?`<div class="price-badge">${plan.badge}</div>`:''}
+      <div class="price-name">${plan.name}</div>
+      <div class="price-amount" style="color:${plan.color};">${typeof plan.price==='number'?'€'+plan.price:'Custom'}</div>
+      <div class="price-period">${typeof plan.price==='number'?'/user/month':' — contact us'}</div>
+      <ul class="price-features">${plan.features.map(f=>`<li>${f}</li>`).join('')}</ul>
+      <button class="btn-price" onclick="showToast('${plan.name} plan selected! Redirecting to payment...','green')">${plan.name==='Enterprise'?'CONTACT US':'GET STARTED'}</button>
+    </div>`).join('');
+}
+
+// ════════════════════════════════════════════════════════════
+// ANALYTICS
+// ════════════════════════════════════════════════════════════
+function renderAnalytics(){
+  const attempts=STATE.attempts;
+  const maxH=120;
+  document.getElementById('score-chart').innerHTML=attempts.length?attempts.slice(-8).map(a=>{
+    const h=Math.max(4,Math.round((a.score/100)*maxH));
+    const col=a.score>=80?'var(--green)':a.score>=60?'var(--orange)':'var(--red)';
+    return `<div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;">
+      <div style="font-size:9px;font-weight:700;color:${col};">${a.score}%</div>
+      <div style="width:100%;height:${h}px;background:${col};"></div>
+      <div style="font-size:8px;color:var(--muted);">${a.progCode.replace('CBT-','')}</div>
+    </div>`}).join(''):
+    `<div style="color:var(--muted);font-size:13px;padding:20px;">No attempts yet</div>`;
+
+  document.getElementById('def-chart').innerHTML='<div style="color:var(--muted);font-size:12px;">Complete quizzes to see deficiency analysis</div>';
+
+  document.getElementById('ana-cert-list').innerHTML=STATE.certificates.length?STATE.certificates.map(c=>`
+    <div style="background:var(--stone);padding:10px 12px;border:1px solid var(--border);margin-bottom:6px;">
+      <div style="font-size:12px;font-weight:700;color:var(--ink);">${c.progCode} — ${c.score}%</div>
+      <div style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;">${c.code}</div>
+    </div>`).join(''):'<div style="color:var(--muted);font-size:12px;">No certificates yet</div>';
+
+  document.getElementById('ana-recent').innerHTML=attempts.slice(-5).reverse().map(a=>`
+    <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px;">
+      <span>${a.progCode}</span>
+      <span style="font-weight:700;color:${a.passed?'var(--green)':'var(--red)'};">${a.score}%</span>
+    </div>`).join('')||'<div style="color:var(--muted);font-size:12px;">No attempts yet</div>';
+}
+
+// ════════════════════════════════════════════════════════════
+// PROFILE
+// ════════════════════════════════════════════════════════════
+function renderProfile(){
+  const u=STATE.user;
+  document.getElementById('prof-av').textContent=(u.first[0]||'')+(u.last?.[0]||'');
+  document.getElementById('prof-name').textContent=u.first+' '+(u.last||'');
+  document.getElementById('prof-role').textContent=u.role.replace(/_/g,' ').toUpperCase();
+  document.getElementById('prof-co').textContent=u.company;
+  document.getElementById('prof-exp').textContent=(u.exp||0)+' years';
+  document.getElementById('prof-dept').textContent=u.dept||'—';
+  document.getElementById('prof-joined').textContent=new Date().toLocaleDateString();
+  document.getElementById('prof-plan').textContent=u.plan||'Starter';
+  document.getElementById('prof-certs').innerHTML=STATE.certificates.length?STATE.certificates.map(c=>`
+    <div class="cert-item">
+      <div><div class="ci-title">${c.progCode}</div><div class="ci-code">${c.code}</div></div>
+      <div class="ci-score">${c.score}%</div>
+    </div>`).join(''):
+    `<div style="color:var(--muted);font-size:12px;padding:16px;">Complete module tests to earn certificates.</div>`;
+}
+
+// ════════════════════════════════════════════════════════════
+// SECURITY
+// ════════════════════════════════════════════════════════════
+function renderSecurity(){
+  const daysLeft=47;
+  document.getElementById('pwd-days').textContent=daysLeft;
+  if(daysLeft<14){
+    document.getElementById('pwd-timer').style.background='var(--red)';
+  }
+  document.getElementById('login-log').innerHTML=[
+    {time:'Today 09:14',device:'Samsung Galaxy A54',location:'Vienna, AT',status:'ok'},
+    {time:'Yesterday 18:32',device:'Samsung Galaxy A54',location:'Vienna, AT',status:'ok'},
+    {time:'Mar 27, 14:11',device:'Samsung Galaxy A54',location:'Vienna, AT',status:'ok'},
+  ].map(l=>`
+    <div style="display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border);font-size:12px;flex-wrap:wrap;gap:4px;">
+      <span style="font-family:'DM Mono',monospace;color:var(--muted);">${l.time}</span>
+      <span style="color:var(--ink);">${l.device}</span>
+      <span style="color:var(--muted);">${l.location}</span>
+      <span style="color:var(--green);font-weight:700;">✓ ${l.status.toUpperCase()}</span>
+    </div>`).join('');
+}
+
+// ════════════════════════════════════════════════════════════
+// TOAST
+// ════════════════════════════════════════════════════════════
+function showToast(msg,type=''){
+  const t=document.getElementById('toast');
+  t.textContent=msg;
+  t.className='toast show'+(type?' '+type:'');
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+// ════════════════════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════════════════════
+buildLangBtns();
+renderPricing();
+</script>
+</body>
+</html>
