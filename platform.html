@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CLS Platform — Clear Leadership Systems</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;700;900&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://unpkg.com/recharts@2.12.7/umd/Recharts.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#080F1E;color:#DCE9FF;font-family:'DM Sans',system-ui,sans-serif;}
+#root{min-height:100vh;}
+</style>
+</head>
+<body>
+<div id="root"><div style="display:flex;align-items:center;justify-content:center;height:100vh;flex-direction:column;gap:16px;"><div style="font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:900;letter-spacing:4px;color:#3BB5F0;">CLS SYSTEMS</div><div style="color:#6A8FC0;font-size:14px;">Plattform wird geladen...</div></div></div>
+
+<script type="text/babel">
+const{useState,useEffect,useCallback,useRef}=React;
+const{BarChart,Bar,LineChart,Line,PieChart,Pie,Cell,XAxis,YAxis,CartesianGrid,Tooltip,ResponsiveContainer}=Recharts;
+
+// ─── DATA ────────────────────────────────────────────────────────────────────
+const MODS=[
+  {id:1,code:"GHO-01",icon:"✈",cat:"Safety",dur:"4h",title:"Vorfeldsicherheit",titleEN:"Ramp Safety",desc:"Sicherheitsregeln, Mindestabstände, PPE, Notfallprozeduren, De-icing, Pushback Safety."},
+  {id:2,code:"GHO-02",icon:"⚠",cat:"Compliance",dur:"6h",title:"Gefahrgut Grundlagen",titleEN:"Dangerous Goods",desc:"IATA DGR Klassen 1–9, Shipper's Declaration, NOTOC, CAO, Lithium-Batterien."},
+  {id:3,code:"GHO-03",icon:"👤",cat:"Service",dur:"3h",title:"Passagierbehandlung",titleEN:"Passenger Handling",desc:"Check-in, Boarding, PRM, UM, MAAS, Turnaround-Sequenz, Notfälle an Bord."},
+  {id:4,code:"GHO-04",icon:"🚐",cat:"Operations",dur:"5h",title:"Fahrzeugbetrieb Vorfeld",titleEN:"Airside Vehicle Ops",desc:"Vorfahrtsregeln, Geschwindigkeitslimits, Towbar/Towbarless, Hot Brakes."},
+  {id:5,code:"GHO-05",icon:"🔒",cat:"Security",dur:"2h",title:"Luftsicherheit",titleEN:"Security Awareness",desc:"SAFA, Security Restricted Areas, unbeaufsichtigte Gegenstände, Sterile Cockpit."},
+  {id:6,code:"GHO-06",icon:"📊",cat:"Management",dur:"8h",title:"SMS & Qualitätsmanagement",titleEN:"SMS & Quality Mgmt",desc:"Safety Management System, 4 ICAO SMS Säulen, Just Culture, Hazard Reports."},
+];
+
+const QS=[
+  {id:1,mod:1,top:"safety",dif:1,q:"Welcher Mindestabstand gilt zu laufenden Triebwerken?",o:["15m","25m","50m","10m"],c:1,e:"25m Mindestabstand schützt vor Sog und Blasstrahl."},
+  {id:2,mod:1,top:"safety",dif:1,q:"Was bedeutet FOD?",o:["Foreign Object Debris","Flight Order Duty","Fuel Output Data","Field Object Damage"],c:0,e:"FOD = Foreign Object Debris — Fremdkörper auf dem Vorfeld."},
+  {id:3,mod:1,top:"emergency",dif:2,q:"Erster Schritt bei einer Notfallmeldung auf dem Vorfeld?",o:["Fahrzeug absichern","Funkruf absetzen","Hilfe holen","Person betreuen"],c:1,e:"Funkruf alarmiert alle Stellen gleichzeitig — immer zuerst."},
+  {id:4,mod:1,top:"safety",dif:2,q:"Wie oft muss der FOD-Check mindestens durchgeführt werden?",o:["Einmal täglich","Vor jeder Turnaround-Abfertigung","Wöchentlich","Nur nach Unfällen"],c:1,e:"FOD-Check vor jeder Turnaround-Abfertigung ist Pflicht."},
+  {id:5,mod:1,top:"safety",dif:3,q:"Was ist die Wing-Tip-Zone?",o:["Bereich hinter der Tragfläche","Schutzzone min. 3m um die Flügelspitze","Zone für Betankungsfahrzeuge","Bereich unter dem Flügel"],c:1,e:"Wing-Tip-Zone: Schutzzone min. 3m um jede Flügelspitze."},
+  {id:6,mod:1,top:"pushback",dif:2,q:"Was ist beim Pushback obligatorisch?",o:["Nur Spiegel nutzen","Headset-Verbindung zum Cockpit","Passagiere müssen aussteigen","Treibstoff zuerst"],c:1,e:"Headset-Verbindung Pilot–Pushback-Fahrer ist Sicherheitspflicht."},
+  {id:7,mod:1,top:"deicing",dif:3,q:"Was ist der Unterschied zwischen De-icing und Anti-icing?",o:["Kein Unterschied","De-icing entfernt Eis — Anti-icing verhindert Neubildung","Anti-icing entfernt Eis","Nur De-icing ist vorgeschrieben"],c:1,e:"De-icing: Eisentfernung (Typ I/II). Anti-icing: Schutzschicht (Typ III/IV)."},
+  {id:8,mod:2,top:"dg",dif:1,q:"Pflichtdokument für Gefahrgut per Luftfracht?",o:["Frachtbrief","Shipper's Declaration","Packliste","Zollerklärung"],c:1,e:"Shipper's Declaration gemäß IATA DGR zwingend vorgeschrieben."},
+  {id:9,mod:2,top:"dg",dif:2,q:"IATA DGR Klasse für Lithium-Batterien?",o:["Klasse 3","Klasse 9","Klasse 8","Klasse 2.1"],c:1,e:"Lithium-Batterien: IATA Klasse 9 (Sonstige gefährliche Güter)."},
+  {id:10,mod:2,top:"dg",dif:1,q:"Was bedeutet NOTOC?",o:["Notification of Transfer of Cargo","Notification to Captain — DG an Bord","No Transport of Cargo","Normal Operations Certificate"],c:1,e:"NOTOC = Notification to Captain — Pilot muss über Gefahrgut informiert werden."},
+  {id:11,mod:2,top:"dg",dif:2,q:"Wie lange ist ein DG Acceptance Certificate gültig?",o:["72 Stunden","24 Stunden","7 Tage","Unbegrenzt"],c:1,e:"DG Acceptance Certificate ist 24 Stunden gültig."},
+  {id:12,mod:2,top:"dg",dif:2,q:"Was bedeutet CAO auf einem Gefahrgut-Etikett?",o:["Cargo Acceptance Order","Cargo Aircraft Only — nur Frachtflugzeuge","Custom Airport Ops","Certified Air Ops"],c:1,e:"CAO = Cargo Aircraft Only — Transport auf Passagierflugzeugen verboten."},
+  {id:13,mod:3,top:"pax",dif:1,q:"Was ist ein PRM?",o:["Premium Rate Member","Passenger with Reduced Mobility","Priority Ramp Manager","Personal Record Mgmt"],c:1,e:"PRM = Passenger with Reduced Mobility."},
+  {id:14,mod:3,top:"pax",dif:1,q:"Was bedeutet MAAS?",o:["Manual Aircraft Assignment","Meet And Assist Service","Medical Assistance Air","Maximum Aircraft Seats"],c:1,e:"MAAS = Meet And Assist Service — Begleitservice für hilfsbedürftige Passagiere."},
+  {id:15,mod:3,top:"pax",dif:2,q:"Was ist die korrekte Turnaround-Sequenz?",o:["Treibstoff→Entladen→Pax→Boarding","Pax aus→Gepäck→Reinigung→Catering→Treibstoff→Boarding","Boarding→Treibstoff→Catering","Reinigung→Boarding→Treibstoff"],c:1,e:"Korrekt: Pax aus → Gepäck → Reinigung → Catering → Treibstoff → Boarding."},
+  {id:16,mod:3,top:"pax",dif:2,q:"Was bedeutet UM?",o:["Upgrade Member","Unaccompanied Minor","Urgent Movement","Under Management"],c:1,e:"UM = Unaccompanied Minor — Kind unter 14 das alleine reist."},
+  {id:17,mod:4,top:"vehicles",dif:1,q:"Maximale Geschwindigkeit auf dem Vorfeld?",o:["50 km/h","25 km/h","15 km/h","30 km/h"],c:1,e:"25 km/h ist die typische Vorfeld-Höchstgeschwindigkeit."},
+  {id:18,mod:4,top:"vehicles",dif:2,q:"Was sind 'Hot Brakes'?",o:["Warme Bremsen","Kritisch überhitzte Bremsen — Brand- und Explosionsgefahr","Hochleistungsbremsen","Getestete Bremsen"],c:1,e:"Hot Brakes: überhitzte Bremsen — Evakuierung und keine Fahrzeugbewegung."},
+  {id:19,mod:4,top:"vehicles",dif:3,q:"Was muss ein Fahrer vor dem Überqueren einer Runway tun?",o:["Überqueren wenn keine Flugzeuge sichtbar","ATC kontaktieren und Freigabe abwarten","Schnell zwischen Flugzeugbewegungen","Anderen Fahrzeugen folgen"],c:1,e:"Runway-Überquerung erfordert explizite ATC-Freigabe — keine Ausnahmen."},
+  {id:20,mod:5,top:"security",dif:1,q:"Was ist SAFA?",o:["Safety Aviation Fleet Assessment","Safety Assessment of Foreign Aircraft — EASA","Security Authority For Airports","Standard Fuel Allocation"],c:1,e:"SAFA = Safety Assessment of Foreign Aircraft — EASA Rampenkontrollprogramm."},
+  {id:21,mod:5,top:"security",dif:2,q:"Unbeaufsichtigter Gegenstand auf dem Vorfeld. Was tun?",o:["Zu Lost & Found bringen","Sicherheit sofort alarmieren — nicht anfassen","Öffnen um Besitzer zu finden","Später melden"],c:1,e:"Unbeaufsichtigte Gegenstände nie anfassen — sofort Sicherheit alarmieren."},
+  {id:22,mod:5,top:"security",dif:2,q:"Kann man airside ohne ID-Ausweis arbeiten?",o:["Ja mit Supervisor","Ja wenn man bekannt ist","Nein — Ausweis muss immer sichtbar getragen werden","Ja vorübergehend"],c:2,e:"Gültiger Ausweis muss IMMER sichtbar getragen werden — keine Ausnahmen."},
+  {id:23,mod:6,top:"sms",dif:1,q:"Was bedeutet SMS im Luftfahrtkontext?",o:["Safety Management System","Service Management Standard","Security Monitoring","Staff Management"],c:0,e:"SMS = Safety Management System — systematischer Sicherheitssteuerungsansatz."},
+  {id:24,mod:6,top:"sms",dif:2,q:"Die 4 Säulen des ICAO SMS?",o:["Plan, Do, Check, Act","Safety Policy · Risk Mgmt · Safety Assurance · Safety Promotion","Identify · Assess · Mitigate · Monitor","Report · Analyse · Improve · Train"],c:1,e:"ICAO SMS: Safety Policy, Risk Management, Safety Assurance, Safety Promotion."},
+  {id:25,mod:6,top:"sms",dif:2,q:"Was ist Just Culture?",o:["Null Toleranz bei Fehlern","Fehler melden ohne Strafangst (außer grober Vorsatz)","Sicherheitskultur für Piloten","Schweizer Qualitätsstandard"],c:1,e:"Just Culture: offene Fehlerkultur fördert Sicherheit durch freies Melden."},
+  {id:26,mod:6,top:"sms",dif:2,q:"Was ist ein Hazard Report?",o:["Unfallbericht","Proaktive Meldung einer potenziellen Gefahr vor dem Zwischenfall","Qualitäts-Audit","Regelmäßiger Sicherheitsbericht"],c:1,e:"Hazard Report: proaktive Gefahrenmeldung BEVOR ein Vorfall passiert."},
+  {id:27,mod:6,top:"sms",dif:3,q:"Was ist 'Normalization of Deviance'?",o:["Regelkonforme Prozeduren","Schrittweise Akzeptanz von Abweichungen als normal — Hauptunfallursache","Training für Abweichungen","Normalisierende Unfalluntersuchung"],c:1,e:"Normalization of Deviance: wiederholte Abweichungen ohne Konsequenzen führen zur Akzeptanz als normal."},
+  {id:28,mod:1,top:"safety",dif:2,q:"Warum muss vor dem Tanken geerdet/gebondet werden?",o:["Für Kraftstoffqualitätsprüfung","Statische Entladung verhindert Kraftstoffvapor-Entzündung","Für Druckangleich","Pflicht nur bei großen Flugzeugen"],c:1,e:"Bonding gleicht statisches Potential an — verhindert Funken die Kraftstoffvapor entzünden könnten."},
+  {id:29,mod:2,top:"dg",dif:1,q:"DGR Klasse 1 umfasst welche Gefahr?",o:["Entzündbare Flüssigkeiten","Explosivstoffe","Radioaktive Stoffe","Toxische Gase"],c:1,e:"IATA DGR Klasse 1 = Explosivstoffe (inkl. Munition, Feuerwerkskörper)."},
+  {id:30,mod:3,top:"pax",dif:3,q:"Ein Passagier scheint betrunken und aggressiv am Gate. Was tun?",o:["Einsteigen lassen und beobachten","Boarding verweigern und Sicherheit/Airline informieren","Ignorieren","Kabinencrew managen lassen"],c:1,e:"Betrunkene/aggressive Passagiere müssen abgewiesen werden — Sicherheitspflicht."},
+];
+
+const SUBS=[
+  {key:"monthly",months:1,price:29,noticeDays:0,cancel:"Jederzeit kündbar",hi:false},
+  {key:"quarterly",months:3,price:25,noticeDays:0,cancel:"Jederzeit kündbar",hi:false},
+  {key:"semiannual",months:6,price:22,noticeDays:30,cancel:"1 Mon. Kündigungsfrist",hi:true},
+  {key:"annual",months:12,price:19,noticeDays:30,cancel:"1 Mon. Kündigungsfrist",hi:false},
+  {key:"biannual",months:24,price:16,noticeDays:90,cancel:"3 Mon. Kündigungsfrist",hi:false},
+  {key:"fiveYear",months:60,price:13,noticeDays:90,cancel:"3 Mon. Kündigungsfrist",hi:false},
+];
+const SUB_NAMES={monthly:"Monatlich",quarterly:"3 Monate",semiannual:"6 Monate",annual:"Jährlich",biannual:"2 Jahre",fiveYear:"5 Jahre"};
+
+const SCENARIOS=[
+  {id:1,icon:"✈",title:"Triebwerk läuft noch",
+   steps:[
+    {sit:"Triebwerk läuft beim Anrollen. Passagiere wollen aussteigen.",
+     opts:["Sofort zur Tür gehen","Warten bis alle Triebwerke aus sind"],c:1,
+     res:["GEFAHR! Sog kann tödlich sein.","Richtig! Immer auf Engine-Shutdown warten."]},
+    {sit:"Triebwerke aus. Was kommt zuerst?",
+     opts:["Treppe sofort anlegen","Zuerst Radbremsklötze setzen (Chocks)"],c:1,
+     res:["Fehler! Chocks müssen zuerst gesetzt werden.","Richtig! Chocks First — immer."]},
+  ]},
+  {id:2,icon:"⚠",title:"Gefahrgut Entdeckung",
+   steps:[
+    {sit:"Paket mit DG-Etikett, aber kein DGR-Dokument.",
+     opts:["Trotzdem einladen","Stopp — Supervisor informieren"],c:1,
+     res:["SCHWERER VERSTOSS! Gefahrgut ohne Dokument = strafbar.","Richtig! Kein DGR-Dokument = kein Laden."]},
+    {sit:"Flüssigkeit läuft aus einem Paket.",
+     opts:["Aufwischen und weitermachen","Bereich sperren — Notfallprotokoll"],c:1,
+     res:["GEFAHR! Unbekannte Chemikalien können toxisch sein.","Richtig! Unbekannte Flüssigkeit = Emergency Protocol."]},
+  ]},
+];
+
+const DEMO_USERS=[
+  {email:"max@airline.com",password:"Test1234",type:"standard",name:"Max Mustermann",company:"Flughafen Wien AG",role:"Ramp Agent Senior"},
+  {email:"ceo@airline.com",password:"Ceo12345",type:"ceo",name:"Dr. Andrea Gruber",company:"Flughafen Wien AG",role:"CEO"},
+];
+
+const REV=[{m:"Jan",v:4200},{m:"Feb",v:5800},{m:"Mär",v:5200},{m:"Apr",v:7100},{m:"Mai",v:6400},{m:"Jun",v:8900},{m:"Jul",v:9200},{m:"Aug",v:8100},{m:"Sep",v:11400},{m:"Okt",v:10200},{m:"Nov",v:12800},{m:"Dez",v:14600}];
+const PIE=[{name:"Ramp Safety",value:28,color:"#3BB5F0"},{name:"DG",value:22,color:"#F0A03B"},{name:"Passenger",value:18,color:"#36B37E"},{name:"Vehicles",value:15,color:"#9B59B6"},{name:"Security",value:10,color:"#E53935"},{name:"SMS",value:7,color:"#F06292"}];
+
+// ─── UTILS ───────────────────────────────────────────────────────────────────
+const fmtCard=v=>v.replace(/\D/g,"").slice(0,16).replace(/(.{4})/g,"$1 ").trim();
+const fmtExp=v=>{const d=v.replace(/\D/g,"").slice(0,4);return d.length>2?d.slice(0,2)+"/"+d.slice(2):d;};
+const luhn=n=>{const d=n.replace(/\s/g,"");let s=0,a=false;for(let i=d.length-1;i>=0;i--){let x=+d[i];if(a){x*=2;if(x>9)x-=9;}s+=x;a=!a;}return s%10===0&&d.length>=13;};
+const detectCard=n=>{const d=n.replace(/\s/g,"");if(/^4/.test(d))return{t:"VISA",c:"#1A1F71"};if(/^5[1-5]/.test(d))return{t:"MC",c:"#EB001B"};if(/^3[47]/.test(d))return{t:"AMEX",c:"#2E77BC"};return{t:"",c:"#555"};};
+const addMonths=(d,m)=>{const r=new Date(d);r.setMonth(r.getMonth()+m);return r;};
+const addDays=(d,n)=>{const r=new Date(d);r.setDate(r.getDate()+n);return r;};
+const fmtDate=d=>new Date(d).toLocaleDateString("de-AT");
+const genId=()=>Math.random().toString(36).slice(2,10).toUpperCase();
+
+const callAI=async msgs=>{
+  try{
+    const res=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1000,
+        system:"Du bist ein Experte für Aviation Ground Handling Training (CLS). Beantworte Fragen zu Rampensicherheit, Gefahrgut, Passagierhandling und SMS. Antworte in der Sprache des Users. Sei präzise und beziehe dich auf IATA, ICAO und EASA Standards.",
+        messages:msgs})});
+    const d=await res.json();
+    return d.content?.map(b=>b.text||"").join("")||"Fehler.";
+  }catch{return"Verbindungsfehler.";}
+};
+
+// ─── APP ─────────────────────────────────────────────────────────────────────
+function App(){
+  const[view,setView]=useState("landing");
+  const[utype,setUtype]=useState(null);
+  const[user,setUser]=useState(null);
+  const[users,setUsers]=useState(DEMO_USERS);
+  const[activeMod,setActiveMod]=useState(null);
+  const[selSub,setSelSub]=useState(null);
+  const[subs,setSubs]=useState([]);
+  const[mem,setMem]=useState({});
+  const[qstate,setQstate]=useState({idx:0,ans:null});
+  const[examState,setExamState]=useState(null);
+  const[simState,setSimState]=useState({sc:0,st:0,dec:null,score:0,done:false});
+  const[helpCat,setHelpCat]=useState(null);
+  const[certMod,setCertMod]=useState(null);
+  const[cancelTarget,setCancelTarget]=useState(null);
+  const[lf,setLf]=useState({email:"",pw:"",sec:""});
+  const[lErr,setLErr]=useState("");
+  const[rf,setRf]=useState({name:"",email:"",company:"",role:"",pw:"",pw2:""});
+  const[rErr,setRErr]=useState("");
+  const[card,setCard]=useState({n:"",h:"",e:"",v:"",coup:""});
+  const[cErr,setCErr]=useState("");
+  const[payMeth,setPayMeth]=useState("card");
+  const[paying,setPaying]=useState(false);
+  const[paid,setPaid]=useState(false);
+  const[aiMsgs,setAiMsgs]=useState([{r:"a",t:"Willkommen beim CLS AI Aviation Trainer! Stell mir eine Frage."}]);
+  const[aiIn,setAiIn]=useState("");
+  const[aiLoad,setAiLoad]=useState(false);
+
+  const nav=useCallback(v=>setView(v),[]);
+  const isCEO=utype==="ceo";
+
+  const userSubs=subs.filter(s=>s.uid===user?.email);
+  const activeSubs=userSubs.filter(s=>s.status==="active"&&new Date(s.effEnd)>new Date());
+  const isUnlocked=mid=>activeSubs.some(s=>s.mid===mid);
+  const getProgress=mid=>{
+    const h=mem[user?.email]?.h||[];
+    const modQs=QS.filter(q=>q.mod===mid);
+    if(!modQs.length)return 0;
+    return Math.min(100,Math.round(h.filter(x=>modQs.find(q=>q.id===x.id)&&x.ok).length/modQs.length*100));
+  };
+  const getWeak=()=>{
+    const h=mem[user?.email]?.h||[];
+    return[...new Set(h.filter(x=>!x.ok).map(x=>QS.find(q=>q.id===x.id)?.top).filter(Boolean))];
+  };
+  const recordAns=(qid,ok)=>{
+    const uid=user?.email;if(!uid)return;
+    setMem(p=>({...p,[uid]:{h:[...(p[uid]?.h||[]),{id:qid,ok,ts:Date.now()}]}}));
+  };
+
+  const th=isCEO
+    ?{bg:"#F4F4F4",sur:"#FFF",bdr:"#E0E0E0",txt:"#181818",sub:"#777",ac:"#CC1111",acfg:"#FFF",acl:"#FFF0F0",hbg:"#CC1111",logo:"#FFF",ibg:"#FFF",ibdr:"#CCC"}
+    :{bg:"#080F1E",sur:"#0C1A32",bdr:"#1A3260",txt:"#DCE9FF",sub:"#6A8FC0",ac:"#3BB5F0",acfg:"#020B1A",acl:"#091D3A",hbg:"#040C1A",logo:"#3BB5F0",ibg:"#091D3A",ibdr:"#1A3260"};
+
+  const S={
+    app:{minHeight:"100vh",background:th.bg,color:th.txt,fontFamily:"'DM Sans',system-ui,sans-serif"},
+    pg:{maxWidth:940,margin:"0 auto",padding:"20px 14px"},
+    cd:{background:th.sur,border:`1px solid ${th.bdr}`,borderRadius:12,padding:18},
+    btn:(c=th.ac)=>({background:c,color:c===th.ac?th.acfg:"#FFF",border:"none",borderRadius:8,padding:"10px 18px",fontWeight:700,cursor:"pointer",fontSize:13}),
+    gh:{background:"transparent",color:th.ac,border:`1.5px solid ${th.ac}`,borderRadius:8,padding:"9px 15px",fontWeight:600,cursor:"pointer",fontSize:13},
+    inp:{width:"100%",background:th.ibg,border:`1.5px solid ${th.ibdr}`,borderRadius:9,padding:"12px 14px",color:th.txt,fontSize:14,outline:"none",boxSizing:"border-box",fontFamily:"inherit"},
+    lbl:{color:th.sub,fontSize:10,fontWeight:800,letterSpacing:1.5,marginBottom:5,display:"block"},
+    H2:{fontFamily:"'Barlow Condensed',sans-serif",fontWeight:900,letterSpacing:1.5,fontSize:"clamp(18px,3vw,26px)",marginBottom:16},
+    lkb:(a)=>({background:a?th.ac:"transparent",color:a?th.acfg:th.sub,border:`1px solid ${a?th.ac:th.bdr}`,borderRadius:5,padding:"3px 9px",cursor:"pointer",fontSize:10,fontWeight:700}),
+    tab:(a)=>({background:a?th.ac:"transparent",color:a?th.acfg:th.sub,border:`1px solid ${a?th.ac:th.bdr}`,borderRadius:8,padding:"10px 12px",cursor:"pointer",fontSize:11,fontWeight:a?700:500,display:"flex",alignItems:"center",gap:5,whiteSpace:"nowrap"}),
+  };
+
+  const NAV=[
+    {icon:"📚",l:"Module",v:"dash"},
+    {icon:"🧠",l:"Quiz",v:"quiz"},
+    {icon:"📝",l:"Prüfung",v:"exam-sel"},
+    {icon:"⚡",l:"Simulation",v:"sim"},
+    {icon:"🤖",l:"AI Trainer",v:"ai"},
+    {icon:"🛟",l:"Hilfe",v:"help"},
+    {icon:"👤",l:"Profil",v:"profile"},
+    ...(isCEO?[{icon:"📊",l:"Analytics",v:"analytics"}]:[]),
+  ];
+
+  const Hdr=({showNav=true})=>(
+    <div style={{position:"sticky",top:0,zIndex:200,boxShadow:"0 2px 14px rgba(0,0,0,.28)"}}>
+      <div style={{background:th.hbg,padding:"0 16px",height:50,display:"flex",alignItems:"center",justifyContent:"space-between",borderBottom:"1px solid rgba(255,255,255,.07)"}}>
+        <span style={{color:th.logo,fontFamily:"'Barlow Condensed',sans-serif",fontWeight:900,fontSize:21,letterSpacing:3,cursor:"pointer"}} onClick={()=>nav(user?"dash":"landing")}>
+          CLS<span style={{opacity:.5,fontSize:9,fontWeight:400,letterSpacing:3,marginLeft:6}}>SYSTEMS</span>
+        </span>
+        <div style={{display:"flex",gap:5}}>
+          {user&&<button onClick={()=>{setUser(null);setUtype(null);nav("landing");}} style={{background:"transparent",border:`1px solid ${th.bdr}`,borderRadius:6,color:th.sub,padding:"4px 10px",cursor:"pointer",fontSize:11,fontWeight:600}}>↩ Abmelden</button>}
+        </div>
+      </div>
+      {showNav&&user&&(
+        <div style={{background:isCEO?"#EBEBEB":th.sur,borderBottom:`2px solid ${th.bdr}`,display:"flex",overflowX:"auto",padding:"0 4px"}}>
+          {NAV.map(item=>{
+            const act=view===item.v||(item.v==="dash"&&(view==="mod-detail"||view==="checkout"));
+            return React.createElement("button",{key:item.v,onClick:()=>nav(item.v),style:{...S.tab(act)}},
+              React.createElement("span",{style:{fontSize:13}},item.icon),item.l);
+          })}
+        </div>
+      )}
+    </div>
+  );
+
+  // LANDING
+  if(view==="landing")return(
+    <div style={{...S.app,background:"#080F1E"}}>
+      <Hdr showNav={false}/>
+      <div style={{display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",minHeight:"calc(100vh - 50px)",padding:"28px 16px",background:"radial-gradient(ellipse at 50% 10%,#0d233f,#080F1E 65%)"}}>
+        <div style={{textAlign:"center",marginBottom:40}}>
+          <div style={{fontFamily:"'Barlow Condensed',sans-serif",fontWeight:900,letterSpacing:5,fontSize:"clamp(36px,9vw,76px)",lineHeight:.92,color:"#3BB5F0",marginBottom:10}}>CLEAR LEADERSHIP</div>
+          <div style={{fontFamily:"'Barlow Condensed',sans-serif",fontWeight:300,letterSpacing:12,fontSize:"clamp(12px,2.5vw,19px)",color:"#2A5A80",marginBottom:12}}>SYSTEMS</div>
+          <div style={{color:"#253F5C",fontSize:10,letterSpacing:4,fontWeight:700,marginBottom:24}}>AVIATION COMPLIANCE TRAINING PLATFORM</div>
+          {/* DEMO BANNER */}
+          <div style={{background:"rgba(59,181,240,.1)",border:"1px solid rgba(59,181,240,.3)",borderRadius:12,padding:"12px 20px",marginBottom:28,display:"flex",flexWrap:"wrap",gap:10,alignItems:"center",justifyContent:"center"}}>
+            <span style={{color:"#3BB5F0",fontSize:12,fontWeight:700}}>⚡ Demo — 1 Klick:</span>
+            <button style={{background:"#3BB5F0",color:"#020B1A",border:"none",borderRadius:8,padding:"7px 16px",fontWeight:800,cursor:"pointer",fontSize:12}}
+              onClick={()=>{setUtype("standard");setUser(DEMO_USERS[0]);nav("dash");}}>👤 Mitarbeiter Demo</button>
+            <button style={{background:"#CC1111",color:"#FFF",border:"none",borderRadius:8,padding:"7px 16px",fontWeight:800,cursor:"pointer",fontSize:12}}
+              onClick={()=>{setUtype("ceo");setUser(DEMO_USERS[1]);nav("dash");}}>📊 CEO Demo</button>
+            <span style={{color:"rgba(59,181,240,.6)",fontSize:10}}>Kein Konto nötig</span>
+          </div>
+        </div>
+        <div style={{display:"flex",gap:16,flexWrap:"wrap",justifyContent:"center",maxWidth:600,width:"100%"}}>
+          {[{type:"standard",icon:"✈",title:"Mitarbeiter & Trainee",desc:"Compliance · Quiz · Exam · Simulation",co:"#3BB5F0",bg:"#0C1A32",bdr:"#1A3260",tc:"#DCE9FF",sc:"#6A8FC0"},
+            {type:"ceo",icon:"📊",title:"Management & CEO",desc:"Analytics · Reports · Lizenzen",co:"#CC1111",bg:"#130A0A",bdr:"#3D0A0A",tc:"#FFD0D0",sc:"#8A5555"}].map(c=>(
+            <div key={c.type} style={{background:c.bg,border:`1px solid ${c.bdr}`,borderTop:`3px solid ${c.co}`,borderRadius:14,padding:24,flex:"1 1 240px",maxWidth:270,cursor:"pointer",transition:"transform .2s"}}
+              onClick={()=>{setUtype(c.type);nav(c.type==="ceo"?"login-ceo":"login-std");}}
+              onMouseEnter={e=>e.currentTarget.style.transform="translateY(-4px)"}
+              onMouseLeave={e=>e.currentTarget.style.transform=""}>
+              <div style={{fontSize:32,marginBottom:11}}>{c.icon}</div>
+              <div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:18,fontWeight:800,color:c.tc,marginBottom:5}}>{c.title}</div>
+              <div style={{color:c.sc,fontSize:11,marginBottom:14}}>{c.desc}</div>
+              <button style={{...S.btn(c.co),width:"100%",padding:10,marginBottom:7}}>Anmelden →</button>
+              <button style={{background:"rgba(255,255,255,.08)",color:"rgba(255,255,255,.7)",border:"1px dashed rgba(255,255,255,.25)",borderRadius:8,width:"100%",padding:"7px",cursor:"pointer",fontSize:11,fontWeight:700}}
+                onClick={e=>{e.stopPropagation();const d=c.type==="ceo"?DEMO_USERS[1]:DEMO_USERS[0];setUtype(c.type);setUser(d);nav("dash");}}>⚡ Demo direkt</button>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+
+  // LOGIN STD
+  if(view==="login-std"){
+    const go=()=>{setLErr("");const u=users.find(x=>x.email===lf.email&&x.password===lf.pw&&x.type==="standard");if(!u)return setLErr("E-Mail oder Passwort falsch");setUser(u);nav("dash");};
+    return(
+      <div style={{...S.app,background:"#080F1E"}}>
+        <Hdr showNav={false}/>
+        <div style={{display:"flex",alignItems:"center",justifyContent:"center",minHeight:"calc(100vh - 50px)",padding:20}}>
+          <div style={{width:"100%",maxWidth:390}}>
+            <div style={{height:3,background:"linear-gradient(90deg,#3BB5F0,#3BB5F022)",borderRadius:2,marginBottom:28}}/>
+            <div style={{textAlign:"center",marginBottom:24}}>
+              <div style={{width:50,height:50,background:"#091D3A",border:"2px solid #3BB5F0",borderRadius:12,display:"flex",alignItems:"center",justifyContent:"center",fontSize:24,margin:"0 auto 12px"}}>✈</div>
+              <div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:22,fontWeight:900,letterSpacing:2,color:"#DCE9FF"}}>Mitarbeiter & Trainee</div>
+            </div>
+            <div style={{display:"flex",flexDirection:"column",gap:13}}>
+              <div><label style={S.lbl}>E-MAIL</label><input style={S.inp} type="email" placeholder="max@airline.com" value={lf.email} onChange={e=>setLf({...lf,email:e.target.value})}/></div>
+              <div><label style={S.lbl}>PASSWORT</label><input style={S.inp} type="password" placeholder="••••••••" value={lf.pw} onChange={e=>setLf({...lf,pw:e.target.value})}/></div>
+              <div style={{fontSize:11,color:"#3A6A90",background:"#091D3A",borderRadius:7,padding:"8px 12px",lineHeight:1.6}}>💡 Demo: max@airline.com / Test1234</div>
+              {lErr&&<div style={{background:"#2A0A0A",border:"1px solid #E53935",borderRadius:8,padding:"9px 13px",color:"#EF5350",fontSize:12}}>⚠ {lErr}</div>}
+              <button style={{...S.btn(),padding:12,fontSize:14,borderRadius:9}} onClick={go}>Anmelden →</button>
+              <div style={{display:"flex",justifyContent:"space-between",fontSize:12,color:"#4A7FAA"}}>
+                <span style={{cursor:"pointer"}}>Passwort vergessen?</span>
+                <span style={{cursor:"pointer",color:"#3BB5F0",fontWeight:700}} onClick={()=>nav("register")}>Registrieren</span>
+              </div>
+            </div>
+            <div style={{textAlign:"center",marginTop:20}}><span style={{color:"#4A7FAA",fontSize:12,cursor:"pointer"}} onClick={()=>nav("landing")}>← Zurück</span></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // LOGIN CEO
+  if(view==="login-ceo"){
+    const go=()=>{setLErr("");const u=users.find(x=>x.email===lf.email&&x.password===lf.pw&&x.type==="ceo");if(!u)return setLErr("E-Mail oder Passwort falsch");setUser(u);nav("dash");};
+    return(
+      <div style={{minHeight:"100vh",background:"#F4F4F4",fontFamily:"'DM Sans',system-ui,sans-serif"}}>
+        <div style={{background:"#CC1111",padding:"0 16px",height:50,display:"flex",alignItems:"center",boxShadow:"0 2px 12px rgba(204,17,17,.4)"}}>
+          <span style={{color:"#FFF",fontFamily:"'Barlow Condensed',sans-serif",fontWeight:900,fontSize:21,letterSpacing:3}}>CLS<span style={{fontWeight:300,fontSize:9,letterSpacing:3,marginLeft:6,opacity:.65}}>SYSTEMS</span></span>
+        </div>
+        <div style={{display:"flex",alignItems:"center",justifyContent:"center",minHeight:"calc(100vh - 50px)",padding:20}}>
+          <div style={{width:"100%",maxWidth:400}}>
+            <div style={{height:3,background:"linear-gradient(90deg,#CC1111,#FF5555)",borderRadius:2,marginBottom:28}}/>
+            <div style={{textAlign:"center",marginBottom:22}}>
+              <div style={{width:50,height:50,background:"#CC1111",borderRadius:12,display:"flex",alignItems:"center",justifyContent:"center",fontSize:24,margin:"0 auto 12px",boxShadow:"0 4px 18px rgba(204,17,17,.4)"}}>📊</div>
+              <div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:22,fontWeight:900,letterSpacing:2,color:"#181818"}}>Management & CEO</div>
+            </div>
+            <div style={{display:"flex",flexDirection:"column",gap:13}}>
+              <div><label style={{...S.lbl,color:"#555"}}>E-MAIL</label><input style={{...S.inp,background:"#FFF",border:"1.5px solid #DDD",color:"#181818"}} type="email" placeholder="ceo@airline.com" value={lf.email} onChange={e=>setLf({...lf,email:e.target.value})}/></div>
+              <div><label style={{...S.lbl,color:"#555"}}>PASSWORT</label><input style={{...S.inp,background:"#FFF",border:"1.5px solid #DDD",color:"#181818"}} type="password" placeholder="••••••••" value={lf.pw} onChange={e=>setLf({...lf,pw:e.target.value})}/></div>
+              <div style={{background:"#FFF8F8",border:"1.5px solid #FFCCCC",borderRadius:10,padding:"12px 15px"}}>
+                <div style={{color:"#CC1111",fontSize:9,fontWeight:900,letterSpacing:2,marginBottom:6}}>⬡ SECURITY VERIFICATION</div>
+                <label style={{color:"#666",fontSize:12,fontWeight:600,display:"block",marginBottom:5}}>Name Ihrer ersten Flughafenstation?</label>
+                <input style={{...S.inp,background:"#FFF",border:"1.5px solid #FFCCCC",color:"#181818"}} placeholder="z.B. Wien Schwechat" value={lf.sec} onChange={e=>setLf({...lf,sec:e.target.value})}/>
+              </div>
+              <div style={{fontSize:11,color:"#AA6666",background:"#FFF8F8",border:"1px solid #FFE0E0",borderRadius:7,padding:"7px 11px"}}>💡 Demo: ceo@airline.com / Ceo12345</div>
+              {lErr&&<div style={{background:"#FFF0F0",border:"1px solid #E53935",borderRadius:8,padding:"9px 13px",color:"#CC1111",fontSize:12}}>⚠ {lErr}</div>}
+              <button style={{background:"#CC1111",color:"#FFF",border:"none",borderRadius:9,padding:12,fontWeight:800,cursor:"pointer",fontSize:14,boxShadow:"0 4px 14px rgba(204,17,17,.4)"}} onClick={go}>Anmelden →</button>
+            </div>
+            <div style={{textAlign:"center",marginTop:22}}><span style={{color:"#AAA",fontSize:12,cursor:"pointer"}} onClick={()=>nav("landing")}>← Zurück</span></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // REGISTER
+  if(view==="register"){
+    const ac=utype==="ceo"?"#CC1111":"#3BB5F0";
+    const doReg=()=>{
+      setRErr("");
+      if(!rf.name||!rf.email||!rf.company||!rf.role||!rf.pw||!rf.pw2)return setRErr("Bitte alle Felder ausfüllen");
+      if(rf.pw!==rf.pw2)return setRErr("Passwörter stimmen nicht überein");
+      if(users.find(u=>u.email===rf.email))return setRErr("E-Mail bereits vergeben");
+      const nu={email:rf.email,password:rf.pw,type:utype||"standard",name:rf.name,company:rf.company,role:rf.role};
+      setUsers(p=>[...p,nu]);setUser(nu);nav("dash");
+    };
+    return(
+      <div style={{...S.app,background:utype==="ceo"?"#F4F4F4":"#080F1E"}}>
+        <Hdr showNav={false}/>
+        <div style={{display:"flex",alignItems:"center",justifyContent:"center",minHeight:"calc(100vh - 50px)",padding:20}}>
+          <div style={{width:"100%",maxWidth:420}}>
+            <div style={{height:3,background:`linear-gradient(90deg,${ac},${ac}44)`,borderRadius:2,marginBottom:24}}/>
+            <div style={{textAlign:"center",marginBottom:20}}>
+              <div style={{width:50,height:50,background:ac,borderRadius:12,display:"flex",alignItems:"center",justifyContent:"center",fontSize:24,margin:"0 auto 11px",boxShadow:`0 4px 18px ${ac}44`}}>{utype==="ceo"?"📊":"✈"}</div>
+              <div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:24,fontWeight:900,letterSpacing:2}}>Konto erstellen</div>
+            </div>
+            <div style={{display:"flex",flexDirection:"column",gap:12}}>
+              {[{k:"name",ph:"Max Mustermann",lb:"Vollständiger Name"},{k:"email",ph:"email@airline.com",lb:"E-Mail",tp:"email"},{k:"company",ph:"Flughafen Wien AG",lb:"Unternehmen"},{k:"role",ph:"Ramp Agent Senior",lb:"Position"},{k:"pw",ph:"••••••••",lb:"Passwort",tp:"password"},{k:"pw2",ph:"••••••••",lb:"Passwort bestätigen",tp:"password"}].map(f=>(
+                <div key={f.k}><label style={S.lbl}>{f.lb.toUpperCase()}</label>
+                  <input style={{...S.inp,background:utype==="ceo"?"#FFF":th.ibg,border:`1.5px solid ${utype==="ceo"?"#DDD":th.ibdr}`,color:th.txt}} type={f.tp||"text"} placeholder={f.ph} value={rf[f.k]} onChange={e=>setRf({...rf,[f.k]:e.target.value})}/></div>
+              ))}
+              {rErr&&<div style={{background:"#2A0A0A",border:"1px solid #E53935",borderRadius:8,padding:"9px 13px",color:"#EF5350",fontSize:12}}>⚠ {rErr}</div>}
+              <button style={{...S.btn(ac),padding:12,fontSize:14,borderRadius:9}} onClick={doReg}>Konto erstellen →</button>
+            </div>
+            <div style={{textAlign:"center",marginTop:18}}><span style={{color:th.sub,fontSize:12,cursor:"pointer"}} onClick={()=>nav("landing")}>← Zurück</span></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // DASHBOARD
+  if(view==="dash")return(
+    <div style={S.app}>
+      <Hdr/>
+      <div style={S.pg}>
+        <div style={{marginBottom:20}}>
+          <div style={{fontFamily:"'Barlow Condensed',sans-serif",fontWeight:900,fontSize:"clamp(21px,4vw,32px)",letterSpacing:1}}>Willkommen, {user?.name?.split(" ")[0]} 👋</div>
+          <div style={{color:th.sub,fontSize:13,marginTop:3}}>{user?.company} · {user?.role}</div>
+        </div>
+        {getWeak().length>0&&(
+          <div style={{background:isCEO?"#FFF8F0":"#1A1200",border:"1px solid #F0A03B",borderRadius:10,padding:"11px 15px",marginBottom:18,display:"flex",alignItems:"center",gap:12}}>
+            <span style={{fontSize:18}}>⚠</span>
+            <div style={{flex:1}}><div style={{fontWeight:700,fontSize:12,marginBottom:2}}>Schwache Themen:</div><div style={{color:th.sub,fontSize:11}}>{getWeak().join(" · ")}</div></div>
+            <button style={{...S.btn("#F0A03B"),fontSize:11,padding:"5px 12px"}} onClick={()=>nav("quiz")}>Training →</button>
+          </div>
+        )}
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(120px,1fr))",gap:10,marginBottom:24}}>
+          {[{icon:"📚",v:MODS.length,l:"Module"},{icon:"🔓",v:activeSubs.length,l:"Freigeschaltet"},{icon:"🏆",v:activeSubs.filter(s=>getProgress(s.mid)===100).length,l:"Abgeschlossen"}].map(s=>(
+            <div key={s.l} style={{...S.cd,textAlign:"center",padding:"14px 8px"}}>
+              <div style={{fontSize:20,marginBottom:3}}>{s.icon}</div>
+              <div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:30,fontWeight:900,color:th.ac}}>{s.v}</div>
+              <div style={{color:th.sub,fontSize:10,fontWeight:700}}>{s.l.toUpperCase()}</div>
+            </div>
+          ))}
+        </div>
+        <div style={S.H2}>MODULE</div>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(260px,1fr))",gap:13}}>
+          {MODS.map(mod=>{
+            const ul=isUnlocked(mod.id);
+            const prog=ul?getProgress(mod.id):0;
+            const done=prog===100;
+            return(
+              <div key={mod.id} style={{...S.cd,borderTop:`3px solid ${done?"#36B37E":ul?th.ac:th.bdr}`,transition:"transform .2s,box-shadow .2s",cursor:"pointer",position:"relative"}}
+                onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-3px)";e.currentTarget.style.boxShadow="0 10px 26px rgba(0,0,0,.24)";}}
+                onMouseLeave={e=>{e.currentTarget.style.transform="";e.currentTarget.style.boxShadow="";}}>
+                <div style={{position:"absolute",top:11,right:11,background:ul?"#36B37E22":th.bdr,borderRadius:6,padding:"2px 7px",fontSize:9,color:ul?"#36B37E":th.sub}}>{ul?"🔓 Freigeschaltet":"🔒"}</div>
+                <div style={{fontSize:26,marginBottom:9}}>{mod.icon}</div>
+                <div style={{fontSize:9,color:th.sub,fontWeight:800,letterSpacing:2,marginBottom:3}}>{mod.code}</div>
+                <div style={{fontWeight:700,fontSize:14,marginBottom:4}}>{mod.title}</div>
+                <div style={{color:th.sub,fontSize:11,marginBottom:11}}>⏱ {mod.dur} · {mod.cat}</div>
+                <div style={{background:th.bdr,borderRadius:4,height:4,marginBottom:12,overflow:"hidden"}}><div style={{height:4,borderRadius:4,width:`${prog}%`,background:done?"#36B37E":th.ac,transition:"width .5s"}}/></div>
+                <div style={{display:"flex",gap:6,flexWrap:"wrap"}}>
+                  {ul?(
+                    <>
+                      <button style={{...S.gh,fontSize:11,padding:"5px 9px",flex:1}} onClick={()=>{setQstate({idx:0,ans:null});nav("quiz");}}>🧠 Quiz</button>
+                      <button style={{...S.gh,fontSize:11,padding:"5px 9px",flex:1}} onClick={()=>{setActiveMod(mod);nav("exam-sel");}}>📝 Prüfung</button>
+                      {done&&<button style={{...S.btn("#36B37E"),fontSize:11,padding:"5px 9px"}} onClick={()=>{setCertMod(mod);nav("cert");}}>📜</button>}
+                    </>
+                  ):(
+                    <button style={{...S.btn(),width:"100%",padding:8,fontSize:12}} onClick={()=>{setActiveMod(mod);nav("mod-detail");}}>🔓 Abonnieren</button>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+
+  // MODULE DETAIL
+  if(view==="mod-detail"&&activeMod){
+    const existing=activeSubs.find(s=>s.mid===activeMod.id);
+    return(
+      <div style={S.app}><Hdr/>
+        <div style={S.pg}>
+          <button style={{...S.gh,marginBottom:18,fontSize:12}} onClick={()=>nav("dash")}>← Zurück</button>
+          {existing&&(
+            <div style={{background:isCEO?"#F0FFF4":"#0A2A1A",border:"1.5px solid #36B37E",borderRadius:12,padding:"12px 16px",marginBottom:18,display:"flex",alignItems:"center",gap:12}}>
+              <span style={{fontSize:22}}>✅</span>
+              <div style={{flex:1}}><div style={{fontWeight:700,color:"#36B37E",fontSize:13}}>Aktiv</div><div style={{color:th.sub,fontSize:11}}>Endet am: {fmtDate(existing.effEnd)}</div></div>
+              <button style={{background:"transparent",border:"1.5px solid #E53935",color:"#E53935",borderRadius:7,padding:"5px 11px",cursor:"pointer",fontSize:11,fontWeight:700}} onClick={()=>{setCancelTarget(existing);nav("cancel");}}>🗑 Kündigen</button>
+            </div>
+          )}
+          <div style={{...S.cd,marginBottom:18,borderTop:`3px solid ${th.ac}`}}>
+            <span style={{fontSize:40}}>{activeMod.icon}</span>
+            <div style={{fontFamily:"'Barlow Condensed',sans-serif",fontWeight:900,fontSize:"clamp(19px,4vw,30px)",letterSpacing:1,marginTop:9,marginBottom:3}}>{activeMod.title}</div>
+            <div style={{color:th.sub,fontSize:11,marginBottom:9}}>{activeMod.code} · {activeMod.dur} · {activeMod.cat}</div>
+            <div style={{color:th.sub,fontSize:13,lineHeight:1.75}}>{activeMod.desc}</div>
+          </div>
+          {!existing&&<>
+            <div style={S.H2}>ABO-OPTIONEN</div>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(185px,1fr))",gap:11,marginBottom:20}}>
+              {SUBS.map(sub=>{
+                const sel=selSub?.key===sub.key;
+                return(
+                  <div key={sub.key} style={{...S.cd,cursor:"pointer",position:"relative",transition:"transform .18s",border:sel?`2px solid ${th.ac}`:sub.hi?`1.5px dashed ${th.ac}`:`1px solid ${th.bdr}`,background:sel?th.acl:th.sur}}
+                    onClick={()=>setSelSub(sub)} onMouseEnter={e=>e.currentTarget.style.transform="translateY(-2px)"} onMouseLeave={e=>e.currentTarget.style.transform=""}>
+                    {sub.hi&&<div style={{position:"absolute",top:-10,left:"50%",transform:"translateX(-50%)",background:th.ac,color:th.acfg,fontSize:8,fontWeight:800,padding:"2px 12px",borderRadius:20}}>BELIEBT</div>}
+                    <div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:17,fontWeight:800,marginBottom:3}}>{SUB_NAMES[sub.key]}</div>
+                    <div style={{display:"flex",alignItems:"baseline",gap:3,marginBottom:5}}><span style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:30,fontWeight:900,color:th.ac}}>€{sub.price}</span><span style={{color:th.sub,fontSize:10}}>/Nutzer/Mon.</span></div>
+                    <div style={{color:th.sub,fontSize:10,marginBottom:12}}>⚡ {sub.cancel}</div>
+                    <button style={{...S.btn(),width:"100%",padding:8,fontSize:11}} onClick={e=>{e.stopPropagation();setSelSub(sub);setPaid(false);setCard({n:"",h:"",e:"",v:"",coup:""});setCErr("");setPayMeth("card");nav("checkout");}}>Kaufen</button>
+                  </div>
+                );
+              })}
+            </div>
+          </>}
+        </div>
+      </div>
+    );
+  }
+
+  // CHECKOUT
+  if(view==="checkout"){
+    const ci=detectCard(card.n);
+    const total=selSub?selSub.price*(selSub.months<3?1:selSub.months):0;
+    const disc=card.coup.toUpperCase()==="CLS10"?Math.round(total*.1):0;
+    const fin=(total-disc).toFixed(2);
+    const doPay=()=>{
+      setCErr("");
+      if(payMeth==="card"){
+        if(!card.n||!card.h||!card.e||!card.v)return setCErr("Bitte alle Felder ausfüllen");
+        if(!luhn(card.n))return setCErr("Ungültige Kartennummer");
+        const[mm]=card.e.split("/");
+        if(!mm||+mm>12||+mm<1)return setCErr("Ungültiges Datum");
+        if(card.v.length<3)return setCErr("Ungültiger CVV");
+      }
+      setPaying(true);
+      setTimeout(()=>{
+        const now=new Date();const end=addMonths(now,selSub.months);
+        setSubs(p=>[...p,{id:genId(),uid:user.email,mid:activeMod.id,mname:activeMod.title,plan:selSub.key,months:selSub.months,price:selSub.price,start:now.toISOString(),end:end.toISOString(),effEnd:end.toISOString(),status:"active",cancelledAt:null,noticeDays:selSub.noticeDays,paid:parseFloat(fin)}]);
+        setPaying(false);setPaid(true);
+      },2000);
+    };
+    return(
+      <div style={S.app}><Hdr/>
+        <div style={{...S.pg,maxWidth:800}}>
+          <button style={{...S.gh,marginBottom:20,fontSize:12}} onClick={()=>nav("mod-detail")}>← Zurück</button>
+          {paid?(
+            <div style={{textAlign:"center",padding:"48px 20px"}}>
+              <div style={{fontSize:68,marginBottom:18}}>✅</div>
+              <div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:34,fontWeight:900,color:"#36B37E",marginBottom:9}}>Zahlung erfolgreich!</div>
+              <div style={{color:th.sub,fontSize:14,marginBottom:28}}>Ihr Zugang wurde aktiviert.</div>
+              <button style={{...S.btn("#36B37E"),padding:"12px 30px",fontSize:14,borderRadius:10}} onClick={()=>nav("dash")}>🎉 Zum Dashboard</button>
+            </div>
+          ):(
+            <div style={{display:"flex",gap:20,flexWrap:"wrap"}}>
+              <div style={{flex:"1 1 330px"}}>
+                <div style={S.H2}>KASSE</div>
+                <div style={{display:"flex",gap:0,marginBottom:20,background:th.sur,borderRadius:10,padding:4,border:`1px solid ${th.bdr}`}}>
+                  {[{k:"card",l:"💳 Kreditkarte"},{k:"paypal",l:"🅿 PayPal"}].map(m=>(
+                    <button key={m.k} onClick={()=>setPayMeth(m.k)} style={{flex:1,padding:"9px 6px",border:"none",cursor:"pointer",borderRadius:8,fontWeight:700,fontSize:12,background:payMeth===m.k?th.ac:"transparent",color:payMeth===m.k?th.acfg:th.sub}}>{m.l}</button>
+                  ))}
+                </div>
+                {payMeth==="card"?(
+                  <div style={{display:"flex",flexDirection:"column",gap:15}}>
+                    <div style={{height:175,borderRadius:14,padding:"20px 22px",background:`linear-gradient(135deg,${th.ac}22,${th.ac}55)`,border:`1px solid ${th.ac}44`,position:"relative",overflow:"hidden"}}>
+                      <div style={{position:"absolute",top:0,right:0,width:140,height:140,borderRadius:"50%",background:`${th.ac}11`,transform:"translate(40%,-40%)"}}/>
+                      <div style={{display:"flex",justifyContent:"space-between",marginBottom:22}}><span style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:17,fontWeight:900,letterSpacing:3,opacity:.8}}>CLS</span><span>💳</span></div>
+                      <div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:"clamp(14px,4vw,20px)",fontWeight:700,letterSpacing:3,marginBottom:16,opacity:.9}}>{card.n||"•••• •••• •••• ••••"}</div>
+                      <div style={{display:"flex",justifyContent:"space-between",fontSize:11,color:th.sub}}>
+                        <div><div style={{fontSize:8,letterSpacing:1,marginBottom:2}}>CARDHOLDER</div><div style={{fontWeight:700,color:th.txt}}>{card.h||"YOUR NAME"}</div></div>
+                        <div style={{textAlign:"right"}}><div style={{fontSize:8,letterSpacing:1,marginBottom:2}}>EXPIRES</div><div style={{fontWeight:700,color:th.txt}}>{card.e||"MM/YY"}</div></div>
+                        {ci.t&&<div style={{background:ci.c,color:"#FFF",fontSize:9,fontWeight:800,borderRadius:5,padding:"2px 8px",alignSelf:"flex-end"}}>{ci.t}</div>}
+                      </div>
+                    </div>
+                    <div><label style={S.lbl}>KARTENNUMMER</label><input style={{...S.inp,letterSpacing:2}} placeholder="1234 5678 9012 3456" value={card.n} onChange={e=>setCard({...card,n:fmtCard(e.target.value)})}/></div>
+                    <div><label style={S.lbl}>KARTENINHABER</label><input style={S.inp} placeholder="MAX MUSTERMANN" value={card.h} onChange={e=>setCard({...card,h:e.target.value.toUpperCase()})}/></div>
+                    <div style={{display:"flex",gap:11}}>
+                      <div style={{flex:1}}><label style={S.lbl}>ABLAUFDATUM</label><input style={S.inp} placeholder="MM/YY" value={card.e} onChange={e=>setCard({...card,e:fmtExp(e.target.value)})}/></div>
+                      <div style={{flex:1}}><label style={S.lbl}>CVV</label><input style={S.inp} placeholder="•••" type="password" maxLength={4} value={card.v} onChange={e=>setCard({...card,v:e.target.value.replace(/\D/g,"").slice(0,4)})}/></div>
+                    </div>
+                    <div><label style={S.lbl}>GUTSCHEIN</label>
+                      <div style={{display:"flex",gap:7}}><input style={{...S.inp,flex:1}} placeholder="CLS10" value={card.coup} onChange={e=>setCard({...card,coup:e.target.value})}/><button style={{...S.gh,whiteSpace:"nowrap"}}>Anwenden</button></div></div>
+                    {disc>0&&<div style={{background:"#0A2A1A",border:"1px solid #36B37E",borderRadius:8,padding:"7px 13px",color:"#36B37E",fontSize:12}}>🎉 10% Rabatt aktiv — Sie sparen €{disc}</div>}
+                    {cErr&&<div style={{background:"#2A0A0A",border:"1px solid #E53935",borderRadius:8,padding:"9px 13px",color:"#EF5350",fontSize:12}}>⚠ {cErr}</div>}
+                    <button style={{...S.btn(),padding:13,fontSize:15,borderRadius:10,opacity:paying?.7:1}} onClick={doPay} disabled={paying}>{paying?"⏳ Verarbeitung...":` 🔒 Jetzt bezahlen — €${fin}`}</button>
+                    <div style={{color:th.sub,fontSize:10,textAlign:"center"}}>🔒 256-Bit SSL · Ihre Daten sind sicher</div>
+                  </div>
+                ):(
+                  <div style={{background:"#003087",borderRadius:13,padding:"28px 36px",textAlign:"center"}}>
+                    <div style={{color:"#FFF",fontFamily:"'Barlow Condensed',sans-serif",fontSize:26,fontWeight:900,marginBottom:7}}>🅿 PayPal</div>
+                    <div style={{color:"rgba(255,255,255,.7)",fontSize:13,marginBottom:20}}>Sicher über PayPal bezahlen</div>
+                    <button style={{background:"#FFD140",color:"#111",border:"none",borderRadius:9,padding:"12px 36px",fontWeight:800,cursor:"pointer",fontSize:14,width:"100%"}} onClick={doPay}>{paying?"⏳ Verarbeitung...":` Jetzt bezahlen — €${fin}`}</button>
+                  </div>
+                )}
+              </div>
+              <div style={{flex:"0 0 240px",minWidth:200}}>
+                <div style={{...S.cd,position:"sticky",top:105}}>
+                  <div style={{fontFamily:"'Barlow Condensed',sans-serif",fontWeight:800,fontSize:16,letterSpacing:1,marginBottom:14}}>BESTELLUNG</div>
+                  {activeMod&&<div style={{display:"flex",gap:9,marginBottom:13,paddingBottom:13,borderBottom:`1px solid ${th.bdr}`}}><span style={{fontSize:22}}>{activeMod.icon}</span><div><div style={{fontWeight:700,fontSize:12}}>{activeMod.title}</div><div style={{color:th.sub,fontSize:10}}>{activeMod.code}</div></div></div>}
+                  {selSub&&<><div style={{display:"flex",justifyContent:"space-between",padding:"6px 0",borderBottom:`1px solid ${th.bdr}`,fontSize:12}}><span style={{color:th.sub}}>Plan</span><span style={{fontWeight:600}}>{SUB_NAMES[selSub.key]}</span></div>
+                  <div style={{display:"flex",justifyContent:"space-between",padding:"6px 0",borderBottom:`1px solid ${th.bdr}`,fontSize:12}}><span style={{color:th.sub}}>Laufzeit</span><span style={{fontWeight:600}}>{selSub.months} Monate</span></div>
+                  {disc>0&&<div style={{display:"flex",justifyContent:"space-between",padding:"6px 0",borderBottom:`1px solid ${th.bdr}`,fontSize:12}}><span style={{color:"#36B37E"}}>Rabatt</span><span style={{color:"#36B37E",fontWeight:700}}>-€{disc}</span></div>}
+                  <div style={{display:"flex",justifyContent:"space-between",padding:"12px 0",fontSize:15,fontWeight:800}}><span>Total</span><span style={{color:th.ac}}>€{fin}</span></div>
+                  <div style={{background:th.acl,borderRadius:8,padding:"9px 11px",fontSize:11,color:th.sub}}>⚡ {selSub.cancel}</div></>}
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  // CANCEL
+  if(view==="cancel"&&cancelTarget){
+    const effDate=cancelTarget.noticeDays>0?addDays(new Date(),cancelTarget.noticeDays):new Date(cancelTarget.end);
+    return(
+      <div style={S.app}><Hdr/>
+        <div style={{...S.pg,maxWidth:560}}>
+          <button style={{...S.gh,marginBottom:18,fontSize:12}} onClick={()=>nav("profile")}>← Zurück</button>
+          <div style={{...S.cd,borderTop:"3px solid #E53935",padding:28}}>
+            <div style={{fontSize:40,marginBottom:13}}>⚠</div>
+            <div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:24,fontWeight:900,marginBottom:7}}>Kündigung bestätigen</div>
+            <div style={{...S.cd,background:th.acl,marginBottom:18}}>
+              <div style={{fontWeight:700,fontSize:13,marginBottom:6}}>{cancelTarget.mname}</div>
+              <div style={{color:th.sub,fontSize:12,lineHeight:1.7}}>Kündigung wirksam ab <strong>{fmtDate(effDate)}</strong>. Zugang bleibt bis dahin erhalten.</div>
+              {cancelTarget.noticeDays>0&&<div style={{marginTop:9,padding:"7px 11px",background:isCEO?"#FFF8F0":"#1A0A00",borderRadius:7,fontSize:11,color:"#F0A03B"}}>⏰ {cancelTarget.noticeDays} Tage Kündigungsfrist</div>}
+            </div>
+            <div style={{display:"flex",gap:11}}>
+              <button style={{...S.btn("#E53935"),flex:1,padding:12,fontSize:13}} onClick={()=>{setSubs(p=>p.map(s=>s.id===cancelTarget.id?{...s,status:"cancelled",cancelledAt:new Date().toISOString(),effEnd:effDate.toISOString()}:s));setCancelTarget(null);nav("profile");}}>🗑 Ja, kündigen</button>
+              <button style={{...S.gh,flex:1,padding:12,fontSize:13}} onClick={()=>nav("profile")}>💚 Behalten</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // QUIZ
+  if(view==="quiz"){
+    const ulMods=MODS.filter(m=>isUnlocked(m.id)).map(m=>m.id);
+    const pool=ulMods.length>0?QS.filter(q=>ulMods.includes(q.mod)):QS;
+    const wrongIds=(mem[user?.email]?.h||[]).filter(x=>!x.ok).map(x=>x.id);
+    const weakT=getWeak();
+    const sorted=[...pool.filter(q=>wrongIds.includes(q.id)),...pool.filter(q=>!wrongIds.includes(q.id)&&weakT.includes(q.top)),...pool.filter(q=>!wrongIds.includes(q.id)&&!weakT.includes(q.top))];
+    const allQs=[...new Map(sorted.map(q=>[q.id,q])).values()];
+    if(!allQs.length)return<div style={S.app}><Hdr/><div style={{...S.pg,textAlign:"center",paddingTop:70,color:th.sub}}><div style={{fontSize:44}}>📚</div><div style={{marginTop:14}}>Bitte erst ein Modul abonnieren.</div><button style={{...S.btn(),marginTop:16}} onClick={()=>nav("dash")}>Zu den Modulen</button></div></div>;
+    const idx=Math.min(qstate.idx,allQs.length-1);
+    const q=allQs[idx];
+    const isWrong=wrongIds.includes(q.id);
+    return(
+      <div style={S.app}><Hdr/>
+        <div style={{...S.pg,maxWidth:680}}>
+          <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:18}}><div style={S.H2}>ADAPTIVES QUIZ</div><div style={{color:th.sub,fontSize:12}}>{idx+1}/{allQs.length}</div></div>
+          {isWrong&&<div style={{background:isCEO?"#FFF8F0":"#1A1200",border:"1px solid #F0A03B",borderRadius:8,padding:"7px 13px",marginBottom:13,fontSize:11,color:"#F0A03B"}}>⚠ Wiederholungsfrage — zuvor falsch beantwortet.</div>}
+          <div style={{display:"flex",gap:3,marginBottom:20}}>{allQs.slice(0,Math.min(allQs.length,20)).map((_,i)=><div key={i} style={{flex:1,height:4,borderRadius:2,cursor:"pointer",background:i<idx?"#36B37E":i===idx?th.ac:th.bdr}} onClick={()=>setQstate({idx:i,ans:null})}/>)}</div>
+          <div style={{...S.cd,marginBottom:13}}>
+            <div style={{display:"flex",gap:7,marginBottom:11}}>
+              <span style={{background:th.acl,color:th.ac,fontSize:9,fontWeight:800,padding:"2px 9px",borderRadius:20}}>{q.top.toUpperCase()}</span>
+              <span style={{background:th.bdr,color:th.sub,fontSize:9,fontWeight:800,padding:"2px 9px",borderRadius:20}}>{"⭐".repeat(q.dif)}</span>
+            </div>
+            <div style={{fontWeight:600,fontSize:15,lineHeight:1.65,marginBottom:20}}>{q.q}</div>
+            <div style={{display:"flex",flexDirection:"column",gap:9}}>
+              {q.o.map((opt,i)=>{
+                let bg=th.acl,bdr=th.bdr,col=th.txt;
+                if(qstate.ans!==null){if(i===q.c){bg=isCEO?"#F0FFF4":"#0A2A1A";bdr="#36B37E";col="#36B37E";}else if(i===qstate.ans){bg=isCEO?"#FFF0F0":"#2A0A0A";bdr="#E53935";col="#E53935";}else col=th.sub;}
+                return<div key={i} style={{background:bg,border:`1.5px solid ${bdr}`,borderRadius:9,padding:"11px 15px",cursor:qstate.ans===null?"pointer":"default",color:col,fontSize:13,display:"flex",alignItems:"center",gap:9,transition:"all .15s"}}
+                  onClick={()=>{if(qstate.ans===null){const ok=i===q.c;setQstate(s=>({...s,ans:i}));recordAns(q.id,ok);}}}>
+                  <span style={{fontFamily:"'Barlow Condensed',sans-serif",fontWeight:800,fontSize:14,minWidth:18,color:th.sub}}>{["A","B","C","D"][i]}</span>
+                  <span style={{flex:1}}>{opt}</span>
+                  {qstate.ans!==null&&i===q.c&&<span>✓</span>}
+                  {qstate.ans!==null&&i===qstate.ans&&i!==q.c&&<span>✗</span>}
+                </div>;
+              })}
+            </div>
+            {qstate.ans!==null&&<div style={{marginTop:16,background:th.acl,borderLeft:`3px solid ${th.ac}`,borderRadius:7,padding:"12px 14px"}}><div style={{color:th.ac,fontSize:9,fontWeight:800,letterSpacing:2,marginBottom:6}}>ERKLÄRUNG</div><div style={{fontSize:12,lineHeight:1.8}}>{q.e}</div></div>}
+          </div>
+          <div style={{display:"flex",justifyContent:"space-between"}}>
+            <button style={S.gh} disabled={idx===0} onClick={()=>setQstate(s=>({...s,idx:s.idx-1,ans:null}))}>← Zurück</button>
+            <button style={S.btn()} disabled={idx>=allQs.length-1} onClick={()=>setQstate(s=>({...s,idx:s.idx+1,ans:null}))}>Weiter →</button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // EXAM SELECT
+  if(view==="exam-sel"){
+    const ulMods=MODS.filter(m=>isUnlocked(m.id));
+    return(
+      <div style={S.app}><Hdr/>
+        <div style={{...S.pg,maxWidth:680}}>
+          <div style={S.H2}>PRÜFUNGSMODUS</div>
+          <div style={{...S.cd,marginBottom:18,borderLeft:`3px solid ${th.ac}`,fontSize:12,color:th.sub,lineHeight:1.8}}>20 Fragen · 45 Minuten · 80% zum Bestehen · Zertifikat bei Erfolg</div>
+          {!ulMods.length?<div style={{...S.cd,textAlign:"center",padding:36}}><div style={{fontSize:40,marginBottom:13}}>🔒</div><button style={{...S.btn(),marginTop:14}} onClick={()=>nav("dash")}>Zu den Modulen</button></div>:(
+            <div style={{display:"flex",flexDirection:"column",gap:11}}>
+              {ulMods.map(mod=>{
+                const pool=QS.filter(q=>q.mod===mod.id);
+                return<div key={mod.id} style={{...S.cd,display:"flex",alignItems:"center",gap:14}}>
+                  <span style={{fontSize:26}}>{mod.icon}</span>
+                  <div style={{flex:1}}><div style={{fontWeight:700,fontSize:13}}>{mod.title}</div><div style={{color:th.sub,fontSize:11}}>{mod.code} · {pool.length} Fragen</div></div>
+                  <button style={{...S.btn(),fontSize:12,padding:"7px 14px"}} onClick={()=>{
+                    const shuffled=[...pool].sort(()=>Math.random()-.5).slice(0,Math.min(20,pool.length));
+                    setExamState({mid:mod.id,mname:mod.title,qs:shuffled,cur:0,ans:{},start:Date.now(),limit:45*60,done:false,passed:false,score:0});nav("exam");
+                  }}>📝 Prüfung starten</button>
+                </div>;
+              })}
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  // EXAM
+  if(view==="exam"&&examState){
+    const ExV=()=>{
+      const[tl,setTl]=useState(examState.limit-Math.floor((Date.now()-examState.start)/1000));
+      const[la,setLa]=useState(examState.ans||{});
+      const[cur,setCur]=useState(examState.cur||0);
+      const[done,setDone]=useState(examState.done);
+      const[res,setRes]=useState(null);
+      useEffect(()=>{if(done)return;const i=setInterval(()=>setTl(p=>{if(p<=1){clearInterval(i);doSubmit();return 0;}return p-1;}),1000);return()=>clearInterval(i);},[done]);
+      const doSubmit=()=>{const correct=examState.qs.filter(q=>la[q.id]===q.c).length;const score=Math.round(correct/examState.qs.length*100);const passed=score>=80;setRes({score,correct,total:examState.qs.length,passed});setDone(true);examState.qs.forEach(q=>recordAns(q.id,la[q.id]===q.c));if(passed){const mod=MODS.find(m=>m.id===examState.mid);if(mod)setCertMod(mod);}};
+      const q=examState.qs[cur];
+      const mm=String(Math.floor(tl/60)).padStart(2,"0");
+      const ss=String(tl%60).padStart(2,"0");
+      if(done&&res)return(
+        <div style={{...S.pg,maxWidth:560,textAlign:"center"}}>
+          <div style={{fontSize:60,marginBottom:16}}>{res.passed?"🏆":"📚"}</div>
+          <div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:38,fontWeight:900,color:res.passed?"#36B37E":"#E53935",marginBottom:9}}>{res.passed?"Bestanden!":"Nicht bestanden"}</div>
+          <div style={{display:"flex",justifyContent:"center",gap:18,marginBottom:28,flexWrap:"wrap"}}>
+            {[{l:"Ergebnis",v:`${res.score}%`,c:res.passed?"#36B37E":"#E53935"},{l:"Mindest",v:"80%",c:th.ac},{l:"Richtig",v:`${res.correct}/${res.total}`,c:th.txt}].map(r=>(
+              <div key={r.l} style={{...S.cd,textAlign:"center",padding:"14px 20px"}}><div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:30,fontWeight:900,color:r.c}}>{r.v}</div><div style={{color:th.sub,fontSize:10,fontWeight:700}}>{r.l.toUpperCase()}</div></div>
+            ))}
+          </div>
+          <div style={{display:"flex",gap:11,justifyContent:"center",flexWrap:"wrap"}}>
+            {res.passed&&<button style={{...S.btn("#36B37E"),padding:"11px 22px",fontSize:13}} onClick={()=>nav("cert")}>📜 Zertifikat</button>}
+            <button style={S.btn()} onClick={()=>{setExamState(null);nav("exam-sel");}}>🔄 Wiederholen</button>
+            <button style={S.gh} onClick={()=>nav("dash")}>Dashboard</button>
+          </div>
+        </div>
+      );
+      return(
+        <div style={{...S.pg,maxWidth:680}}>
+          <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:16,flexWrap:"wrap",gap:9}}>
+            <div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:20,fontWeight:900}}>{examState.mname}</div>
+            <div style={{background:tl<120?"#E53935":th.acl,color:tl<120?"#FFF":th.ac,padding:"7px 14px",borderRadius:8,fontFamily:"'Barlow Condensed',sans-serif",fontWeight:900,fontSize:19,letterSpacing:2}}>⏱ {mm}:{ss}</div>
+          </div>
+          <div style={{display:"flex",gap:3,marginBottom:18,flexWrap:"wrap"}}>{examState.qs.map((_,i)=><div key={i} style={{width:17,height:17,borderRadius:3,background:i===cur?th.ac:la[examState.qs[i]?.id]!==undefined?"#36B37E":th.bdr,cursor:"pointer"}} onClick={()=>setCur(i)}/>)}</div>
+          <div style={{...S.cd,marginBottom:13}}>
+            <div style={{color:th.sub,fontSize:10,fontWeight:800,letterSpacing:2,marginBottom:11}}>FRAGE {cur+1} / {examState.qs.length}</div>
+            <div style={{fontWeight:600,fontSize:15,lineHeight:1.65,marginBottom:19}}>{q.q}</div>
+            <div style={{display:"flex",flexDirection:"column",gap:9}}>
+              {q.o.map((opt,i)=>{const sel=la[q.id]===i;return<div key={i} style={{background:sel?th.acl:th.sur,border:`1.5px solid ${sel?th.ac:th.bdr}`,borderRadius:9,padding:"11px 15px",cursor:"pointer",fontSize:13,display:"flex",alignItems:"center",gap:9,transition:"all .15s"}}
+                onClick={()=>setLa(p=>({...p,[q.id]:i}))}>
+                <span style={{fontFamily:"'Barlow Condensed',sans-serif",fontWeight:800,fontSize:14,minWidth:18,color:sel?th.ac:th.sub}}>{["A","B","C","D"][i]}</span>
+                <span style={{flex:1,color:sel?th.ac:th.txt}}>{opt}</span>{sel&&<span>✓</span>}
+              </div>;})}
+            </div>
+          </div>
+          <div style={{display:"flex",justifyContent:"space-between"}}>
+            <button style={S.gh} disabled={cur===0} onClick={()=>setCur(p=>p-1)}>← Zurück</button>
+            {cur<examState.qs.length-1?<button style={S.btn()} onClick={()=>setCur(p=>p+1)}>Weiter →</button>:<button style={{...S.btn("#36B37E"),padding:"9px 22px"}} onClick={doSubmit}>✅ Abgeben</button>}
+          </div>
+        </div>
+      );
+    };
+    return<div style={S.app}><Hdr/><ExV/></div>;
+  }
+
+  // SIMULATION
+  if(view==="sim"){
+    const sc=SCENARIOS[simState.sc];
+    const step=sc.steps[simState.st];
+    const done=simState.st>=sc.steps.length;
+    return(
+      <div style={S.app}><Hdr/>
+        <div style={{...S.pg,maxWidth:700}}>
+          <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:18,flexWrap:"wrap",gap:11}}>
+            <div style={S.H2}>INCIDENT SIMULATION</div>
+            <div style={{display:"flex",gap:7}}>{SCENARIOS.map((s,i)=><button key={i} style={{...S.lkb(simState.sc===i),padding:"5px 11px",borderRadius:8}} onClick={()=>setSimState({sc:i,st:0,dec:null,score:0,done:false})}>{s.icon} {s.title}</button>)}</div>
+          </div>
+          <div style={{...S.cd,marginBottom:14,borderLeft:`3px solid ${th.ac}`}}>
+            <div style={{fontWeight:700,fontSize:14,marginBottom:4}}>{sc.icon} {sc.title}</div>
+            <div style={{display:"flex",gap:5,marginTop:10}}>{sc.steps.map((_,i)=><div key={i} style={{flex:1,height:4,borderRadius:2,background:i<simState.st?"#36B37E":i===simState.st?th.ac:th.bdr}}/>)}</div>
+          </div>
+          {!done?(
+            <div style={{...S.cd,marginBottom:14}}>
+              <div style={{color:th.sub,fontSize:9,fontWeight:800,letterSpacing:2,marginBottom:11}}>SITUATION {simState.st+1} / {sc.steps.length}</div>
+              <div style={{fontWeight:600,fontSize:15,lineHeight:1.7,marginBottom:22}}>{step.sit}</div>
+              {simState.dec===null?(
+                <div style={{display:"flex",flexDirection:"column",gap:9}}>
+                  {step.opts.map((opt,i)=>(
+                    <div key={i} style={{background:th.acl,border:`1.5px solid ${th.bdr}`,borderRadius:10,padding:"13px 17px",cursor:"pointer",fontSize:13,display:"flex",alignItems:"center",gap:11,transition:"border-color .15s"}}
+                      onMouseEnter={e=>e.currentTarget.style.borderColor=th.ac}
+                      onMouseLeave={e=>e.currentTarget.style.borderColor=th.bdr}
+                      onClick={()=>setSimState(s=>({...s,dec:i}))}>
+                      <span style={{fontFamily:"'Barlow Condensed',sans-serif",fontWeight:900,fontSize:17,color:th.ac,minWidth:26}}>{["A","B"][i]}</span>
+                      <span style={{flex:1}}>{opt}</span>
+                    </div>
+                  ))}
+                </div>
+              ):(
+                <>
+                  <div style={{background:simState.dec===step.c?(isCEO?"#F0FFF4":"#0A2A1A"):(isCEO?"#FFF0F0":"#2A0A0A"),border:`2px solid ${simState.dec===step.c?"#36B37E":"#E53935"}`,borderRadius:11,padding:"16px 18px",marginBottom:14}}>
+                    <div style={{fontWeight:800,fontSize:15,color:simState.dec===step.c?"#36B37E":"#E53935",marginBottom:7}}>{simState.dec===step.c?"✅ Richtige Entscheidung":"❌ Falsche Entscheidung — Safety Violation"}</div>
+                    <div style={{fontSize:12,lineHeight:1.75}}>{step.res[simState.dec]}</div>
+                  </div>
+                  <button style={{...S.btn(),width:"100%",padding:11,fontSize:13}} onClick={()=>{const ok=simState.dec===step.c;const next=simState.st+1;setSimState(s=>({...s,st:next,dec:null,score:s.score+(ok?1:0),done:next>=sc.steps.length}));}}>
+                    {simState.st+1<sc.steps.length?"Weiter →":"Ergebnis →"}
+                  </button>
+                </>
+              )}
+            </div>
+          ):(
+            <div style={{...S.cd,textAlign:"center",padding:38}}>
+              <div style={{fontSize:52,marginBottom:14}}>{simState.score===sc.steps.length?"🏆":"📚"}</div>
+              <div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:30,fontWeight:900,color:simState.score===sc.steps.length?"#36B37E":th.ac,marginBottom:9}}>{simState.score}/{sc.steps.length} richtige Entscheidungen</div>
+              <div style={{display:"flex",gap:11,justifyContent:"center",flexWrap:"wrap"}}>
+                <button style={S.btn()} onClick={()=>setSimState({sc:simState.sc,st:0,dec:null,score:0,done:false})}>🔄 Neu starten</button>
+                {simState.sc<SCENARIOS.length-1&&<button style={S.gh} onClick={()=>setSimState({sc:simState.sc+1,st:0,dec:null,score:0,done:false})}>Nächstes Szenario →</button>}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  // AI TRAINER
+  if(view==="ai"){
+    const send=async()=>{
+      if(!aiIn.trim()||aiLoad)return;
+      const um={r:"u",t:aiIn};
+      const newMsgs=[...aiMsgs,um];
+      setAiMsgs(newMsgs);setAiIn("");setAiLoad(true);
+      const apiMsgs=newMsgs.filter(m=>!(m.r==="a"&&m===aiMsgs[0])).map(m=>({role:m.r==="u"?"user":"assistant",content:m.t}));
+      const reply=await callAI(apiMsgs);
+      setAiMsgs(p=>[...p,{r:"a",t:reply}]);setAiLoad(false);
+    };
+    const msgRef=useRef(null);
+    useEffect(()=>{msgRef.current?.scrollTo(0,msgRef.current.scrollHeight);},[aiMsgs,aiLoad]);
+    return(
+      <div style={S.app}><Hdr/>
+        <div style={{...S.pg,maxWidth:700,display:"flex",flexDirection:"column"}}>
+          <div style={{...S.H2,marginBottom:6}}>🤖 AI AVIATION TRAINER</div>
+          <div style={{color:th.sub,fontSize:12,marginBottom:16}}>Gestützt auf Claude AI · Antwortet auf Deutsch und Englisch</div>
+          <div style={{...S.cd,display:"flex",flexDirection:"column",flex:1}}>
+            <div ref={msgRef} style={{height:380,overflowY:"auto",display:"flex",flexDirection:"column",gap:13,paddingBottom:8}}>
+              {aiMsgs.map((msg,i)=>(
+                <div key={i} style={{display:"flex",gap:10,alignItems:"flex-start",...(msg.r==="u"?{flexDirection:"row-reverse"}:{})}}>
+                  <div style={{width:32,height:32,borderRadius:"50%",background:msg.r==="u"?th.ac:th.acl,flexShrink:0,display:"flex",alignItems:"center",justifyContent:"center",fontSize:15}}>{msg.r==="u"?"👤":"🤖"}</div>
+                  <div style={{maxWidth:"80%",background:msg.r==="u"?th.ac:th.sur,color:msg.r==="u"?th.acfg:th.txt,borderRadius:11,padding:"11px 15px",fontSize:13,lineHeight:1.75,border:msg.r==="u"?"none":`1px solid ${th.bdr}`}}>{msg.t}</div>
+                </div>
+              ))}
+              {aiLoad&&<div style={{display:"flex",gap:10}}><div style={{width:32,height:32,borderRadius:"50%",background:th.acl,display:"flex",alignItems:"center",justifyContent:"center"}}>🤖</div><div style={{background:th.sur,border:`1px solid ${th.bdr}`,borderRadius:11,padding:"11px 15px",color:th.sub,fontSize:13}}>Trainer denkt... ⏳</div></div>}
+            </div>
+            <div style={{borderTop:`1px solid ${th.bdr}`,paddingTop:13,display:"flex",gap:9,marginTop:13}}>
+              <input style={{...S.inp,flex:1}} placeholder="Frage zur Rampensicherheit, Gefahrgut..." value={aiIn} onChange={e=>setAiIn(e.target.value)} onKeyDown={e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();send();}}}/>
+              <button style={{...S.btn(),padding:"11px 16px",flexShrink:0}} onClick={send} disabled={aiLoad}>Senden ↗</button>
+            </div>
+            <div style={{display:"flex",gap:6,marginTop:9,flexWrap:"wrap"}}>
+              {["Was ist FOD?","Mindestabstand Triebwerk?","IATA DGR Klassen?","Was ist SMS?"].map(q=>(
+                <button key={q} style={{...S.gh,fontSize:10,padding:"4px 9px"}} onClick={()=>setAiIn(q)}>{q}</button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // PROFILE
+  if(view==="profile")return(
+    <div style={S.app}><Hdr/>
+      <div style={{...S.pg,maxWidth:700}}>
+        <div style={S.H2}>MEIN PROFIL</div>
+        <div style={{...S.cd,display:"flex",alignItems:"center",gap:18,marginBottom:16}}>
+          <div style={{width:62,height:62,borderRadius:"50%",background:th.acl,border:`2.5px solid ${th.ac}`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:26,flexShrink:0}}>{isCEO?"👔":"👤"}</div>
+          <div><div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:22,fontWeight:900}}>{user?.name}</div><div style={{color:th.sub,fontSize:12}}>{user?.role} · {user?.company}</div></div>
+        </div>
+        <div style={{...S.cd,marginBottom:14}}>
+          <div style={{fontWeight:700,fontSize:14,marginBottom:14}}>💳 Abo-Verwaltung</div>
+          {!userSubs.length?<div style={{textAlign:"center",padding:"18px 0",color:th.sub}}><div style={{fontSize:30,marginBottom:9}}>📭</div><div>Keine Abonnements</div><button style={{...S.btn(),marginTop:14,fontSize:12}} onClick={()=>nav("dash")}>Zu den Modulen</button></div>:(
+            <div style={{display:"flex",flexDirection:"column",gap:11}}>
+              {userSubs.map(sub=>{
+                const act=sub.status==="active"&&new Date(sub.effEnd)>new Date();
+                const canc=sub.status==="cancelled";
+                return(
+                  <div key={sub.id} style={{background:th.acl,borderRadius:10,padding:"13px 15px",border:`1px solid ${act?"#36B37E":canc?"#E53935":th.bdr}`}}>
+                    <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",flexWrap:"wrap",gap:9}}>
+                      <div>
+                        <div style={{fontWeight:700,fontSize:13,marginBottom:3}}>{sub.mname}</div>
+                        <div style={{color:th.sub,fontSize:11,lineHeight:1.7}}>{SUB_NAMES[sub.plan]} · €{sub.price}/Nutzer/Mon. · Endet: <strong>{fmtDate(sub.effEnd)}</strong></div>
+                        <div style={{display:"flex",gap:7,marginTop:7}}><span style={{background:act?"#36B37E22":"#E5393522",color:act?"#36B37E":"#E53935",fontSize:9,fontWeight:800,padding:"2px 9px",borderRadius:20}}>{act?"✅ Aktiv":canc?"🔴 Gekündigt":"⏰"}</span></div>
+                      </div>
+                      {act&&!canc&&<button style={{background:"transparent",border:"1.5px solid #E53935",color:"#E53935",borderRadius:7,padding:"5px 10px",cursor:"pointer",fontSize:10,fontWeight:700}} onClick={()=>{setCancelTarget(sub);nav("cancel");}}>🗑 Kündigen</button>}
+                      {!act&&<button style={{...S.btn(),fontSize:10,padding:"5px 10px"}} onClick={()=>{setActiveMod(MODS.find(m=>m.id===sub.mid));nav("mod-detail");}}>🔄 Verlängern</button>}
+                    </div>
+                    {canc&&<div style={{marginTop:9,fontSize:10,color:"#E53935"}}>⚠ Gekündigt — Zugang bis {fmtDate(sub.effEnd)}</div>}
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+        <div style={{...S.cd,marginBottom:14}}>
+          <div style={{fontWeight:700,fontSize:14,marginBottom:14}}>📊 Lernfortschritt</div>
+          {MODS.filter(m=>isUnlocked(m.id)).map(mod=>{
+            const p=getProgress(mod.id);
+            return<div key={mod.id} style={{marginBottom:11}}>
+              <div style={{display:"flex",justifyContent:"space-between",fontSize:12,marginBottom:3}}><span>{mod.icon} {mod.title}</span><span style={{color:th.ac,fontWeight:700}}>{p}%</span></div>
+              <div style={{background:th.bdr,borderRadius:4,height:5,overflow:"hidden"}}><div style={{height:5,borderRadius:4,width:`${p}%`,background:p===100?"#36B37E":th.ac,transition:"width .5s"}}/></div>
+            </div>;
+          })}
+          {!MODS.filter(m=>isUnlocked(m.id)).length&&<div style={{color:th.sub,fontSize:12}}>Noch keine Module abonniert.</div>}
+        </div>
+      </div>
+    </div>
+  );
+
+  // CERTIFICATE
+  if(view==="cert"){
+    const mod=certMod||MODS[2];
+    const cid=`CLS-${mod.code}-${Date.now().toString(36).toUpperCase().slice(-6)}`;
+    const iss=new Date().toLocaleDateString("de-AT");
+    const val=new Date(Date.now()+365*24*60*60*1000).toLocaleDateString("de-AT");
+    return(
+      <div style={S.app}><Hdr/>
+        <div style={{...S.pg,maxWidth:740}}>
+          <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:20,flexWrap:"wrap",gap:9}}>
+            <button style={{...S.gh,fontSize:12}} onClick={()=>nav("profile")}>← Zurück</button>
+            <button style={{...S.btn("#36B37E"),fontSize:12}} onClick={()=>window.print()}>🖨 Drucken / PDF</button>
+          </div>
+          <div style={{background:"#FFF",borderRadius:14,overflow:"hidden",boxShadow:"0 8px 44px rgba(0,0,0,.32)",fontFamily:"'DM Sans',sans-serif",color:"#1A1A1A"}}>
+            <div style={{height:9,background:`linear-gradient(90deg,${th.ac},${th.ac}88,#36B37E)`}}/>
+            <div style={{padding:"40px 48px"}}>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:32,flexWrap:"wrap",gap:11}}>
+                <div><div style={{fontFamily:"'Barlow Condensed',sans-serif",fontWeight:900,fontSize:21,letterSpacing:5,color:th.ac}}>CLEAR LEADERSHIP SYSTEMS</div><div style={{fontSize:10,letterSpacing:3,color:"#999",fontWeight:600}}>AVIATION COMPLIANCE TRAINING</div></div>
+                <div style={{textAlign:"right"}}><div style={{fontSize:9,color:"#AAA",letterSpacing:1}}>ZERTIFIKAT-ID</div><div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:12,fontWeight:800,color:th.ac}}>{cid}</div></div>
+              </div>
+              <div style={{textAlign:"center",marginBottom:32}}>
+                <div style={{fontSize:10,letterSpacing:4,color:"#AAA",fontWeight:700,marginBottom:9}}>ZERTIFIKAT</div>
+                <div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:"clamp(26px,5vw,48px)",fontWeight:900,letterSpacing:2,color:"#181818",marginBottom:9}}>{user?.name||"Max Mustermann"}</div>
+                <div style={{width:70,height:2,background:th.ac,margin:"0 auto 18px"}}/>
+                <div style={{fontSize:14,color:"#555",lineHeight:1.7}}>hat das Modul erfolgreich abgeschlossen</div>
+                <div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:24,fontWeight:800,color:"#181818",marginTop:11}}>{mod.code} — {mod.title}</div>
+              </div>
+              <div style={{display:"flex",justifyContent:"center",gap:11,flexWrap:"wrap",marginBottom:32}}>
+                {[mod.cat,"Aviation","IATA Compliant"].map(tag=><div key={tag} style={{background:`${th.ac}11`,border:`1px solid ${th.ac}44`,borderRadius:20,padding:"5px 16px",fontSize:11,fontWeight:700,color:th.ac}}>{tag}</div>)}
+              </div>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-end",borderTop:"1.5px solid #E5E5E5",paddingTop:22,flexWrap:"wrap",gap:13}}>
+                <div><div style={{fontSize:9,color:"#AAA",letterSpacing:1,marginBottom:3}}>AUSGESTELLT AM</div><div style={{fontWeight:700,fontSize:13}}>{iss}</div><div style={{fontSize:9,color:"#AAA",letterSpacing:1,marginTop:7,marginBottom:3}}>GÜLTIG BIS</div><div style={{fontWeight:700,fontSize:13}}>{val}</div></div>
+                <div style={{textAlign:"center"}}><div style={{width:84,height:84,border:`2.5px solid ${th.ac}`,borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center",flexDirection:"column",background:`${th.ac}08`}}><span style={{fontSize:24}}>✈</span><span style={{fontSize:7,letterSpacing:1.5,color:th.ac,fontWeight:900}}>CERTIFIED</span></div></div>
+                <div style={{textAlign:"right"}}><div style={{width:130,borderBottom:"1.5px solid #333",marginBottom:5}}/><div style={{fontSize:10,color:"#888"}}>Stephan Gruber</div><div style={{fontSize:9,color:"#AAA"}}>CEO, Clear Leadership Systems</div><div style={{fontSize:9,color:"#AAA",marginTop:2}}>clear-leadership-systems.com</div></div>
+              </div>
+            </div>
+            <div style={{height:5,background:`linear-gradient(90deg,#36B37E,${th.ac})`}}/>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // ANALYTICS (CEO)
+  if(view==="analytics")return(
+    <div style={S.app}><Hdr/>
+      <div style={S.pg}>
+        <div style={{...S.H2,marginBottom:6}}>ANALYTICS DASHBOARD</div>
+        <div style={{color:th.sub,fontSize:12,marginBottom:24}}>Letzte 12 Monate · Echtzeit-Übersicht</div>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(150px,1fr))",gap:13,marginBottom:26}}>
+          {[{icon:"💰",v:"€109.2k",l:"Umsatz",d:"+23%",up:true},{icon:"👥",v:"420",l:"Nutzer",d:"+18%",up:true},{icon:"🎯",v:"74%",l:"Abschlussrate",d:"+5%",up:true},{icon:"🔑",v:subs.length+38,l:"Lizenzen",d:`+${subs.length}`,up:true}].map(k=>(
+            <div key={k.l} style={S.cd}>
+              <div style={{fontSize:20,marginBottom:7}}>{k.icon}</div>
+              <div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:28,fontWeight:900,color:th.ac,lineHeight:1}}>{k.v}</div>
+              <div style={{color:th.sub,fontSize:10,fontWeight:700,letterSpacing:1,marginTop:3}}>{k.l.toUpperCase()}</div>
+              <div style={{marginTop:7,fontSize:11,fontWeight:700,color:k.up?"#36B37E":"#E53935"}}>{k.d} {k.up?"▲":"▼"}</div>
+            </div>
+          ))}
+        </div>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(300px,1fr))",gap:15,marginBottom:15}}>
+          <div style={S.cd}>
+            <div style={{fontWeight:700,fontSize:13,marginBottom:14}}>Monatsumsatz</div>
+            <ResponsiveContainer width="100%" height={190}><BarChart data={REV}><CartesianGrid strokeDasharray="3 3" stroke={th.bdr}/><XAxis dataKey="m" tick={{fill:th.sub,fontSize:9}} axisLine={false} tickLine={false}/><YAxis tick={{fill:th.sub,fontSize:9}} axisLine={false} tickLine={false} tickFormatter={v=>`€${v/1000}k`}/><Tooltip contentStyle={{background:th.sur,border:`1px solid ${th.bdr}`,borderRadius:8,color:th.txt}} formatter={v=>[`€${v}`,""]} /><Bar dataKey="v" fill={th.ac} radius={[4,4,0,0]}/></BarChart></ResponsiveContainer>
+          </div>
+          <div style={S.cd}>
+            <div style={{fontWeight:700,fontSize:13,marginBottom:14}}>Modulverteilung</div>
+            <ResponsiveContainer width="100%" height={190}><PieChart><Pie data={PIE} cx="50%" cy="50%" outerRadius={72} dataKey="value" label={({percent})=>`${(percent*100).toFixed(0)}%`} labelLine={false}>{PIE.map((e,i)=><Cell key={i} fill={e.color}/>)}</Pie><Tooltip contentStyle={{background:th.sur,border:`1px solid ${th.bdr}`,borderRadius:8,color:th.txt}}/></PieChart></ResponsiveContainer>
+            <div style={{display:"flex",flexWrap:"wrap",gap:"5px 12px",marginTop:9}}>{PIE.map(m=><div key={m.name} style={{display:"flex",alignItems:"center",gap:4,fontSize:9}}><div style={{width:7,height:7,borderRadius:2,background:m.color}}/><span style={{color:th.sub}}>{m.name}</span></div>)}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  // HELP
+  if(view==="help"){
+    const cats=[{k:"tech",icon:"⚙",l:"Technisches Problem",sol:"Cache leeren (Strg+Shift+R). Bei Problemen Ticket senden."},{k:"billing",icon:"💳",l:"Zahlungsproblem",sol:"Zahlungsmethode unter Profil prüfen. Erstattungen in 5-7 Werktagen."},{k:"access",icon:"🔑",l:"Zugriffsproblem",sol:"'Passwort vergessen' nutzen. Konto nach 5 Fehlversuchen 30 Min. gesperrt."},{k:"cert",icon:"📜",l:"Zertifikat",sol:"Zertifikate nach Prüfungsbestehen automatisch generiert."},{k:"other",icon:"💬",l:"Sonstiges",sol:"Ticket senden. Reaktionszeit: 4 Stunden."}];
+    return(
+      <div style={S.app}><Hdr/>
+        <div style={S.pg}>
+          <div style={S.H2}>HILFE & SUPPORT</div>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(180px,1fr))",gap:11,marginBottom:20}}>
+            {cats.map(cat=><div key={cat.k} style={{...S.cd,cursor:"pointer",border:helpCat?.k===cat.k?`2px solid ${th.ac}`:`1px solid ${th.bdr}`,background:helpCat?.k===cat.k?th.acl:th.sur,transition:"transform .15s"}} onClick={()=>setHelpCat(cat)} onMouseEnter={e=>e.currentTarget.style.transform="translateY(-2px)"} onMouseLeave={e=>e.currentTarget.style.transform=""}><div style={{fontSize:28,marginBottom:9}}>{cat.icon}</div><div style={{fontWeight:700,fontSize:12}}>{cat.l}</div></div>)}
+          </div>
+          {helpCat&&<div style={{...S.cd,marginBottom:20,borderLeft:`3px solid ${th.ac}`}}><div style={{color:th.ac,fontSize:9,fontWeight:800,letterSpacing:2,marginBottom:7}}>LÖSUNG</div><div style={{fontSize:13,lineHeight:1.8}}>{helpCat.sol}</div></div>}
+          <div style={S.cd}>
+            <div style={{...S.H2,marginBottom:14}}>TICKET SENDEN</div>
+            <div style={{display:"flex",flexDirection:"column",gap:12}}>
+              <div style={{display:"flex",gap:11,flexWrap:"wrap"}}>
+                <div style={{flex:"1 1 150px"}}><label style={S.lbl}>NAME</label><input style={S.inp} placeholder="Max Mustermann"/></div>
+                <div style={{flex:"1 1 190px"}}><label style={S.lbl}>E-MAIL</label><input style={S.inp} type="email" placeholder="email@airline.com"/></div>
+              </div>
+              <div><label style={S.lbl}>NACHRICHT</label><textarea style={{...S.inp,height:75,resize:"vertical"}}/></div>
+              <button style={{...S.btn(),alignSelf:"flex-start",padding:"10px 22px"}}>Absenden ↗</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return<div style={S.app}><Hdr/><div style={{...S.pg,textAlign:"center",paddingTop:70,color:th.sub,fontSize:32}}>🔄</div></div>;
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(App));
+</script>
+</body>
+</html>
