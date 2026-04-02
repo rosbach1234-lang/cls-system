@@ -1,1 +1,1 @@
-const http=require('http');const fs=require('fs');const p=process.env.PORT||3001;http.createServer((q,r)=>{fs.readFile('index.html',(e,d)=>{r.writeHead(e?404:200,{'Content-Type':'text/html'});r.end(e?'error':d);});}).listen(p,()=>console.log('OK '+p));
+const http=require('http');const fs=require('fs');const path=require('path');const p=process.env.PORT||8080;http.createServer((q,r)=>{let f=path.join(__dirname,'index.html');fs.readFile(f,(e,d)=>{r.writeHead(e?404:200,{'Content-Type':'text/html'});r.end(e?'Not found':d);});}).listen(p,()=>console.log('OK '+p));
