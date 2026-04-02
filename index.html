@@ -5,11 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CLS — Clear Leadership Systems | Aviation Ground Operations</title>
 <meta name="description" content="CLS delivers aviation ground operations consulting and CBT training. Built from 10+ years of frontline experience.">
-<meta property="og:title" content="CLS — Clear Leadership Systems">
-<meta property="og:description" content="Aviation Ground Operations Consulting & CBT Platform. Built from the inside. Delivered worldwide.">
-<meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
@@ -198,249 +195,532 @@ footer{background:var(--ink);padding:48px 0 24px;}
 }
 
 
-/* ══ UNIFIED PLATFORM ADDITIONS ══ */
-.screen{display:none!important;}
-.screen.active{display:block!important;}
-#screen-home{display:block!important;}
+/* ══════════════════════════════════════════
+   SCREEN SYSTEM
+══════════════════════════════════════════ */
+.screen { display: none !important; }
+.screen.active { display: block !important; }
+#screen-home { display: block !important; }
+#screen-app { display: grid !important; }
 
-/* LOGIN */
-#screen-login{background:var(--ink);min-height:100vh;display:flex!important;align-items:center;justify-content:center;padding:80px 20px;}
-.login-wrap{width:100%;max-width:400px;}
-.login-logo{text-align:center;margin-bottom:32px;}
-.ll-big{font-family:'Syne',sans-serif;font-size:64px;font-weight:800;color:#fff;letter-spacing:-4px;line-height:1;}
-.ll-big span{color:#3b82f6;}
-.ll-sub{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.2);margin-top:6px;}
-.login-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);padding:32px;}
-.login-tabs{display:flex;border-bottom:1px solid rgba(255,255,255,0.07);margin-bottom:22px;}
-.lt-btn{background:transparent;border:none;color:rgba(255,255,255,0.35);padding:9px 16px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;letter-spacing:0.5px;border-bottom:2px solid transparent;margin-bottom:-1px;transition:.15s;}
-.lt-btn.active{color:#fff;border-bottom-color:#2563eb;}
-.lf-group{margin-bottom:13px;}
-.lf-group label{display:block;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:5px;}
-.lf-group input,.lf-group select{width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);color:#fff;padding:10px 13px;font-size:13px;font-family:'Inter',sans-serif;outline:none;}
-.lf-group input:focus,.lf-group select:focus{border-color:#2563eb;}
-.lf-group select option{background:#111827;}
-.lf-grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.btn-login-submit{width:100%;background:#2563eb;color:#fff;border:none;padding:12px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;margin-top:8px;letter-spacing:0.5px;transition:.15s;}
-.btn-login-submit:hover{background:#1d4ed8;}
-.demo-box{margin-top:18px;padding:12px 14px;background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.15);}
-.db-title{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#f59e0b;margin-bottom:7px;}
-.db-item{font-size:11px;font-family:monospace;color:rgba(255,255,255,0.4);cursor:pointer;padding:2px 0;transition:.15s;}
-.db-item:hover{color:#fff;}
-.btn-back{background:transparent;border:none;color:rgba(255,255,255,0.4);font-size:12px;cursor:pointer;font-family:'Inter',sans-serif;margin-top:16px;display:block;text-align:center;width:100%;}
-.btn-back:hover{color:#fff;}
-
-/* APP */
-#screen-app{background:#0a0a0f;min-height:100vh;display:grid!important;grid-template-columns:220px 1fr;}
-.app-sidebar{background:rgba(255,255,255,0.02);border-right:1px solid rgba(255,255,255,0.06);padding:0;position:sticky;top:0;height:100vh;overflow-y:auto;}
-.sb-brand{padding:20px;border-bottom:1px solid rgba(255,255,255,0.06);}
-.sb-brand-logo{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:#fff;letter-spacing:-1px;}
-.sb-brand-logo span{color:#3b82f6;}
-.sb-user-box{padding:14px 18px;border-bottom:1px solid rgba(255,255,255,0.06);}
-.sb-avatar{width:36px;height:36px;background:#2563eb;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:14px;font-weight:800;color:#fff;margin-bottom:6px;}
-.sb-uname{font-size:12px;font-weight:700;color:#fff;}
-.sb-urole{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.3);}
-.sb-section-label{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.2);padding:14px 18px 5px;}
-.sb-nav-item{display:flex;align-items:center;gap:9px;padding:9px 18px;font-size:12px;font-weight:600;color:rgba(255,255,255,0.4);cursor:pointer;border-left:2px solid transparent;transition:.15s;letter-spacing:0.2px;}
-.sb-nav-item:hover{color:#fff;background:rgba(255,255,255,0.03);}
-.sb-nav-item.active{color:#fff;border-left-color:#2563eb;background:rgba(37,99,235,0.06);}
-.app-main{overflow-y:auto;min-height:100vh;}
-.app-page{display:none;padding:32px;}
-.app-page.active{display:block;}
-
-/* DASHBOARD */
-.dash-welcome{margin-bottom:24px;}
-.dash-title{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;color:#fff;margin-bottom:3px;}
-.dash-sub{font-size:12px;color:rgba(255,255,255,0.35);}
-.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px;}
-.kpi-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);padding:18px;}
-.kpi-val{font-family:'Syne',sans-serif;font-size:30px;font-weight:800;color:#fff;line-height:1;}
-.kpi-lbl{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-top:4px;}
-.prog-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.prog-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);padding:18px;cursor:pointer;transition:.2s;border-left:3px solid transparent;}
-.prog-card:hover{background:rgba(255,255,255,0.05);border-left-color:#2563eb;}
-.prog-card.exec-card{border-left-color:#d97706;background:rgba(217,119,6,0.04);}
-.prog-level{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:7px;}
-.lv-op{color:#3b82f6;}
-.lv-sup{color:#f59e0b;}
-.lv-mgmt{color:#a78bfa;}
-.lv-exec{color:#d97706;}
-.prog-title{font-size:13px;font-weight:700;color:#fff;margin-bottom:3px;}
-.prog-desc{font-size:11px;color:rgba(255,255,255,0.35);line-height:1.55;margin-bottom:12px;}
-.prog-footer{display:flex;justify-content:space-between;align-items:center;}
-.prog-mods{font-size:10px;font-family:monospace;color:rgba(255,255,255,0.25);}
-.btn-start{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);color:#fff;padding:5px 12px;font-size:10px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:.15s;}
-.btn-start:hover{background:#2563eb;border-color:#2563eb;}
-.enroll-btn{background:transparent;border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.5);padding:5px 12px;font-size:10px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:.15s;}
-.enroll-btn:hover{color:#fff;border-color:#fff;}
-
-/* QUIZ */
-.quiz-container{max-width:700px;}
-.quiz-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
-.quiz-prog-bar{background:rgba(255,255,255,0.08);height:3px;margin-bottom:28px;}
-.quiz-prog-fill{height:3px;background:#2563eb;transition:.3s;}
-.quiz-badge{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#3b82f6;}
-.quiz-counter{font-size:11px;font-family:monospace;color:rgba(255,255,255,0.3);}
-.quiz-topic-lbl{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:10px;}
-.quiz-question{font-family:'Syne',sans-serif;font-size:20px;font-weight:700;color:#fff;line-height:1.4;margin-bottom:24px;}
-.quiz-options{display:flex;flex-direction:column;gap:7px;}
-.q-opt{display:flex;align-items:flex-start;gap:12px;padding:12px 16px;border:1px solid rgba(255,255,255,0.08);cursor:pointer;transition:.15s;}
-.q-opt:hover:not(.revealed){border-color:rgba(255,255,255,0.25);}
-.q-opt.selected{border-color:#2563eb;background:rgba(37,99,235,0.08);}
-.q-opt.correct{border-color:#10b981;background:rgba(16,185,129,0.08);}
-.q-opt.wrong{border-color:#ef4444;background:rgba(239,68,68,0.08);}
-.opt-letter{width:26px;height:26px;background:rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;font-family:monospace;color:rgba(255,255,255,0.4);}
-.q-opt.selected .opt-letter{background:#2563eb;color:#fff;}
-.q-opt.correct .opt-letter{background:#10b981;color:#fff;}
-.q-opt.wrong .opt-letter{background:#ef4444;color:#fff;}
-.opt-text{font-size:13px;color:rgba(255,255,255,0.7);line-height:1.5;padding-top:3px;}
-.quiz-textarea{width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);color:#fff;padding:14px;font-size:12px;font-family:'Inter',sans-serif;min-height:130px;resize:vertical;outline:none;margin-top:12px;}
-.quiz-textarea:focus{border-color:#2563eb;}
-.quiz-textarea::placeholder{color:rgba(255,255,255,0.2);}
-.expl-box{margin-top:14px;padding:14px 18px;background:rgba(255,255,255,0.03);border-left:3px solid #2563eb;}
-.expl-lbl{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#3b82f6;margin-bottom:5px;}
-.expl-txt{font-size:12px;color:rgba(255,255,255,0.6);line-height:1.7;}
-.quiz-actions{display:flex;justify-content:space-between;margin-top:22px;}
-.btn-quiz-back{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.5);padding:11px 22px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;}
-.btn-quiz-action{background:#2563eb;color:#fff;border:none;padding:11px 24px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:.15s;}
-.btn-quiz-action:disabled{opacity:.3;cursor:not-allowed;}
-
-/* RESULT */
-.result-hero{padding:44px;text-align:center;margin-bottom:16px;}
-.result-hero.pass{background:linear-gradient(135deg,rgba(16,185,129,.12),transparent);}
-.result-hero.fail{background:linear-gradient(135deg,rgba(239,68,68,.12),transparent);}
-.result-score{font-family:'Syne',sans-serif;font-size:88px;font-weight:800;line-height:1;}
-.result-verdict{font-size:18px;font-weight:700;margin-top:6px;}
-.result-cert{display:inline-block;border:1px solid rgba(255,255,255,0.15);padding:10px 22px;margin-top:18px;}
-.rc-lbl{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.3);}
-.rc-code{font-family:monospace;font-size:12px;color:#fff;margin-top:3px;}
-
-/* ANALYTICS */
-.ana-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-.ana-card{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.07);padding:18px;}
-.ana-card-title{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:14px;}
-.bar-row{display:flex;align-items:center;gap:8px;margin-bottom:9px;}
-.bar-label{font-size:10px;color:rgba(255,255,255,0.4);min-width:100px;}
-.bar-track{flex:1;background:rgba(255,255,255,0.06);height:4px;}
-.bar-fill{height:4px;}
-.bar-val{font-size:9px;font-family:monospace;font-weight:700;min-width:30px;text-align:right;}
-
-/* PROFILE */
-.profile-grid{display:grid;grid-template-columns:240px 1fr;gap:18px;}
-.profile-card{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.07);padding:22px;}
-.pf-av{width:56px;height:56px;background:#2563eb;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:#fff;margin:0 auto 12px;}
-.pf-name{font-size:15px;font-weight:700;color:#fff;text-align:center;}
-.pf-role{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#3b82f6;text-align:center;margin-top:2px;}
-.pf-co{font-size:11px;color:rgba(255,255,255,0.35);text-align:center;margin-top:2px;}
-.pf-stat-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.05);font-size:11px;}
-.pf-stat-l{color:rgba(255,255,255,0.35);}
-.pf-stat-r{font-weight:700;font-family:monospace;color:#fff;}
-.cert-item{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);padding:11px 14px;display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
-.ci-title{font-size:12px;font-weight:600;color:#fff;}
-.ci-code{font-size:9px;font-family:monospace;color:rgba(255,255,255,0.3);margin-top:2px;}
-.ci-score{font-size:18px;font-weight:700;color:#10b981;font-family:monospace;}
-
-/* AI CHAT */
-.ai-layout{display:flex;flex-direction:column;height:calc(100vh - 200px);}
-.ai-msgs{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:14px;padding-bottom:16px;}
-.ai-msg{display:flex;gap:10px;align-items:flex-start;}
-.ai-msg.user{flex-direction:row-reverse;}
-.ai-av{width:30px;height:30px;background:#2563eb;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;}
-.ai-bubble{max-width:560px;padding:11px 14px;font-size:12px;line-height:1.7;color:rgba(255,255,255,0.8);}
-.ai-msg:not(.user) .ai-bubble{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);}
-.ai-msg.user .ai-bubble{background:rgba(37,99,235,0.18);border:1px solid rgba(37,99,235,0.25);}
-.ai-input-row{display:flex;gap:8px;border-top:1px solid rgba(255,255,255,0.07);padding-top:14px;}
-.ai-inp{flex:1;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);color:#fff;padding:11px 14px;font-size:12px;font-family:'Inter',sans-serif;outline:none;}
-.ai-inp:focus{border-color:#2563eb;}
-.btn-ai-send{background:#2563eb;border:none;color:#fff;padding:11px 18px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;}
-
-/* SECURITY */
-.sec-status-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;}
-.sec-item{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.07);padding:16px;}
-.sec-icon{font-size:20px;margin-bottom:7px;}
-.sec-label{font-size:11px;font-weight:700;color:#fff;margin-bottom:3px;}
-.sec-status{font-size:9px;font-weight:700;letter-spacing:1px;}
-.s-ok{color:#10b981;}
-
-/* LEGAL SCREEN */
-#screen-legal{background:#0a0a0f;min-height:100vh;padding:80px 0;}
-.legal-container{max-width:900px;margin:0 auto;padding:0 24px;}
-.legal-back{background:transparent;border:none;color:rgba(255,255,255,0.4);font-size:12px;cursor:pointer;font-family:'Inter',sans-serif;margin-bottom:24px;display:flex;align-items:center;gap:6px;}
-.legal-back:hover{color:#fff;}
-.legal-title{font-family:'Syne',sans-serif;font-size:36px;font-weight:800;color:#fff;margin-bottom:8px;}
-.legal-section{margin-bottom:28px;padding-bottom:28px;border-bottom:1px solid rgba(255,255,255,0.06);}
-.ls-num{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#3b82f6;margin-bottom:6px;}
-.ls-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:#fff;margin-bottom:10px;}
-.ls-body{font-size:13px;color:rgba(255,255,255,0.5);line-height:1.85;}
-.ls-body strong{color:#fff;}
-.disclaimer-highlight{background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.2);border-left:4px solid #ef4444;padding:16px 20px;margin:16px 0;font-size:13px;color:rgba(255,255,255,0.6);line-height:1.75;}
-
-/* PRICING SCREEN */
-#screen-pricing{background:#0a0a0f;min-height:100vh;padding:80px 0;}
-.pricing-container{max-width:1100px;margin:0 auto;padding:0 24px;}
-.price-back{background:transparent;border:none;color:rgba(255,255,255,0.4);font-size:12px;cursor:pointer;font-family:'Inter',sans-serif;margin-bottom:24px;display:flex;align-items:center;gap:6px;}
-.price-back:hover{color:#fff;}
-.dur-tabs{display:inline-flex;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);padding:3px;gap:2px;margin-bottom:28px;}
-.dur-tab{background:transparent;border:none;color:rgba(255,255,255,0.35);padding:7px 14px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;letter-spacing:0.5px;transition:.15s;}
-.dur-tab.active{background:#2563eb;color:#fff;}
-.price-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,0.08);margin-bottom:2px;}
-.price-card{background:#0a0a0f;padding:32px 24px;position:relative;}
-.price-card.featured{background:rgba(37,99,235,0.06);}
-.pc-badge{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:#2563eb;color:#fff;font-size:9px;font-weight:700;padding:2px 14px;letter-spacing:1px;white-space:nowrap;}
-.pc-name{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:14px;}
-.pc-price{font-family:'Syne',sans-serif;font-size:44px;font-weight:800;color:#fff;line-height:1;}
-.pc-price sup{font-size:18px;vertical-align:top;margin-top:6px;font-weight:600;}
-.pc-period{font-size:11px;color:rgba(255,255,255,0.3);margin-top:3px;margin-bottom:20px;}
-.pc-features{list-style:none;margin-bottom:24px;}
-.pc-features li{font-size:12px;color:rgba(255,255,255,0.55);padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;gap:7px;}
-.pc-features li::before{content:'✓';color:#10b981;font-weight:700;flex-shrink:0;}
-.btn-pc{width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:#fff;padding:12px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:.15s;}
-.btn-pc:hover{background:rgba(255,255,255,0.1);}
-.price-card.featured .btn-pc{background:#2563eb;border-color:#2563eb;}
-.enterprise-band{background:rgba(37,99,235,0.06);border:1px solid rgba(37,99,235,0.2);padding:36px;display:grid;grid-template-columns:1fr auto;gap:28px;align-items:center;margin-top:2px;}
-.eb-title{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#fff;margin-bottom:6px;}
-.eb-desc{font-size:12px;color:rgba(255,255,255,0.4);line-height:1.7;max-width:540px;}
-.btn-enterprise{background:#d97706;color:#0a0a0f;border:none;padding:12px 28px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap;}
-
-/* TOAST */
-.toast{position:fixed;bottom:20px;right:20px;background:#111827;border:1px solid rgba(255,255,255,0.1);color:#fff;padding:10px 18px;font-size:12px;z-index:9999;transform:translateY(60px);opacity:0;transition:.3s;max-width:320px;}
-.toast.show{transform:translateY(0);opacity:1;}
-.toast.green{border-left:3px solid #10b981;}
-.toast.red{border-left:3px solid #ef4444;}
-
-/* PAYMENT MODAL */
-.pay-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:2000;display:none;align-items:center;justify-content:center;padding:20px;}
-.pay-overlay.show{display:flex;}
-.pay-modal{background:#111827;max-width:460px;width:100%;padding:32px;}
-.pay-modal-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:#fff;margin-bottom:3px;}
-.pay-modal-sub{font-size:12px;color:rgba(255,255,255,0.35);margin-bottom:20px;}
-.pay-close{float:right;background:rgba(255,255,255,0.08);border:none;color:#fff;width:30px;height:30px;font-size:13px;cursor:pointer;margin-top:-4px;}
-.pay-methods{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:18px;}
-.pay-m{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);padding:10px;text-align:center;cursor:pointer;transition:.15s;}
-.pay-m.active{border-color:#2563eb;background:rgba(37,99,235,0.1);}
-.pay-m-icon{font-size:18px;margin-bottom:3px;}
-.pay-m-lbl{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.4);}
-.pay-field{margin-bottom:12px;}
-.pay-field label{display:block;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:5px;}
-.pay-field input{width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:#fff;padding:10px 12px;font-size:13px;font-family:'Inter',sans-serif;outline:none;}
-.pay-field input:focus{border-color:#2563eb;}
-.pay-grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.btn-pay{width:100%;background:#2563eb;color:#fff;border:none;padding:13px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;margin-top:4px;}
-.pay-sec{display:flex;align-items:center;gap:6px;margin-top:10px;font-size:10px;color:rgba(255,255,255,0.25);}
-.pay-sec::before{content:'🔒';}
-
-@media(max-width:800px){
-  #screen-app{grid-template-columns:1fr;}
-  .app-sidebar{display:none;}
-  .kpi-row,.ana-grid,.profile-grid,.sec-status-grid,.price-cards{grid-template-columns:1fr;}
-  .enterprise-band{grid-template-columns:1fr;}
-  .prog-grid{grid-template-columns:1fr;}
+/* ══════════════════════════════════════════
+   LEFT SIDEBAR — HAUPTMENÜ (not hamburger)
+══════════════════════════════════════════ */
+#screen-app {
+  grid-template-columns: 240px 1fr;
+  grid-template-rows: auto 1fr;
+  min-height: 100vh;
+  background: #0a0a0f;
 }
 
+/* Top bar inside app */
+.app-topbar {
+  grid-column: 1 / -1;
+  background: rgba(10,10,15,0.98);
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px 0 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.topbar-logo {
+  width: 240px;
+  padding: 0 20px;
+  font-family: 'Syne', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-right: 1px solid rgba(255,255,255,0.07);
+  height: 100%;
+}
+.topbar-logo span { color: #2563eb; }
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.topbar-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.tb-avatar {
+  width: 32px;
+  height: 32px;
+  background: #2563eb;
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Syne', sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+  color: #fff;
+}
+.tb-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+}
+.tb-role {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+}
+.btn-tb-logout {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.5);
+  padding: 6px 14px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: .15s;
+}
+.btn-tb-logout:hover { color: #fff; border-color: #fff; }
+.topbar-lang {
+  display: flex;
+  gap: 2px;
+}
+.lang-btn {
+  background: rgba(255,255,255,0.05);
+  border: none;
+  color: rgba(255,255,255,0.35);
+  padding: 4px 8px;
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: .15s;
+  letter-spacing: 0.5px;
+}
+.lang-btn.active { background: #2563eb; color: #fff; }
+
+/* HAUPTMENÜ — Left sidebar */
+.app-sidebar {
+  background: rgba(255,255,255,0.015);
+  border-right: 1px solid rgba(255,255,255,0.07);
+  padding: 0;
+  position: sticky;
+  top: 56px;
+  height: calc(100vh - 56px);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.sb-section {
+  padding: 18px 0 4px;
+}
+.sb-section-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.18);
+  padding: 0 16px 6px;
+  display: block;
+}
+.sb-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.4);
+  cursor: pointer;
+  border-left: 2px solid transparent;
+  transition: .15s;
+  letter-spacing: 0.2px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.sb-item:hover {
+  color: #fff;
+  background: rgba(255,255,255,0.03);
+  border-left-color: rgba(37,99,235,0.5);
+}
+.sb-item.active {
+  color: #fff;
+  border-left-color: #2563eb;
+  background: rgba(37,99,235,0.08);
+}
+.sb-item-icon { font-size: 14px; flex-shrink: 0; width: 18px; text-align: center; }
+.sb-divider { height: 1px; background: rgba(255,255,255,0.06); margin: 8px 16px; }
+
+/* User info in sidebar */
+.sb-user {
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  margin-bottom: 4px;
+}
+.sb-user-av {
+  width: 40px;
+  height: 40px;
+  background: #2563eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Syne', sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 8px;
+}
+.sb-user-name { font-size: 13px; font-weight: 700; color: #fff; }
+.sb-user-role { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-top: 2px; }
+.sb-user-plan { display: inline-block; background: rgba(37,99,235,0.2); border: 1px solid rgba(37,99,235,0.3); color: #3b82f6; font-size: 9px; font-weight: 700; padding: 2px 8px; margin-top: 6px; letter-spacing: 0.5px; }
+
+/* App content */
+.app-content {
+  overflow-y: auto;
+  min-height: calc(100vh - 56px);
+}
+.app-page { display: none; padding: 28px 32px; }
+.app-page.active { display: block; }
+
+/* ══════════════════════════════════════════
+   DASHBOARD
+══════════════════════════════════════════ */
+.page-header { margin-bottom: 22px; }
+.page-title { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 3px; }
+.page-sub { font-size: 12px; color: rgba(255,255,255,0.3); }
+.kpi-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 20px; }
+.kpi { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); padding: 18px; border-top: 2px solid transparent; }
+.kpi.k-blue { border-top-color: #2563eb; }
+.kpi.k-green { border-top-color: #10b981; }
+.kpi.k-orange { border-top-color: #f59e0b; }
+.kpi.k-purple { border-top-color: #8b5cf6; }
+.kpi-val { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800; color: #fff; line-height: 1; }
+.kpi-lbl { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.28); margin-top: 4px; }
+.section-label { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.22); margin-bottom: 11px; }
+
+/* ══════════════════════════════════════════
+   PROGRAM CARDS
+══════════════════════════════════════════ */
+.prog-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; }
+.prog-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-left: 3px solid transparent;
+  padding: 16px 18px;
+  cursor: pointer;
+  transition: .2s;
+}
+.prog-card:hover { background: rgba(255,255,255,0.05); }
+.prog-card.exec-card { border-left-color: #d97706; background: rgba(217,119,6,0.04); }
+.prog-level { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px; }
+.lv-op { color: #3b82f6; }
+.lv-sup { color: #f59e0b; }
+.lv-mgmt { color: #a78bfa; }
+.lv-exec { color: #d97706; }
+.prog-title { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 3px; }
+.prog-desc { font-size: 11px; color: rgba(255,255,255,0.35); line-height: 1.55; margin-bottom: 11px; }
+.prog-footer { display: flex; justify-content: space-between; align-items: center; }
+.prog-mods { font-size: 10px; font-family: monospace; color: rgba(255,255,255,0.22); }
+.btn-start { background: rgba(37,99,235,0.12); border: 1px solid rgba(37,99,235,0.3); color: #3b82f6; padding: 5px 12px; font-size: 10px; font-weight: 700; cursor: pointer; font-family: 'Inter', sans-serif; transition: .15s; }
+.btn-start:hover { background: #2563eb; color: #fff; border-color: #2563eb; }
+.btn-enroll { background: transparent; border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.4); padding: 5px 12px; font-size: 10px; font-weight: 700; cursor: pointer; font-family: 'Inter', sans-serif; transition: .15s; }
+.btn-enroll:hover { color: #fff; border-color: #fff; }
+
+/* ══════════════════════════════════════════
+   QUIZ
+══════════════════════════════════════════ */
+.quiz-wrap { max-width: 720px; }
+.quiz-topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.quiz-badge { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #3b82f6; }
+.quiz-ctr { font-size: 11px; font-family: monospace; color: rgba(255,255,255,0.25); }
+.quiz-pb { background: rgba(255,255,255,0.08); height: 2px; margin-bottom: 28px; }
+.quiz-pb-fill { height: 2px; background: #2563eb; transition: .3s; }
+.quiz-topic { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.28); margin-bottom: 10px; }
+.quiz-q { font-family: 'Syne', sans-serif; font-size: 19px; font-weight: 700; color: #fff; line-height: 1.4; margin-bottom: 22px; }
+.quiz-opts { display: flex; flex-direction: column; gap: 7px; }
+.q-opt { display: flex; align-items: flex-start; gap: 12px; padding: 11px 14px; border: 1px solid rgba(255,255,255,0.08); cursor: pointer; transition: .15s; }
+.q-opt:hover:not(.revealed) { border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.02); }
+.q-opt.sel { border-color: #2563eb; background: rgba(37,99,235,0.08); }
+.q-opt.corr { border-color: #10b981; background: rgba(16,185,129,0.08); }
+.q-opt.wrong { border-color: #ef4444; background: rgba(239,68,68,0.08); }
+.opt-l { width: 25px; height: 25px; background: rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; flex-shrink: 0; font-family: monospace; color: rgba(255,255,255,0.35); }
+.q-opt.sel .opt-l { background: #2563eb; color: #fff; }
+.q-opt.corr .opt-l { background: #10b981; color: #fff; }
+.q-opt.wrong .opt-l { background: #ef4444; color: #fff; }
+.opt-txt { font-size: 13px; color: rgba(255,255,255,0.65); line-height: 1.5; padding-top: 2px; }
+.quiz-ta { width: 100%; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); color: #fff; padding: 14px; font-size: 13px; font-family: 'Inter', sans-serif; min-height: 140px; resize: vertical; outline: none; margin-top: 12px; }
+.quiz-ta:focus { border-color: #2563eb; }
+.quiz-ta::placeholder { color: rgba(255,255,255,0.2); }
+.expl { margin-top: 14px; padding: 13px 16px; background: rgba(255,255,255,0.03); border-left: 3px solid #2563eb; }
+.expl-lbl { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #3b82f6; margin-bottom: 5px; }
+.expl-txt { font-size: 12px; color: rgba(255,255,255,0.55); line-height: 1.7; }
+.quiz-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 22px; gap: 10px; }
+.btn-qback { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.4); padding: 11px 20px; font-size: 12px; font-weight: 700; cursor: pointer; font-family: 'Inter', sans-serif; transition: .15s; }
+.btn-qback:hover { color: #fff; }
+.btn-qaction { background: #2563eb; color: #fff; border: none; padding: 11px 24px; font-size: 12px; font-weight: 700; cursor: pointer; font-family: 'Inter', sans-serif; transition: .15s; }
+.btn-qaction:hover { background: #1d4ed8; }
+.btn-qaction:disabled { opacity: .3; cursor: not-allowed; }
+
+/* RESULTS */
+.result-hero { padding: 44px 32px; text-align: center; margin-bottom: 16px; }
+.result-hero.pass { background: linear-gradient(135deg, rgba(16,185,129,.12), transparent); }
+.result-hero.fail { background: linear-gradient(135deg, rgba(239,68,68,.12), transparent); }
+.res-score { font-family: 'Syne', sans-serif; font-size: 88px; font-weight: 800; line-height: 1; }
+.res-verdict { font-size: 18px; font-weight: 700; margin-top: 6px; }
+.res-cert { display: inline-block; border: 1px solid rgba(255,255,255,0.15); padding: 10px 22px; margin-top: 18px; }
+.rc-lbl { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.3); }
+.rc-code { font-family: monospace; font-size: 12px; color: #fff; margin-top: 3px; }
+
+/* ANALYTICS */
+.ana-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.07); }
+.card-head { padding: 13px 16px; border-bottom: 1px solid rgba(255,255,255,0.06); font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.3); }
+.card-body { padding: 16px; }
+.bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 9px; }
+.bar-lbl { font-size: 10px; color: rgba(255,255,255,0.35); min-width: 110px; }
+.bar-track { flex: 1; background: rgba(255,255,255,0.06); height: 4px; }
+.bar-fill { height: 4px; }
+.bar-val { font-size: 9px; font-family: monospace; font-weight: 700; min-width: 32px; text-align: right; }
+
+/* PROFILE */
+.profile-layout { display: grid; grid-template-columns: 220px 1fr; gap: 16px; }
+.profile-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.07); padding: 20px; }
+.pf-av { width: 52px; height: 52px; background: #2563eb; display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 800; color: #fff; margin: 0 auto 10px; }
+.pf-name { font-size: 14px; font-weight: 700; color: #fff; text-align: center; }
+.pf-role-lbl { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #3b82f6; text-align: center; margin-top: 2px; }
+.pf-co { font-size: 11px; color: rgba(255,255,255,0.3); text-align: center; margin-top: 2px; }
+.pf-stat { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 11px; margin-top: 14px; }
+.pf-sl { color: rgba(255,255,255,0.3); }
+.pf-sr { font-weight: 700; font-family: monospace; color: #fff; }
+.cert-item { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.07); padding: 10px 13px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.ci-title { font-size: 12px; font-weight: 600; color: #fff; }
+.ci-code { font-size: 9px; font-family: monospace; color: rgba(255,255,255,0.25); margin-top: 2px; }
+.ci-score { font-size: 18px; font-weight: 700; color: #10b981; font-family: monospace; }
+
+/* AI */
+.ai-layout { display: flex; flex-direction: column; height: calc(100vh - 220px); }
+.ai-msgs { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; padding-bottom: 16px; }
+.ai-msg { display: flex; gap: 10px; align-items: flex-start; }
+.ai-msg.user { flex-direction: row-reverse; }
+.ai-av { width: 28px; height: 28px; background: #2563eb; display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; }
+.ai-bubble { max-width: 540px; padding: 10px 14px; font-size: 12px; line-height: 1.7; color: rgba(255,255,255,0.75); }
+.ai-msg:not(.user) .ai-bubble { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07); }
+.ai-msg.user .ai-bubble { background: rgba(37,99,235,0.15); border: 1px solid rgba(37,99,235,0.25); }
+.ai-row { display: flex; gap: 8px; border-top: 1px solid rgba(255,255,255,0.07); padding-top: 13px; }
+.ai-inp { flex: 1; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); color: #fff; padding: 10px 14px; font-size: 12px; font-family: 'Inter', sans-serif; outline: none; }
+.ai-inp:focus { border-color: #2563eb; }
+.btn-ai { background: #2563eb; border: none; color: #fff; padding: 10px 18px; font-size: 12px; font-weight: 700; cursor: pointer; font-family: 'Inter', sans-serif; }
+
+/* SECURITY */
+.sec-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-bottom: 16px; }
+.sec-item { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.07); padding: 14px; }
+.sec-icon { font-size: 18px; margin-bottom: 6px; }
+.sec-lbl { font-size: 11px; font-weight: 700; color: #fff; margin-bottom: 3px; }
+.sec-status { font-size: 9px; font-weight: 700; letter-spacing: 1px; }
+.s-ok { color: #10b981; }
+
+/* ══════════════════════════════════════════
+   LOGIN SCREEN
+══════════════════════════════════════════ */
+#screen-login {
+  background: #0a0a0f;
+  min-height: 100vh;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+}
+.login-wrap { width: 100%; max-width: 400px; }
+.login-logo { text-align: center; margin-bottom: 28px; }
+.ll-big { font-family: 'Syne', sans-serif; font-size: 60px; font-weight: 800; color: #fff; letter-spacing: -4px; line-height: 1; }
+.ll-big span { color: #2563eb; }
+.ll-sub { font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.18); margin-top: 5px; }
+.login-box { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); padding: 28px; }
+.login-tab-row { display: flex; border-bottom: 1px solid rgba(255,255,255,0.07); margin-bottom: 20px; }
+.login-tab { background: transparent; border: none; color: rgba(255,255,255,0.3); padding: 8px 16px; font-size: 11px; font-weight: 700; cursor: pointer; font-family: 'Inter', sans-serif; letter-spacing: 0.5px; border-bottom: 2px solid transparent; margin-bottom: -1px; transition: .15s; }
+.login-tab.active { color: #fff; border-bottom-color: #2563eb; }
+.lf { margin-bottom: 12px; }
+.lf label { display: block; font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.28); margin-bottom: 5px; }
+.lf input, .lf select { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); color: #fff; padding: 10px 12px; font-size: 13px; font-family: 'Inter', sans-serif; outline: none; transition: .15s; }
+.lf input:focus, .lf select:focus { border-color: #2563eb; }
+.lf select option { background: #111827; }
+.lf-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.btn-login-go { width: 100%; background: #2563eb; color: #fff; border: none; padding: 12px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: 'Inter', sans-serif; margin-top: 8px; letter-spacing: 0.5px; transition: .15s; }
+.btn-login-go:hover { background: #1d4ed8; }
+.demo-creds { margin-top: 16px; padding: 12px 14px; background: rgba(245,158,11,0.06); border: 1px solid rgba(245,158,11,0.15); }
+.dc-title { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #f59e0b; margin-bottom: 7px; }
+.dc-item { font-size: 11px; font-family: monospace; color: rgba(255,255,255,0.38); cursor: pointer; padding: 2px 0; transition: .15s; }
+.dc-item:hover { color: #fff; }
+.btn-back-home { background: transparent; border: none; color: rgba(255,255,255,0.35); font-size: 12px; cursor: pointer; font-family: 'Inter', sans-serif; margin-top: 14px; display: block; text-align: center; width: 100%; transition: .15s; }
+.btn-back-home:hover { color: #fff; }
+
+/* ══════════════════════════════════════════
+   LEGAL & PRICING SCREENS
+══════════════════════════════════════════ */
+#screen-legal, #screen-pricing {
+  background: #0a0a0f;
+  min-height: 100vh;
+  padding: 80px 0;
+}
+.sub-container { max-width: 1000px; margin: 0 auto; padding: 0 24px; }
+.btn-back-sub { background: transparent; border: none; color: rgba(255,255,255,0.35); font-size: 12px; cursor: pointer; font-family: 'Inter', sans-serif; display: flex; align-items: center; gap: 6px; margin-bottom: 24px; padding: 0; }
+.btn-back-sub:hover { color: #fff; }
+.sub-title { font-family: 'Syne', sans-serif; font-size: 34px; font-weight: 800; color: #fff; letter-spacing: -1px; margin-bottom: 6px; }
+.sub-desc { font-size: 13px; color: rgba(255,255,255,0.35); margin-bottom: 32px; }
+.legal-section { margin-bottom: 26px; padding-bottom: 26px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+.ls-num { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #3b82f6; margin-bottom: 5px; }
+.ls-title { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 700; color: #fff; margin-bottom: 9px; }
+.ls-body { font-size: 13px; color: rgba(255,255,255,0.48); line-height: 1.85; }
+.ls-body strong { color: #fff; }
+.disclaimer-box { background: rgba(239,68,68,.06); border: 1px solid rgba(239,68,68,.2); border-left: 4px solid #ef4444; padding: 14px 18px; margin: 14px 0; font-size: 12.5px; color: rgba(255,255,255,0.55); line-height: 1.75; }
+
+/* Pricing */
+.dur-tabs { display: inline-flex; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); padding: 3px; gap: 2px; margin-bottom: 26px; flex-wrap: wrap; }
+.dur-tab { background: transparent; border: none; color: rgba(255,255,255,0.35); padding: 7px 14px; font-size: 11px; font-weight: 700; cursor: pointer; font-family: 'Inter', sans-serif; letter-spacing: 0.5px; transition: .15s; }
+.dur-tab.active { background: #2563eb; color: #fff; }
+.price-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: rgba(255,255,255,0.08); margin-bottom: 2px; }
+.price-card { background: #0a0a0f; padding: 30px 22px; position: relative; }
+.price-card.feat { background: rgba(37,99,235,0.06); }
+.pc-badge { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: #2563eb; color: #fff; font-size: 9px; font-weight: 700; padding: 2px 14px; letter-spacing: 1px; white-space: nowrap; }
+.pc-name { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.32); margin-bottom: 13px; }
+.pc-price { font-family: 'Syne', sans-serif; font-size: 42px; font-weight: 800; color: #fff; line-height: 1; }
+.pc-price sup { font-size: 17px; vertical-align: top; margin-top: 7px; font-weight: 600; }
+.pc-period { font-size: 11px; color: rgba(255,255,255,0.28); margin-top: 3px; margin-bottom: 18px; }
+.pc-feats { list-style: none; margin-bottom: 22px; }
+.pc-feats li { font-size: 12px; color: rgba(255,255,255,0.52); padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; gap: 7px; }
+.pc-feats li::before { content: '✓'; color: #10b981; font-weight: 700; flex-shrink: 0; }
+.btn-pc { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #fff; padding: 11px; font-size: 12px; font-weight: 700; cursor: pointer; font-family: 'Inter', sans-serif; transition: .15s; }
+.btn-pc:hover { background: rgba(255,255,255,0.1); }
+.price-card.feat .btn-pc { background: #2563eb; border-color: #2563eb; }
+.enterprise-band { background: rgba(37,99,235,0.05); border: 1px solid rgba(37,99,235,0.18); padding: 32px; display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: center; margin-top: 2px; }
+.eb-title { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 800; color: #fff; margin-bottom: 5px; }
+.eb-desc { font-size: 12px; color: rgba(255,255,255,0.38); line-height: 1.7; max-width: 520px; }
+.btn-ent { background: #d97706; color: #0a0a0f; border: none; padding: 12px 26px; font-size: 12px; font-weight: 700; cursor: pointer; font-family: 'Inter', sans-serif; white-space: nowrap; }
+
+/* PAYMENT MODAL */
+.pay-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.88); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; }
+.pay-overlay.show { display: flex; }
+.pay-modal { background: #111827; max-width: 460px; width: 100%; padding: 30px; }
+.pay-title { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 3px; }
+.pay-sub { font-size: 12px; color: rgba(255,255,255,0.35); margin-bottom: 18px; }
+.pay-close { float: right; background: rgba(255,255,255,0.08); border: none; color: #fff; width: 28px; height: 28px; font-size: 13px; cursor: pointer; margin-top: -4px; }
+.pay-methods { display: grid; grid-template-columns: repeat(3,1fr); gap: 7px; margin-bottom: 16px; }
+.pay-m { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); padding: 10px; text-align: center; cursor: pointer; transition: .15s; }
+.pay-m.active { border-color: #2563eb; background: rgba(37,99,235,0.1); }
+.pay-m-ico { font-size: 18px; margin-bottom: 3px; }
+.pay-m-lbl { font-size: 9px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.38); }
+.pf { margin-bottom: 11px; }
+.pf label { display: block; font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.28); margin-bottom: 4px; }
+.pf input { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #fff; padding: 9px 12px; font-size: 13px; font-family: 'Inter', sans-serif; outline: none; }
+.pf input:focus { border-color: #2563eb; }
+.pf-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.btn-pay { width: 100%; background: #2563eb; color: #fff; border: none; padding: 12px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: 'Inter', sans-serif; margin-top: 4px; }
+.pay-sec { display: flex; align-items: center; gap: 6px; margin-top: 9px; font-size: 10px; color: rgba(255,255,255,0.22); }
+.pay-sec::before { content: '🔒'; }
+
+/* TOAST */
+.toast { position: fixed; bottom: 20px; right: 20px; background: #111827; border: 1px solid rgba(255,255,255,0.1); color: #fff; padding: 10px 18px; font-size: 12px; font-weight: 500; z-index: 9999; transform: translateY(60px); opacity: 0; transition: .3s; max-width: 300px; }
+.toast.show { transform: translateY(0); opacity: 1; }
+.toast.green { border-left: 3px solid #10b981; }
+.toast.red { border-left: 3px solid #ef4444; }
+
+/* ══════════════════════════════════════════
+   MOBILE — Responsive
+══════════════════════════════════════════ */
+@media (max-width: 900px) {
+  /* Website responsive already handled */
+  #screen-app {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto 1fr;
+  }
+  .app-topbar { padding: 0 12px; }
+  .topbar-logo { width: auto; border-right: none; font-size: 17px; }
+  .topbar-lang { display: none; }
+
+  /* Sidebar becomes horizontal top bar on mobile */
+  .app-sidebar {
+    position: sticky;
+    top: 56px;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0;
+    background: rgba(10,10,15,0.98);
+    z-index: 50;
+  }
+  .sb-user { display: none; }
+  .sb-section { padding: 0; display: flex; }
+  .sb-section-label { display: none; }
+  .sb-divider { display: none; }
+  .sb-item {
+    padding: 12px 14px;
+    border-left: none;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    font-size: 11px;
+    flex-shrink: 0;
+  }
+  .sb-item.active { border-bottom-color: #2563eb; border-left-color: transparent; }
+  .sb-item-icon { display: none; }
+
+  .app-page { padding: 18px 16px; }
+  .kpi-row { grid-template-columns: repeat(2,1fr); }
+  .prog-grid, .ana-grid, .profile-layout, .sec-grid, .price-cards, .enterprise-band { grid-template-columns: 1fr; }
+  .quiz-wrap { max-width: 100%; }
+  .quiz-q { font-size: 16px; }
+}
+
+@media (max-width: 480px) {
+  .kpi-row { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .kpi-val { font-size: 22px; }
+  .app-page { padding: 14px 12px; }
+  .prog-title { font-size: 12px; }
+  .res-score { font-size: 64px; }
+  .topbar-user .tb-name { display: none; }
+  .topbar-user .tb-role { display: none; }
+}
 </style>
 </head>
 <body>
 
-<!-- ══ HOME SCREEN ══ -->
+<div class="toast" id="toast"></div>
+
+<!-- PAYMENT MODAL -->
+<div class="pay-overlay" id="pay-overlay">
+  <div class="pay-modal">
+    <button class="pay-close" onclick="closePayModal()">✕</button>
+    <div class="pay-title" id="pay-plan">Professional</div>
+    <div class="pay-sub" id="pay-price-sub">€79 / Nutzer / Monat</div>
+    <div class="pay-methods">
+      <div class="pay-m active" onclick="selPay(this)"><div class="pay-m-ico">💳</div><div class="pay-m-lbl">Karte</div></div>
+      <div class="pay-m" onclick="selPay(this)"><div class="pay-m-ico">🅿</div><div class="pay-m-lbl">PayPal</div></div>
+      <div class="pay-m" onclick="selPay(this)"><div class="pay-m-ico">💰</div><div class="pay-m-lbl">Guthaben</div></div>
+    </div>
+    <div class="pf"><label>Karteninhaber</label><input type="text" placeholder="Max Mustermann"></div>
+    <div class="pf"><label>Kartennummer</label><input type="text" placeholder="4242 4242 4242 4242" maxlength="19"></div>
+    <div class="pf-2">
+      <div class="pf"><label>Ablaufdatum</label><input type="text" placeholder="MM/YY"></div>
+      <div class="pf"><label>CVV</label><input type="text" placeholder="123" maxlength="4"></div>
+    </div>
+    <button class="btn-pay" onclick="processPayment()">JETZT BEZAHLEN →</button>
+    <div class="pay-sec">256-bit SSL · PCI-DSS konform · Verschlüsselt</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════
+  HOME SCREEN
+════════════════════════════ -->
 <div class="screen active" id="screen-home">
 <nav>
   <div class="container">
@@ -450,8 +730,8 @@ footer{background:var(--ink);padding:48px 0 24px;}
         <a href="#solution" class="nav-link">Solutions</a>
         <a href="#platform" class="nav-link">CBT Platform</a>
         <a href="#framework" class="nav-link">Framework</a>
-        <a href="#contact" class="nav-link">Contact</a>
-        <button class="nav-cta" onclick="showScreen('login')">LOGIN →</button>
+        <a href="#contact" class="nav-link">Contact</a><a href="#" class="nav-link" onclick="showScreen('pricing')">Preise</a>
+        <button class="nav-cta" onclick="showScreen('login')">ANMELDEN →</button>
       </div>
     </div>
   </div>
@@ -834,7 +1114,7 @@ footer{background:var(--ink);padding:48px 0 24px;}
           </div>
           <div class="cb-item">
             <div class="cb-label">Direct Contact</div>
-            <div class="cb-val"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0669767546656a752b757f7572636b2865696b">[email&#160;protected]</a></div>
+            <div class="cb-val"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f59a8586b5969986d8868c86819098db969a98">[email&#160;protected]</a></div>
             <div class="cb-sub">Response within 24 hours · EN / DE / AT</div>
           </div>
         </div>
@@ -895,9 +1175,9 @@ footer{background:var(--ink);padding:48px 0 24px;}
       </div>
       <div class="footer-col">
         <h4>Contact</h4>
-        <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="741b04073417180759070d070011195a171b19">[email&#160;protected]</a></p>
-        <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="bcddd5ced0d5d2d9cffcdfd0cf91cfc5cfc8d9d192dfd3d1">[email&#160;protected]</a></p>
-        <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="aadacbd8dec4cfd8d9eac9c6d987d9d3d9decfc784c9c5c7">[email&#160;protected]</a></p>
+        <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="87e8f7f4c7e4ebf4aaf4fef4f3e2eaa9e4e8ea">[email&#160;protected]</a></p>
+        <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5f3e362d3336313a2c1f3c332c722c262c2b3a32713c3032">[email&#160;protected]</a></p>
+        <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f989988b8d979c8b8ab99a958ad48a808a8d9c94d79a9694">[email&#160;protected]</a></p>
         <p style="margin-top:12px;">Vienna, Austria · Worldwide</p>
       </div>
     </div>
@@ -905,45 +1185,18 @@ footer{background:var(--ink);padding:48px 0 24px;}
       <div class="footer-copy">© 2025 CLS — Clear Leadership Systems. All intellectual property rights reserved. Unauthorized reproduction prohibited.</div>
       <div class="footer-legal">
         <a href="#" onclick="showScreen('legal')">Legal Notice</a>
-        <a href="CLS_Legal.html#privacy">Privacy Policy</a>
-        <a href="CLS_Legal.html#terms">Terms of Use</a>
-        <a href="CLS_Legal.html#copyright">Copyright</a>
+        <a href="#" onclick="showScreen('legal')">Privacy Policy</a>
+        <a href="#" onclick="showScreen('legal')">Terms of Use</a>
+        <a href="#" onclick="showScreen('legal')">Copyright</a>
       </div>
     </div>
   </div>
 </footer>
 </div>
 
-
-<!-- ═══════════════════════════════════════════
-  SCREENS WRAPPER
-═══════════════════════════════════════════ -->
-
-<div class="toast" id="toast"></div>
-
-<!-- PAYMENT MODAL -->
-<div class="pay-overlay" id="pay-overlay">
-  <div class="pay-modal">
-    <button class="pay-close" onclick="closePayModal()">✕</button>
-    <div class="pay-modal-title" id="pay-plan-name">Professional</div>
-    <div class="pay-modal-sub" id="pay-plan-price">€79 / Nutzer / Monat</div>
-    <div class="pay-methods">
-      <div class="pay-m active" onclick="selectPayMethod(this)"><div class="pay-m-icon">💳</div><div class="pay-m-lbl">Karte</div></div>
-      <div class="pay-m" onclick="selectPayMethod(this)"><div class="pay-m-icon">🅿</div><div class="pay-m-lbl">PayPal</div></div>
-      <div class="pay-m" onclick="selectPayMethod(this)"><div class="pay-m-icon">💰</div><div class="pay-m-lbl">Guthaben</div></div>
-    </div>
-    <div class="pay-field"><label>Karteninhaber</label><input type="text" placeholder="Max Mustermann"></div>
-    <div class="pay-field"><label>Kartennummer</label><input type="text" placeholder="4242 4242 4242 4242" maxlength="19"></div>
-    <div class="pay-grid2">
-      <div class="pay-field"><label>Ablaufdatum</label><input type="text" placeholder="MM/YY"></div>
-      <div class="pay-field"><label>CVV</label><input type="text" placeholder="123" maxlength="4"></div>
-    </div>
-    <button class="btn-pay" onclick="processPayment()">JETZT BEZAHLEN →</button>
-    <div class="pay-sec">256-bit SSL · PCI-DSS konform · Verschlüsselt</div>
-  </div>
-</div>
-
-<!-- ── LOGIN ── -->
+<!-- ════════════════════════════
+  LOGIN SCREEN
+════════════════════════════ -->
 <div class="screen" id="screen-login">
   <div id="login-inner" style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#0a0a0f;padding:80px 20px;">
     <div class="login-wrap">
@@ -951,24 +1204,22 @@ footer{background:var(--ink);padding:48px 0 24px;}
         <div class="ll-big">CL<span>S</span></div>
         <div class="ll-sub">Clear Leadership Systems</div>
       </div>
-      <div class="login-card">
-        <div class="login-tabs">
-          <button class="lt-btn active" onclick="switchTab('login',this)">ANMELDEN</button>
-          <button class="lt-btn" onclick="switchTab('register',this)">REGISTRIEREN</button>
+      <div class="login-box">
+        <div class="login-tab-row">
+          <button class="login-tab active" onclick="switchTab('login',this)">ANMELDEN</button>
+          <button class="login-tab" onclick="switchTab('register',this)">REGISTRIEREN</button>
         </div>
-
         <div id="tab-login">
-          <div class="lf-group"><label>Firmen-E-Mail</label><input type="email" id="li-email" placeholder="name@unternehmen.com"></div>
-          <div class="lf-group"><label>Passwort</label><input type="password" id="li-pw" placeholder="••••••••"></div>
-          <button class="btn-login-submit" onclick="doLogin()">ANMELDEN →</button>
+          <div class="lf"><label>Firmen-E-Mail</label><input type="email" id="li-email" placeholder="name@unternehmen.com"></div>
+          <div class="lf"><label>Passwort</label><input type="password" id="li-pw" placeholder="••••••••"></div>
+          <button class="btn-login-go" onclick="doLogin()">ANMELDEN →</button>
         </div>
-
         <div id="tab-register" style="display:none;">
-          <div class="lf-grid2">
-            <div class="lf-group"><label>Vorname</label><input type="text" id="reg-fn" placeholder="Max"></div>
-            <div class="lf-group"><label>Nachname</label><input type="text" id="reg-ln" placeholder="Muster"></div>
+          <div class="lf-2">
+            <div class="lf"><label>Vorname</label><input type="text" id="reg-fn" placeholder="Max"></div>
+            <div class="lf"><label>Nachname</label><input type="text" id="reg-ln" placeholder="Muster"></div>
           </div>
-          <div class="lf-group">
+          <div class="lf">
             <label>Rolle</label>
             <select id="reg-role">
               <option value="ramp_agent">Ramp Agent</option>
@@ -984,100 +1235,141 @@ footer{background:var(--ink);padding:48px 0 24px;}
               <option value="legal">Legal / Recht</option>
             </select>
           </div>
-          <div class="lf-group"><label>Unternehmen</label><input type="text" id="reg-co" placeholder="Handling GmbH"></div>
-          <div class="lf-group"><label>Firmen-E-Mail</label><input type="email" id="reg-email" placeholder="name@firma.com"></div>
-          <div class="lf-group"><label>Passwort</label><input type="password" id="reg-pw" placeholder="Mindestens 8 Zeichen"></div>
-          <button class="btn-login-submit" onclick="doRegister()">KONTO ERSTELLEN →</button>
+          <div class="lf"><label>Unternehmen</label><input type="text" id="reg-co" placeholder="Handling GmbH"></div>
+          <div class="lf"><label>Firmen-E-Mail</label><input type="email" id="reg-email" placeholder="name@firma.com"></div>
+          <div class="lf"><label>Passwort</label><input type="password" id="reg-pw" placeholder="Min. 8 Zeichen"></div>
+          <button class="btn-login-go" onclick="doRegister()">KONTO ERSTELLEN →</button>
         </div>
-
-        <div class="demo-box">
-          <div class="db-title">DEMO-ZUGÄNGE</div>
-          <div class="db-item" onclick="fillLogin('supervisor@fraport.de','demo123')">supervisor@fraport.de / demo123</div>
-          <div class="db-item" onclick="fillLogin('ceo@menzies.com','demo123')">ceo@menzies.com / demo123</div>
-          <div class="db-item" onclick="fillLogin('trainer@swissport.com','demo123')">trainer@swissport.com / demo123</div>
+        <div class="demo-creds">
+          <div class="dc-title">DEMO-ZUGÄNGE</div>
+          <div class="dc-item" onclick="fillLogin('supervisor@fraport.de','demo123')">supervisor@fraport.de / demo123</div>
+          <div class="dc-item" onclick="fillLogin('ceo@menzies.com','demo123')">ceo@menzies.com / demo123</div>
+          <div class="dc-item" onclick="fillLogin('trainer@swissport.com','demo123')">trainer@swissport.com / demo123</div>
         </div>
       </div>
-      <button class="btn-back" onclick="showScreen('home')">← Zurück zur Website</button>
+      <button class="btn-back-home" onclick="showScreen('home')">← Zurück zur Website</button>
     </div>
   </div>
 </div>
 
-<!-- ── APP ── -->
+<!-- ════════════════════════════
+  APP SCREEN
+════════════════════════════ -->
 <div class="screen" id="screen-app">
-  <div class="app-sidebar">
-    <div class="sb-brand"><div class="sb-brand-logo">CL<span>S</span></div></div>
-    <div class="sb-user-box">
-      <div class="sb-avatar" id="sb-av">ST</div>
-      <div class="sb-uname" id="sb-name">Stephan C.</div>
-      <div class="sb-urole" id="sb-role">CEO</div>
+
+  <!-- Top bar -->
+  <div class="app-topbar">
+    <div class="topbar-logo">CL<span>S</span></div>
+    <div class="topbar-right">
+      <div class="topbar-lang">
+        <button class="lang-btn active" onclick="setLang('de',this)">DE</button>
+        <button class="lang-btn" onclick="setLang('en',this)">EN</button>
+        <button class="lang-btn" onclick="setLang('fr',this)">FR</button>
+        <button class="lang-btn" onclick="setLang('es',this)">ES</button>
+        <button class="lang-btn" onclick="setLang('ru',this)">RU</button>
+        <button class="lang-btn" onclick="setLang('ar',this)">AR</button>
+      </div>
+      <div class="topbar-user">
+        <div class="tb-avatar" id="tb-av">ST</div>
+        <div>
+          <div class="tb-name" id="tb-name">Stephan C.</div>
+          <div class="tb-role" id="tb-role">CEO</div>
+        </div>
+      </div>
+      <button class="btn-tb-logout" onclick="doLogout()">Abmelden</button>
     </div>
-    <div class="sb-section-label">HAUPTMENÜ</div>
-    <div class="sb-nav-item active" onclick="showPage('dashboard')">📊 Dashboard</div>
-    <div class="sb-nav-item" onclick="showPage('programs')">📚 Programme</div>
-    <div class="sb-nav-item" onclick="showPage('analytics')">📈 Analytics</div>
-    <div class="sb-nav-item" onclick="showPage('ai')">🤖 KI-Assistent</div>
-    <div class="sb-section-label">KONTO</div>
-    <div class="sb-nav-item" onclick="showPage('profile')">👤 Profil</div>
-    <div class="sb-nav-item" onclick="showPage('security')">🔒 Sicherheit</div>
-    <div class="sb-nav-item" onclick="showPage('pricing-app')">💳 Preise</div>
-    <div class="sb-nav-item" onclick="doLogout()">⬅ Abmelden</div>
   </div>
-  <div class="app-main">
+
+  <!-- HAUPTMENÜ — Left sidebar -->
+  <div class="app-sidebar">
+    <div class="sb-user" id="sb-user-box">
+      <div class="sb-user-av" id="sb-av">ST</div>
+      <div class="sb-user-name" id="sb-uname">Stephan</div>
+      <div class="sb-user-role" id="sb-urole">CEO</div>
+      <div class="sb-user-plan" id="sb-uplan">Enterprise</div>
+    </div>
+    <div class="sb-section">
+      <span class="sb-section-label">HAUPTMENÜ</span>
+      <div class="sb-item active" onclick="showPage('dashboard')"><span class="sb-item-icon">📊</span>Dashboard</div>
+      <div class="sb-item" onclick="showPage('programs')"><span class="sb-item-icon">📚</span>Programme</div>
+      <div class="sb-item" onclick="showPage('analytics')"><span class="sb-item-icon">📈</span>Analytics</div>
+      <div class="sb-item" onclick="showPage('ai')"><span class="sb-item-icon">🤖</span>KI-Assistent</div>
+    </div>
+    <div class="sb-divider"></div>
+    <div class="sb-section">
+      <span class="sb-section-label">KONTO & SYSTEM</span>
+      <div class="sb-item" onclick="showPage('profile')"><span class="sb-item-icon">👤</span>Mein Profil</div>
+      <div class="sb-item" onclick="showPage('security')"><span class="sb-item-icon">🔒</span>Sicherheit</div>
+      <div class="sb-item" onclick="showPage('pricing-app')"><span class="sb-item-icon">💳</span>Tarife & Zahlung</div>
+    </div>
+    <div class="sb-divider"></div>
+    <div class="sb-section">
+      <span class="sb-section-label">WEBSITE</span>
+      <div class="sb-item" onclick="showScreen('home')"><span class="sb-item-icon">🌐</span>Zur Website</div>
+      <div class="sb-item" onclick="showScreen('legal')"><span class="sb-item-icon">⚖️</span>Rechtliches</div>
+    </div>
+  </div>
+
+  <!-- App content -->
+  <div class="app-content">
 
     <!-- DASHBOARD -->
     <div class="app-page active" id="page-dashboard">
-      <div class="dash-welcome">
-        <div class="dash-title" id="dash-greeting">Willkommen</div>
-        <div class="dash-sub" id="dash-sub"></div>
+      <div class="page-header">
+        <div class="page-title" id="dash-title">Guten Tag</div>
+        <div class="page-sub" id="dash-sub"></div>
       </div>
       <div class="kpi-row">
-        <div class="kpi-card"><div class="kpi-val" id="kpi-e">0</div><div class="kpi-lbl">Programme</div></div>
-        <div class="kpi-card"><div class="kpi-val" id="kpi-p">0</div><div class="kpi-lbl">Bestanden</div></div>
-        <div class="kpi-card"><div class="kpi-val" id="kpi-c">0</div><div class="kpi-lbl">Zertifikate</div></div>
-        <div class="kpi-card"><div class="kpi-val" id="kpi-s">—</div><div class="kpi-lbl">Ø Score</div></div>
+        <div class="kpi k-blue"><div class="kpi-val" id="kpi-e">0</div><div class="kpi-lbl">Eingeschrieben</div></div>
+        <div class="kpi k-green"><div class="kpi-val" id="kpi-p">0</div><div class="kpi-lbl">Bestanden</div></div>
+        <div class="kpi k-orange"><div class="kpi-val" id="kpi-c">0</div><div class="kpi-lbl">Zertifikate</div></div>
+        <div class="kpi k-purple"><div class="kpi-val" id="kpi-s">—</div><div class="kpi-lbl">Ø Score</div></div>
       </div>
-      <div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:12px;">MEINE PROGRAMME</div>
+      <div class="section-label">MEINE PROGRAMME</div>
       <div class="prog-grid" id="dash-progs"></div>
     </div>
 
     <!-- PROGRAMS -->
     <div class="app-page" id="page-programs">
-      <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#fff;margin-bottom:20px;">Programm-Katalog</div>
+      <div class="page-header">
+        <div class="page-title">Programm-Katalog</div>
+        <div class="page-sub">14 CBT-Programme · Von Ramp Agent bis CEO</div>
+      </div>
       <div class="prog-grid" id="prog-catalog"></div>
     </div>
 
     <!-- QUIZ -->
     <div class="app-page" id="page-quiz">
-      <div class="quiz-container">
-        <div class="quiz-top">
+      <div class="quiz-wrap">
+        <div class="quiz-topbar">
           <span class="quiz-badge" id="quiz-badge">MODULE QUIZ</span>
-          <span class="quiz-counter" id="quiz-ctr">1 / 5</span>
+          <span class="quiz-ctr" id="quiz-ctr">1 / 5</span>
         </div>
-        <div class="quiz-prog-bar"><div class="quiz-prog-fill" id="quiz-fill" style="width:20%"></div></div>
-        <div class="quiz-topic-lbl" id="quiz-topic"></div>
-        <div class="quiz-question" id="quiz-q"></div>
-        <div class="quiz-options" id="quiz-opts"></div>
-        <textarea class="quiz-textarea" id="quiz-ta" style="display:none;" placeholder="Beschreiben Sie Ihre Antwort ausführlich (mindestens 100 Wörter)..."></textarea>
-        <div class="expl-box" id="quiz-expl" style="display:none;">
+        <div class="quiz-pb"><div class="quiz-pb-fill" id="quiz-fill" style="width:20%"></div></div>
+        <div class="quiz-topic" id="quiz-topic"></div>
+        <div class="quiz-q" id="quiz-q"></div>
+        <div class="quiz-opts" id="quiz-opts"></div>
+        <textarea class="quiz-ta" id="quiz-ta" style="display:none;" placeholder="Beschreiben Sie Ihre Antwort ausführlich (mindestens 100 Wörter)..."></textarea>
+        <div class="expl" id="quiz-expl" style="display:none;">
           <div class="expl-lbl" id="expl-lbl">ERKLÄRUNG</div>
           <div class="expl-txt" id="expl-txt"></div>
         </div>
-        <div class="quiz-actions">
-          <button class="btn-quiz-back" onclick="showPage('programs')">← Zurück</button>
-          <button class="btn-quiz-action" id="quiz-btn" onclick="quizAction()">Antwort bestätigen</button>
+        <div class="quiz-footer">
+          <button class="btn-qback" onclick="showPage('programs')">← Zurück</button>
+          <button class="btn-qaction" id="quiz-btn" onclick="quizAction()">Antwort bestätigen</button>
         </div>
       </div>
     </div>
 
     <!-- RESULTS -->
     <div class="app-page" id="page-results">
-      <div class="quiz-container">
+      <div class="quiz-wrap">
         <div class="result-hero" id="result-hero">
-          <div class="result-score" id="res-score">0%</div>
-          <div class="result-verdict" id="res-verdict"></div>
+          <div class="res-score" id="res-score">0%</div>
+          <div class="res-verdict" id="res-verdict"></div>
           <div id="res-cert"></div>
         </div>
-        <div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:12px;">AUSWERTUNG</div>
+        <div class="section-label">AUSWERTUNG NACH TESTABSCHLUSS</div>
         <div id="res-review"></div>
         <div style="display:flex;gap:8px;margin-top:18px;">
           <button style="flex:1;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);color:#fff;padding:11px;font-size:11px;font-weight:700;cursor:pointer;" onclick="showPage('programs')">← Programme</button>
@@ -1088,64 +1380,70 @@ footer{background:var(--ink);padding:48px 0 24px;}
 
     <!-- ANALYTICS -->
     <div class="app-page" id="page-analytics">
-      <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#fff;margin-bottom:20px;">Performance Analytics</div>
+      <div class="page-header">
+        <div class="page-title">Performance Analytics</div>
+        <div class="page-sub">Persönliche Lernkurve und Kompetenzanalyse</div>
+      </div>
       <div class="ana-grid">
-        <div class="ana-card">
-          <div class="ana-card-title">SCORE-VERLAUF</div>
-          <div id="score-chart" style="height:90px;display:flex;align-items:flex-end;gap:5px;"></div>
+        <div class="card">
+          <div class="card-head">SCORE-VERLAUF</div>
+          <div class="card-body"><div id="score-chart" style="height:90px;display:flex;align-items:flex-end;gap:5px;"></div></div>
         </div>
-        <div class="ana-card">
-          <div class="ana-card-title">ZERTIFIKATE</div>
-          <div id="cert-ana"></div>
+        <div class="card">
+          <div class="card-head">ZERTIFIKATE</div>
+          <div class="card-body"><div id="cert-ana"></div></div>
         </div>
-        <div class="ana-card" style="grid-column:1/-1;">
-          <div class="ana-card-title">KOMPETENZ-ANALYSE</div>
-          <div id="topic-ana"></div>
+        <div class="card" style="grid-column:1/-1;">
+          <div class="card-head">KOMPETENZ-ANALYSE NACH THEMENBEREICH</div>
+          <div class="card-body"><div id="topic-ana"></div></div>
         </div>
       </div>
     </div>
 
     <!-- AI -->
     <div class="app-page" id="page-ai">
-      <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#fff;margin-bottom:6px;">KI-Lernassistent</div>
-      <div style="font-size:11px;color:rgba(255,255,255,0.3);margin-bottom:18px;">Stellen Sie Fragen zu Ihren Tests, bitten Sie um Erklärungen, lassen Sie Ihre Schwächen analysieren.</div>
+      <div class="page-header">
+        <div class="page-title">KI-Lernassistent</div>
+        <div class="page-sub">Analysiert Ihre Testergebnisse · Erklärt Konzepte · Empfiehlt Lernpfade</div>
+      </div>
       <div class="ai-layout">
         <div class="ai-msgs" id="ai-msgs">
           <div class="ai-msg">
             <div class="ai-av">🤖</div>
-            <div class="ai-bubble">Guten Tag! Ich bin Ihr CLS Lernassistent. Ich analysiere Ihre Testergebnisse, erkläre Konzepte und empfehle Lernpfade. Was möchten Sie wissen?</div>
+            <div class="ai-bubble">Guten Tag! Ich bin Ihr persönlicher CLS-Lernassistent. Ich analysiere Ihre Testergebnisse, erkläre Konzepte und empfehle Ihnen den optimalen Lernpfad. Was möchten Sie wissen?</div>
           </div>
         </div>
-        <div class="ai-input-row">
+        <div class="ai-row">
           <input type="text" class="ai-inp" id="ai-inp" placeholder="Frage stellen..." onkeydown="if(event.key==='Enter')sendAI()">
-          <button class="btn-ai-send" onclick="sendAI()">SENDEN →</button>
+          <button class="btn-ai" onclick="sendAI()">SENDEN →</button>
         </div>
       </div>
     </div>
 
     <!-- PROFILE -->
     <div class="app-page" id="page-profile">
-      <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#fff;margin-bottom:20px;">Mein Profil</div>
-      <div class="profile-grid">
+      <div class="page-header">
+        <div class="page-title">Mein Profil</div>
+        <div class="page-sub">Persönliche Daten, Zertifikate und Executive-Zugang</div>
+      </div>
+      <div class="profile-layout">
         <div class="profile-card">
           <div class="pf-av" id="pf-av">ST</div>
           <div class="pf-name" id="pf-name">—</div>
-          <div class="pf-role" id="pf-role">—</div>
+          <div class="pf-role-lbl" id="pf-role-lbl">—</div>
           <div class="pf-co" id="pf-co">—</div>
-          <div style="margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.06);">
-            <div class="pf-stat-row"><span class="pf-stat-l">Plan</span><span class="pf-stat-r" id="pf-plan">Starter</span></div>
-            <div class="pf-stat-row"><span class="pf-stat-l">Mitglied seit</span><span class="pf-stat-r" id="pf-joined">—</span></div>
-            <div class="pf-stat-row"><span class="pf-stat-l">Zertifikate</span><span class="pf-stat-r" id="pf-cert-count">0</span></div>
-          </div>
+          <div class="pf-stat"><span class="pf-sl">Plan</span><span class="pf-sr" id="pf-plan">Starter</span></div>
+          <div class="pf-stat"><span class="pf-sl">Mitglied seit</span><span class="pf-sr" id="pf-since">—</span></div>
+          <div class="pf-stat"><span class="pf-sl">Zertifikate</span><span class="pf-sr" id="pf-certs-count">0</span></div>
         </div>
         <div>
-          <div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:10px;">MEINE ZERTIFIKATE</div>
+          <div class="section-label">MEINE ZERTIFIKATE</div>
           <div id="cert-list"></div>
-          <div id="exec-box" style="display:none;margin-top:16px;background:rgba(217,119,6,0.06);border:1px solid rgba(217,119,6,0.2);border-left:4px solid #d97706;padding:20px;">
-            <div style="font-size:9px;font-weight:700;letter-spacing:2px;color:#d97706;margin-bottom:8px;">⭐ EXECUTIVE ACCESS</div>
-            <div style="font-family:'Syne',sans-serif;font-size:17px;font-weight:700;color:#fff;margin-bottom:6px;">CEO & Vorstand — Spezieller Zugang</div>
-            <div style="font-size:12px;color:rgba(255,255,255,0.45);line-height:1.7;margin-bottom:14px;">Erweiterte Programme: Luftrecht, internationales Handelsrecht, M&A, Board-Governance, KI-Strategie. Diplomarbeit-Niveau Fragen.</div>
-            <button style="background:#d97706;color:#0a0a0f;border:none;padding:10px 22px;font-size:11px;font-weight:700;cursor:pointer;" onclick="startQuiz('CBT-EX')">EXECUTIVE PROGRAMM STARTEN →</button>
+          <div id="exec-box" style="display:none;margin-top:16px;background:rgba(217,119,6,0.06);border:1px solid rgba(217,119,6,0.2);border-left:4px solid #d97706;padding:18px;">
+            <div style="font-size:9px;font-weight:700;letter-spacing:2px;color:#d97706;margin-bottom:7px;">⭐ EXECUTIVE ACCESS</div>
+            <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:#fff;margin-bottom:5px;">CEO & Vorstand — Spezieller Zugang</div>
+            <div style="font-size:12px;color:rgba(255,255,255,0.4);line-height:1.7;margin-bottom:12px;">Erweiterte Programme auf Diplomarbeit-Niveau: Luftrecht, internationales Handelsrecht, M&A, Board-Governance, KI-Strategie, Krisenmanagement.</div>
+            <button style="background:#d97706;color:#0a0a0f;border:none;padding:9px 20px;font-size:11px;font-weight:700;cursor:pointer;" onclick="startQuiz('CBT-EX')">EXECUTIVE PROGRAMM STARTEN →</button>
           </div>
         </div>
       </div>
@@ -1153,26 +1451,32 @@ footer{background:var(--ink);padding:48px 0 24px;}
 
     <!-- SECURITY -->
     <div class="app-page" id="page-security">
-      <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#fff;margin-bottom:20px;">Sicherheitszentrum</div>
+      <div class="page-header">
+        <div class="page-title">Sicherheitszentrum</div>
+        <div class="page-sub">Account-Sicherheit · Passwort-Rotation · Login-Protokoll</div>
+      </div>
       <div style="background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.2);border-left:4px solid #ef4444;padding:16px 20px;margin-bottom:16px;">
-        <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#ef4444;margin-bottom:5px;">PASSWORT-ROTATION ERFORDERLICH IN</div>
+        <div style="font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#ef4444;margin-bottom:4px;">PASSWORT-ROTATION ERFORDERLICH IN</div>
         <div style="font-family:'Syne',sans-serif;font-size:38px;font-weight:800;color:#fff;" id="pwd-days">47</div>
         <div style="font-size:11px;color:rgba(255,255,255,0.3);">Tagen — Pflicht alle 60 Tage</div>
-        <button style="background:#2563eb;color:#fff;border:none;padding:9px 18px;font-size:11px;font-weight:700;cursor:pointer;margin-top:10px;" onclick="showToast('Passwort-Änderung eingeleitet','green')">JETZT ÄNDERN</button>
+        <button style="background:#2563eb;color:#fff;border:none;padding:8px 18px;font-size:11px;font-weight:700;cursor:pointer;margin-top:10px;" onclick="showToast('Passwort-Änderung eingeleitet','green')">JETZT ÄNDERN</button>
       </div>
-      <div class="sec-status-grid">
-        <div class="sec-item"><div class="sec-icon">🔐</div><div class="sec-label">Passwortstärke</div><div class="sec-status s-ok">● STARK</div></div>
-        <div class="sec-item"><div class="sec-icon">🛡</div><div class="sec-label">Session-Verschlüsselung</div><div class="sec-status s-ok">● JWT AKTIV</div></div>
-        <div class="sec-item"><div class="sec-icon">🔄</div><div class="sec-label">Auto-Rotation</div><div class="sec-status s-ok">● 60 TAGE</div></div>
-        <div class="sec-item"><div class="sec-icon">🌐</div><div class="sec-label">HTTPS / SSL</div><div class="sec-status s-ok">● AKTIV</div></div>
-        <div class="sec-item"><div class="sec-icon">🚫</div><div class="sec-label">Brute-Force-Schutz</div><div class="sec-status s-ok">● 5 VERSUCHE</div></div>
-        <div class="sec-item"><div class="sec-icon">📋</div><div class="sec-label">Zugriffsprotokoll</div><div class="sec-status s-ok">● MONITORING</div></div>
+      <div class="sec-grid">
+        <div class="sec-item"><div class="sec-icon">🔐</div><div class="sec-lbl">Passwortstärke</div><div class="sec-status s-ok">● STARK</div></div>
+        <div class="sec-item"><div class="sec-icon">🛡</div><div class="sec-lbl">Session-Verschlüsselung</div><div class="sec-status s-ok">● JWT AKTIV</div></div>
+        <div class="sec-item"><div class="sec-icon">🔄</div><div class="sec-lbl">Auto-Rotation</div><div class="sec-status s-ok">● 60 TAGE</div></div>
+        <div class="sec-item"><div class="sec-icon">🌐</div><div class="sec-lbl">HTTPS / SSL</div><div class="sec-status s-ok">● AKTIV</div></div>
+        <div class="sec-item"><div class="sec-icon">🚫</div><div class="sec-lbl">Brute-Force-Schutz</div><div class="sec-status s-ok">● 5 VERSUCHE</div></div>
+        <div class="sec-item"><div class="sec-icon">📋</div><div class="sec-lbl">Zugriffsprotokoll</div><div class="sec-status s-ok">● MONITORING</div></div>
       </div>
     </div>
 
     <!-- PRICING IN APP -->
     <div class="app-page" id="page-pricing-app">
-      <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#fff;margin-bottom:20px;">Flexible Tarife</div>
+      <div class="page-header">
+        <div class="page-title">Tarife & Zahlung</div>
+        <div class="page-sub">Flexible Laufzeiten · Kreditkarte, PayPal, Guthaben</div>
+      </div>
       <div class="dur-tabs" id="dur-tabs-app">
         <button class="dur-tab active" onclick="setDur('monthly',this,'app')">Monatlich</button>
         <button class="dur-tab" onclick="setDur('6months',this,'app')">6 Monate</button>
@@ -1183,75 +1487,44 @@ footer{background:var(--ink);padding:48px 0 24px;}
       <div class="price-cards" id="price-cards-app"></div>
       <div class="enterprise-band">
         <div>
-          <div class="eb-title">Enterprise — Fraport, Swissport, Menzies, dnata</div>
-          <div class="eb-desc">Maßgeschneiderte Lösungen. Unbegrenzte Nutzer, dedizierter Support, SCORM-Export, White-Label, Compliance-Reporting. Alle 6 Sprachen.</div>
+          <div class="eb-title">Enterprise & Airlines</div>
+          <div class="eb-desc">Fraport, Swissport, Menzies, dnata. Unbegrenzte Nutzer, White-Label, SCORM-Export, Compliance-Reporting, dedizierter Manager. Alle 6 Sprachen.</div>
         </div>
-        <button class="btn-enterprise" onclick="showToast('Enterprise-Anfrage gesendet. Wir melden uns in 24h.','green')">KONTAKT →</button>
+        <button class="btn-ent" onclick="showToast('Enterprise-Anfrage gesendet. Wir melden uns in 24h.','green')">KONTAKT →</button>
       </div>
     </div>
 
-  </div>
-</div>
+  </div><!-- end app-content -->
+</div><!-- end screen-app -->
 
-<!-- ── LEGAL SCREEN ── -->
+<!-- ════════════════════════════
+  LEGAL SCREEN
+════════════════════════════ -->
 <div class="screen" id="screen-legal">
-  <div class="legal-container">
-    <button class="legal-back" onclick="showScreen('home')">← Zurück zur Website</button>
-    <div class="legal-title">Rechtliche Grundlagen</div>
-    <div style="font-size:13px;color:rgba(255,255,255,0.35);margin-bottom:32px;">CLS — Clear Leadership Systems · Österreichisches Recht · Wien</div>
-
-    <div class="disclaimer-highlight"><strong>KERNAUSSAGE:</strong> CLS analysiert und schult. Personalentscheidungen liegen ausschließlich beim Auftraggeber. CLS haftet nicht für unternehmerische Entscheidungen auf Basis von CLS-Analysen.</div>
-
-    <div class="legal-section">
-      <div class="ls-num">§ 1</div>
-      <div class="ls-title">Geltungsbereich</div>
-      <div class="ls-body">Diese AGB gelten für alle Leistungen von <strong>CLS — Clear Leadership Systems</strong> gegenüber Unternehmen und natürlichen Personen. Mit der Beauftragung oder Registrierung erkennt der Auftraggeber diese AGB vollumfänglich an. CLS ist ein Beratungs- und Schulungsunternehmen mit Sitz in Wien, Österreich.</div>
-    </div>
-    <div class="legal-section">
-      <div class="ls-num">§ 2</div>
-      <div class="ls-title">Leistungsbeschreibung</div>
-      <div class="ls-body">CLS erbringt: CBT-Schulungsprogramme für Ground Handling, Kompetenz- und Wissensstandsanalysen, Consulting und Operational Reality Audits sowie Analytics und Reporting. Alle Leistungen haben <strong>ausschließlich informatorischen und schulenden Charakter</strong>. CLS trifft keine unternehmerischen oder personalrechtlichen Entscheidungen.</div>
-    </div>
-    <div class="legal-section">
-      <div class="ls-num">§ 3</div>
-      <div class="ls-title">Haftungsausschluss — Vollständig</div>
-      <div class="ls-body">CLS haftet ausdrücklich <strong>NICHT</strong> für: Entscheidungen des Auftraggebers auf Basis von CLS-Analysen; wirtschaftliche, personelle oder organisatorische Folgen aus der Umsetzung von CLS-Empfehlungen; Personalabbau, Umstrukturierung oder Kostenmaßnahmen des Auftraggebers; Reaktionen Dritter auf Entscheidungen des Auftraggebers. Die Haftung von CLS ist auf die Höhe des vereinbarten Honorars begrenzt.</div>
-      <div class="disclaimer-highlight">Alle CLS-Berichte enthalten: "Diese Analyse ist eine Informationsgrundlage. CLS ist nicht für Personalentscheidungen verantwortlich. Das Unternehmen entscheidet allein nach österreichischem Arbeitsrecht."</div>
-    </div>
-    <div class="legal-section">
-      <div class="ls-num">§ 4</div>
-      <div class="ls-title">Personalmaßnahmen und Arbeitsrecht</div>
-      <div class="ls-body">Der Auftraggeber ist allein verantwortlich für die arbeitsrechtliche Zulässigkeit aller Personalmaßnahmen, die Beteiligung des Betriebsrats nach ArbVG §§ 96ff sowie die Einhaltung von Kündigungsschutzbestimmungen. CLS erbringt keine Leistungen im Bereich Arbeitsrecht.</div>
-    </div>
-    <div class="legal-section">
-      <div class="ls-num">§ 5</div>
-      <div class="ls-title">Datenschutz und DSGVO</div>
-      <div class="ls-body">Alle Daten werden DSGVO-konform verarbeitet. Speicherort: EU-Datenzentren. Verschlüsselung: AES-256. Authentifizierung: JWT. Passwort-Rotation alle 60 Tage (Pflicht). Keine Weitergabe an Dritte ohne Einwilligung. Löschung nach Vertragsende.</div>
-    </div>
-    <div class="legal-section">
-      <div class="ls-num">§ 6</div>
-      <div class="ls-title">Keine Garantie — Keine Gewährleistung</div>
-      <div class="ls-body">CLS übernimmt <strong>keine Garantie und keine Gewährleistung</strong> für bestimmte Lernergebnisse, wirtschaftliche Ergebnisse nach Schulungen oder bestimmte Auswirkungen auf Sicherheitsindikatoren. CLS-Analysen bilden einen Zeitpunkt ab.</div>
-    </div>
-    <div class="legal-section">
-      <div class="ls-num">§ 7</div>
-      <div class="ls-title">Urheberrecht</div>
-      <div class="ls-body">Alle CLS-Inhalte — Schulungsmaterialien, Fragen, Frameworks, Analysen, Software — sind urheberrechtlich geschütztes Eigentum von CLS. Weitergabe, Vervielfältigung oder kommerzielle Nutzung ohne schriftliche Zustimmung ist verboten.</div>
-    </div>
-    <div class="legal-section" style="border:none;">
-      <div class="ls-num">§ 8</div>
-      <div class="ls-title">Anwendbares Recht und Gerichtsstand</div>
-      <div class="ls-body">Österreichisches Recht. Gerichtsstand Wien, Österreich. © 2025 CLS — Clear Leadership Systems. Alle Rechte vorbehalten.</div>
-    </div>
+  <div class="sub-container" style="padding-top:40px;">
+    <button class="btn-back-sub" onclick="showScreen('home')">← Zurück zur Website</button>
+    <div class="sub-title">Rechtliche Grundlagen</div>
+    <div class="sub-desc">CLS — Clear Leadership Systems · Österreichisches Recht · Wien</div>
+    <div class="disclaimer-box"><strong>KERNAUSSAGE:</strong> CLS analysiert und schult. Personalentscheidungen liegen ausschließlich beim Auftraggeber. CLS haftet nicht für unternehmerische Entscheidungen auf Basis von CLS-Analysen.</div>
+    <div class="legal-section"><div class="ls-num">§ 1</div><div class="ls-title">Geltungsbereich</div><div class="ls-body">Diese AGB gelten für alle Leistungen von <strong>CLS — Clear Leadership Systems</strong>. Mit Beauftragung oder Registrierung erkennt der Auftraggeber diese AGB an. CLS ist ein Beratungs- und Schulungsunternehmen mit Sitz in Wien, Österreich.</div></div>
+    <div class="legal-section"><div class="ls-num">§ 2</div><div class="ls-title">Leistungsbeschreibung</div><div class="ls-body">CLS erbringt CBT-Schulungsprogramme, Wissensstandsanalysen, Consulting und Analytics. Alle Leistungen haben <strong>ausschließlich informatorischen und schulenden Charakter</strong>. CLS trifft keine Personalentscheidungen.</div></div>
+    <div class="legal-section"><div class="ls-num">§ 3</div><div class="ls-title">Haftungsausschluss — Vollständig</div><div class="ls-body">CLS haftet <strong>NICHT</strong> für: Entscheidungen des Auftraggebers auf Basis von CLS-Analysen, wirtschaftliche oder personelle Folgen daraus, Personalabbau oder Umstrukturierungen. Die Haftung ist auf das vereinbarte Honorar begrenzt.</div><div class="disclaimer-box">Alle CLS-Berichte enthalten: "Diese Analyse ist eine Informationsgrundlage. CLS ist nicht für Personalentscheidungen verantwortlich."</div></div>
+    <div class="legal-section"><div class="ls-num">§ 4</div><div class="ls-title">Personalmaßnahmen</div><div class="ls-body">Der Auftraggeber trägt die volle Verantwortung für arbeitsrechtliche Zulässigkeit, Betriebsrat-Einbindung (ArbVG §§ 96ff) und Kündigungsschutz. CLS empfiehlt vor Personalmaßnahmen arbeitsrechtliche Beratung.</div></div>
+    <div class="legal-section"><div class="ls-num">§ 5</div><div class="ls-title">Datenschutz & DSGVO</div><div class="ls-body">DSGVO-konformer Betrieb. EU-Datenzentren. AES-256 Verschlüsselung. JWT-Authentifizierung. 60-Tage Passwort-Rotation (Pflicht). Keine Datenweitergabe ohne Einwilligung.</div></div>
+    <div class="legal-section"><div class="ls-num">§ 6</div><div class="ls-title">Keine Garantie</div><div class="ls-body">CLS übernimmt <strong>keine Garantie</strong> für bestimmte Lernergebnisse, wirtschaftliche Auswirkungen oder Verhaltensänderungen nach Schulungen.</div></div>
+    <div class="legal-section"><div class="ls-num">§ 7</div><div class="ls-title">Urheberrecht</div><div class="ls-body">Alle CLS-Inhalte sind urheberrechtlich geschützt. Weitergabe oder kommerzielle Nutzung ohne schriftliche Zustimmung ist verboten.</div></div>
+    <div class="legal-section" style="border:none;"><div class="ls-num">§ 8</div><div class="ls-title">Gerichtsstand</div><div class="ls-body">Österreichisches Recht. Gerichtsstand Wien. © 2025 CLS — Clear Leadership Systems. Alle Rechte vorbehalten.</div></div>
   </div>
 </div>
 
-<!-- ── PRICING SCREEN ── -->
+<!-- ════════════════════════════
+  PRICING SCREEN
+════════════════════════════ -->
 <div class="screen" id="screen-pricing">
-  <div class="pricing-container">
-    <button class="price-back" onclick="showScreen('home')">← Zurück zur Website</button>
-    <div style="font-family:'Syne',sans-serif;font-size:36px;font-weight:800;color:#fff;letter-spacing:-1px;margin-bottom:6px;">Investition in Qualität.</div>
-    <div style="font-size:14px;color:rgba(255,255,255,0.4);margin-bottom:28px;">Flexible Laufzeiten. Kein Kleingedrucktes. Jederzeit kündbar.</div>
+  <div class="sub-container" style="padding-top:40px;">
+    <button class="btn-back-sub" onclick="showScreen('home')">← Zurück zur Website</button>
+    <div class="sub-title">Flexible Tarife.</div>
+    <div class="sub-desc">Kein Kleingedrucktes. Jederzeit kündbar. Kreditkarte, PayPal oder Guthaben.</div>
     <div class="dur-tabs" id="dur-tabs">
       <button class="dur-tab active" onclick="setDur('monthly',this,'main')">Monatlich</button>
       <button class="dur-tab" onclick="setDur('3months',this,'main')">3 Monate</button>
@@ -1264,19 +1537,15 @@ footer{background:var(--ink);padding:48px 0 24px;}
     <div class="enterprise-band" style="margin-top:2px;">
       <div>
         <div class="eb-title">Enterprise & Airlines</div>
-        <div class="eb-desc">Fraport, Swissport, Menzies, dnata und große Airlines. Unbegrenzte Nutzer, White-Label, SCORM-Export, Compliance-Reporting, dedizierter Manager.</div>
+        <div class="eb-desc">Fraport, Swissport, Menzies, dnata und große Airlines. Unbegrenzte Nutzer, White-Label, SCORM-Export, Compliance-Reporting.</div>
       </div>
-      <button class="btn-enterprise" onclick="showToast('Enterprise-Anfrage gesendet. Wir melden uns in 24h.','green')">KONTAKT AUFNEHMEN →</button>
+      <button class="btn-ent" onclick="showToast('Enterprise-Anfrage gesendet. Wir melden uns in 24h.','green')">KONTAKT AUFNEHMEN →</button>
     </div>
   </div>
 </div>
 
-
-
 <script>
-// ══════════════════════════════════════════════════
-// DATA
-// ══════════════════════════════════════════════════
+// ══ DATA ══════════════════════════════════════
 const DEMO_USERS=[
   {id:1,email:'supervisor@fraport.de',pw:'demo123',fn:'Thomas',ln:'Weber',role:'supervisor',company:'Fraport Ground Services',plan:'Professional'},
   {id:2,email:'ceo@menzies.com',pw:'demo123',fn:'Sarah',ln:'Mitchell',role:'ceo',company:'Menzies Aviation',plan:'Enterprise'},
@@ -1284,69 +1553,52 @@ const DEMO_USERS=[
 ];
 const PROGRAMS=[
   {code:'CBT-RA',level:'op',title:'Ramp Agent Core Training',desc:'GSE, Sicherheit, Loading, Pushback, Emergency. 8 Module.',mods:8},
-  {code:'CBT-RS',level:'sup',title:'Ramp Supervisor Development',desc:'Führung, Briefing-Standards, Fehleranalyse, IROPS. 10 Module.',mods:10},
+  {code:'CBT-LM',level:'op',title:'Loading Master / Load Control',desc:'Gewicht & Balance, DG-Cargo, Beladungsplanung. 6 Module.',mods:6},
+  {code:'CBT-CS',level:'op',title:'Check-in & Service Agent',desc:'Passagierabfertigung, DCS-Systeme, spezielle PAX. 5 Module.',mods:5},
+  {code:'CBT-TE',level:'op',title:'Trainee Experience (0–90 Tage)',desc:'Einstieg, Grundlagen, erste 90-Tage-Bewertung. 5 Module.',mods:5},
+  {code:'CBT-RS',level:'sup',title:'Ramp Supervisor Development',desc:'Führung, Briefing-Standards, IROPS-Management. 10 Module.',mods:10},
+  {code:'CBT-TC',level:'sup',title:'Turnaround Coordinator',desc:'Turnaround-Management, Critical Path, Multi-Airline. 6 Module.',mods:6},
   {code:'CBT-DM',level:'mgmt',title:'Duty Manager Program',desc:'IROPS, SLA, KPI, Krisenentscheidung. 10 Module.',mods:10},
-  {code:'CBT-EX',level:'exec',title:'Executive Leadership',desc:'Systemisches Risiko, Haftung, M&A, Board-Governance. 8 Module.',mods:8},
-  {code:'CBT-SC',level:'mgmt',title:'Security & Safety Compliance',desc:'ICAO/EASA, Airside, SMS, Vorfallsberichte. 6 Module.',mods:6},
+  {code:'CBT-SM',level:'mgmt',title:'Station Manager Program',desc:'P&L-Bewusstsein, Airline-Relations, Qualität. 8 Module.',mods:8},
+  {code:'CBT-TR',level:'mgmt',title:'Trainer & Training Dept.',desc:'Erwachsenenlernen, CBT-Methodik, Assessment. 7 Module.',mods:7},
   {code:'CBT-HR',level:'mgmt',title:'HR & Arbeitsrecht',desc:'Arbeitsrecht AT/EU, Assessment, Mitarbeitergespräche. 6 Module.',mods:6},
   {code:'CBT-IT',level:'mgmt',title:'IT & Cybersecurity',desc:'Systemsicherheit, VPN, Hosting, Datenschutz. 6 Module.',mods:6},
+  {code:'CBT-AL',level:'mgmt',title:'Airline Operations Integration',desc:'Handler-Airline-Interface, SLA, Delay-Management. 7 Module.',mods:7},
+  {code:'CBT-EX',level:'exec',title:'Executive Leadership',desc:'Systemisches Risiko, M&A, Board-Governance. 8 Module.',mods:8},
   {code:'CBT-LG',level:'exec',title:'Luftrecht & Internationales Recht',desc:'Luftrecht, Wettbewerbsrecht, Vertragsrecht. 8 Module.',mods:8},
 ];
 const QUESTIONS=[
   {id:1,type:'mc',topic:'Human Factors',q:'Wenn ein Fehler das Flugzeug erreicht, zeigt dies primär:',opts:['Individuelle Nachlässigkeit','Geräteausfall','System- und Führungsversagen','Schlechtes Wetter'],correct:2,exp:'Fehler sind Systemergebnisse. Das System hat versagt — nicht die Person allein.'},
   {id:2,type:'mc',topic:'Normalization of Deviation',q:'Normalisierung von Abweichungen beschreibt:',opts:['Eine genehmigte Prozessänderung','Einen plötzlichen Regelverstoß','Den schrittweisen Prozess durch den Nicht-Standard zur Norm wird','Einen temporären Workaround'],correct:2,exp:'Schlüssel: SCHRITTWEISE und ORGANISATORISCH. Das macht sie gefährlich.'},
-  {id:3,type:'mc',topic:'Briefing Standards',q:'Das Primärziel eines Vor-Schicht-Briefings ist:',opts:['Delays vorlesen','Schriftliches Material verteilen','Gemeinsames Situationsbewusstsein schaffen','Leistungsüberprüfungen'],correct:2,exp:'Ausrichtung ist das Ziel — nicht nur Informationsübertragung.'},
-  {id:4,type:'mc',topic:'Leadership',q:'Ein effektiver Duty Manager in einer IROPS-Situation:',opts:['Wartet auf Anweisungen von oben','Handelt sofort ohne Kommunikation','Priorisiert, delegiert und kommuniziert gleichzeitig','Konzentriert sich nur auf eine Aufgabe'],correct:2,exp:'IROPS erfordert paralleles Handeln: Priorisierung, Delegation und Kommunikation gleichzeitig.'},
+  {id:3,type:'mc',topic:'Briefing Standards',q:'Das Primärziel eines Vor-Schicht-Briefings ist:',opts:['Delays vorlesen','Material verteilen','Gemeinsames Situationsbewusstsein schaffen','Leistungsüberprüfungen'],correct:2,exp:'Ausrichtung ist das Ziel — nicht nur Informationsübertragung.'},
+  {id:4,type:'mc',topic:'Leadership',q:'Ein effektiver Duty Manager in einer IROPS-Situation:',opts:['Wartet auf Anweisungen','Handelt ohne Kommunikation','Priorisiert, delegiert und kommuniziert gleichzeitig','Fokussiert eine Aufgabe'],correct:2,exp:'IROPS erfordert paralleles Handeln: Priorisierung, Delegation und Kommunikation.'},
   {id:5,type:'mc',topic:'Safety Culture',q:'Eine starke Sicherheitskultur zeichnet sich aus durch:',opts:['Bestrafung aller Fehler','Offene Fehlerkultur und Just Culture','Verschweigen von Vorfällen','Maximale Kontrolle'],correct:1,exp:'Just Culture — offen über Fehler sprechen ohne Angst — ist das Fundament.'},
-  {id:6,type:'text',topic:'Führungskompetenz',q:'Beschreiben Sie, wie Sie als Supervisor einen demotivierten Ramp Agent ansprechen würden. Nutzen Sie die SBI-Methode (Situation-Behavior-Impact). Mindestens 150 Wörter.',opts:[],correct:-1,exp:'SBI: Konkrete Situation beschreiben, beobachtetes Verhalten neutral benennen, Auswirkung erklären, dann gemeinsam Lösungen entwickeln.'},
-  {id:7,type:'mc',topic:'Luftrecht',q:'Das Standard Ground Handling Agreement (SGHA) definiert:',opts:['Unbegrenzte Haftung des Handlers','Keine Haftung des Handlers','Haftungsgrenzen zwischen Handler und Airline','Staatliche Vorgaben für Ground Handling'],correct:2,exp:'Das SGHA definiert Haftungsgrenzen. Darüber hinaus braucht es spezifische Vereinbarungen.'},
-  {id:8,type:'mc',topic:'Cybersecurity',q:'Sicherste Authentifizierungsmethode in einem operativen System:',opts:['Passwort allein','Multi-Faktor-Authentifizierung (MFA)','Biometrie allein','IP-basierte Erkennung'],correct:1,exp:'MFA kombiniert etwas das man weiß (Passwort) mit etwas das man hat (Token).'},
-  {id:9,type:'text',topic:'Krisenmanagement',q:'Ein Flugzeug hat bei der Ankunft einen Felgenbruch. Runway ist 45 Minuten gesperrt. 3 Abflüge betroffen. Beschreiben Sie Ihren Aktionsplan als Duty Manager. Mindestens 200 Wörter.',opts:[],correct:-1,exp:'Korrekt: 1. Sicherheit 2. Airlines informieren 3. IOCC 4. Passagiere betreuen 5. Dokumentation'},
-  {id:10,type:'mc',topic:'Arbeitsrecht',q:'Eine Änderungskündigung in Österreich ist:',opts:['Sofort wirksam','Ordentliche Kündigung mit Wiedereinstellungsangebot zu geänderten Bedingungen','Nur bei grobem Fehlverhalten möglich','Immer unwirksam'],correct:1,exp:'Änderungskündigung = ordentliche Kündigung + neues Angebot. Der Arbeitnehmer kann annehmen oder ablehnen.'},
+  {id:6,type:'text',topic:'Führungskompetenz',q:'Beschreiben Sie, wie Sie als Supervisor einen demotivierten Ramp Agent ansprechen würden. Nutzen Sie die SBI-Methode (Situation-Behavior-Impact). Min. 150 Wörter.',opts:[],correct:-1,exp:'SBI: Konkrete Situation beschreiben, Verhalten neutral benennen, Auswirkung erklären, gemeinsam Lösungen entwickeln.'},
+  {id:7,type:'mc',topic:'Luftrecht',q:'Das Standard Ground Handling Agreement (SGHA) definiert:',opts:['Unbegrenzte Haftung','Keine Haftung','Haftungsgrenzen zwischen Handler und Airline','Staatliche Vorgaben'],correct:2,exp:'Das SGHA definiert Haftungsgrenzen. Darüber hinaus braucht es spezifische Vereinbarungen.'},
+  {id:8,type:'mc',topic:'Cybersecurity',q:'Sicherste Authentifizierungsmethode in operativen Systemen:',opts:['Passwort allein','Multi-Faktor-Authentifizierung (MFA)','Biometrie allein','IP-basierte Erkennung'],correct:1,exp:'MFA kombiniert Passwort mit Token — entscheidend für operative Systeme.'},
+  {id:9,type:'text',topic:'Krisenmanagement',q:'Felgenbruch bei Ankunft. Runway 45 Min. gesperrt. 3 Abflüge betroffen. Beschreiben Sie Ihren Aktionsplan als Duty Manager. Min. 200 Wörter.',opts:[],correct:-1,exp:'Korrekt: 1. Sicherheit 2. Airlines informieren 3. IOCC 4. Passagiere betreuen 5. Dokumentation'},
+  {id:10,type:'mc',topic:'Arbeitsrecht',q:'Eine Änderungskündigung in Österreich ist:',opts:['Sofort wirksam','Ordentliche Kündigung mit Wiedereinstellungsangebot','Nur bei grobem Fehlverhalten möglich','Immer unwirksam'],correct:1,exp:'Änderungskündigung = ordentliche Kündigung + neues Angebot.'},
 ];
-const PRICES={
-  monthly:{s:29,p:79,b:149},
-  '3months':{s:26,p:71,b:134},
-  '6months':{s:24,p:67,b:127},
-  yearly:{s:19,p:59,b:112},
-  '2years':{s:16,p:52,b:99},
-  '5years':{s:12,p:42,b:79},
-};
-const AI_RESPONSES=[
-  'Basierend auf Ihrer Lernkurve empfehle ich, Human Factors Module zu priorisieren — dort sind Ihre Defizite am stärksten.',
-  'Normalisierung von Abweichungen ist ein häufig unterschätztes Konzept. Wiederholen Sie dieses Modul — es ist der Kern der Sicherheitskultur.',
-  'Ihr Score-Trend zeigt eine positive Entwicklung. Konsistenz schlägt Intensität — täglich 20 Minuten ist besser als 2 Stunden pro Woche.',
-  'Für Supervisor-Rollen ist Briefing-Kompetenz entscheidend. CBT-RS Modul 4-6 ist hier besonders wertvoll.',
-  'Das österreichische Arbeitsrecht ist komplex. ArbVG §§ 96ff zur Betriebsrat-Einbindung ist besonders wichtig vor Personalmaßnahmen.',
-  'Fehler die das Flugzeug erreichen sind immer Systemfehler — nicht Individualversagen. Diese Erkenntnis ist fundamental für eine Just Culture.',
-  'Für CEO-Level empfehle ich CBT-EX und CBT-LG gleichzeitig — die Verbindung von Führung und Luftrecht ist für Ihre Rolle entscheidend.',
-];
+const PRICES={monthly:{s:29,p:79,b:149},'3months':{s:26,p:71,b:134},'6months':{s:24,p:67,b:127},yearly:{s:19,p:59,b:112},'2years':{s:16,p:52,b:99},'5years':{s:12,p:42,b:79}};
+const AI_RESPONSES=['Basierend auf Ihrer Lernkurve empfehle ich, Human Factors Module zu priorisieren.','Normalisierung von Abweichungen ist fundamental — wiederholen Sie dieses Modul.','Ihr Trend zeigt Verbesserung. Konsistenz schlägt Intensität.','Für Supervisor-Rollen ist Briefing-Kompetenz entscheidend.','Das österreichische Arbeitsrecht ist komplex. ArbVG §§ 96ff ist besonders wichtig.','Fehler die das Flugzeug erreichen sind immer Systemfehler — nicht Individualversagen.','Für CEO-Level empfehle ich CBT-EX und CBT-LG gleichzeitig.'];
 
-// ══════════════════════════════════════════════════
-// STATE
-// ══════════════════════════════════════════════════
 let STATE={user:null,enrolled:new Set(),attempts:[],certs:[],quizState:null};
 let currentDur='monthly';
 let aiIdx=0;
 
-// ══════════════════════════════════════════════════
-// SCREEN NAVIGATION
-// ══════════════════════════════════════════════════
+// ══ SCREENS ══════════════════════════════════
 function showScreen(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   const s=document.getElementById('screen-'+id);
-  if(s){s.classList.add('active');}
+  if(s) s.classList.add('active');
   window.scrollTo(0,0);
   if(id==='pricing'){renderPricing('main');renderPricing('app');}
 }
-
 function openLogin(){showScreen('login');}
 
-// ══════════════════════════════════════════════════
-// AUTH
-// ══════════════════════════════════════════════════
+// ══ AUTH ══════════════════════════════════
 function switchTab(tab,btn){
-  document.querySelectorAll('.lt-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.login-tab').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
   document.getElementById('tab-login').style.display=tab==='login'?'block':'none';
   document.getElementById('tab-register').style.display=tab==='register'?'block':'none';
@@ -1382,10 +1634,12 @@ function loginUser(u){
   if(['ceo','director'].includes(u.role)){STATE.enrolled.add('CBT-EX');STATE.enrolled.add('CBT-LG');}
   if(u.role==='hr_manager') STATE.enrolled.add('CBT-HR');
   if(u.role==='it') STATE.enrolled.add('CBT-IT');
+  if(u.role==='trainer') STATE.enrolled.add('CBT-TR');
   const init=(u.fn[0]||'')+(u.ln?.[0]||'');
-  document.getElementById('sb-av').textContent=init||'?';
-  document.getElementById('sb-name').textContent=u.fn+' '+(u.ln||'');
-  document.getElementById('sb-role').textContent=u.role.replace(/_/g,' ').toUpperCase();
+  ['sb-av','tb-av','pf-av'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=init||'?';});
+  ['sb-uname','tb-name'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=u.fn+' '+(u.ln||'');});
+  ['sb-urole','tb-role'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=u.role.replace(/_/g,' ').toUpperCase();});
+  const pl=document.getElementById('sb-uplan');if(pl)pl.textContent=u.plan||'Starter';
   showScreen('app');
   showPage('dashboard');
   showToast('Willkommen, '+u.fn+'!','green');
@@ -1396,36 +1650,43 @@ function doLogout(){
   showScreen('home');
 }
 
-// ══════════════════════════════════════════════════
-// APP PAGES
-// ══════════════════════════════════════════════════
+// ══ APP PAGES ══════════════════════════════
 function showPage(id){
   document.querySelectorAll('.app-page').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.sb-nav-item').forEach(i=>i.classList.remove('active'));
+  document.querySelectorAll('.sb-item').forEach(i=>i.classList.remove('active'));
   const page=document.getElementById('page-'+id);
   if(page) page.classList.add('active');
+  // Highlight sidebar item
+  document.querySelectorAll('.sb-item').forEach(item=>{
+    const txt=item.textContent.trim().toLowerCase();
+    if(id==='dashboard'&&txt.includes('dashboard'))item.classList.add('active');
+    if(id==='programs'&&txt.includes('programme'))item.classList.add('active');
+    if(id==='analytics'&&txt.includes('analytics'))item.classList.add('active');
+    if(id==='ai'&&txt.includes('ki'))item.classList.add('active');
+    if(id==='profile'&&txt.includes('profil'))item.classList.add('active');
+    if(id==='security'&&txt.includes('sicherheit'))item.classList.add('active');
+    if(id==='pricing-app'&&txt.includes('tarife'))item.classList.add('active');
+  });
   renderPage(id);
-  window.scrollTo(0,0);
+  const appContent=document.querySelector('.app-content');
+  if(appContent) appContent.scrollTop=0;
 }
 
 function renderPage(id){
-  const u=STATE.user;
-  if(!u) return;
+  if(!STATE.user) return;
   if(id==='dashboard') renderDash();
   else if(id==='programs') renderProgs();
   else if(id==='analytics') renderAna();
   else if(id==='profile') renderProfile();
-  else if(id==='pricing-app') renderPricing('app');
+  else if(id==='pricing-app'){renderPricing('app');}
 }
 
-// ══════════════════════════════════════════════════
-// DASHBOARD
-// ══════════════════════════════════════════════════
+// ══ DASHBOARD ══════════════════════════════
 function renderDash(){
   const u=STATE.user;
   const h=new Date().getHours();
   const gr=h<12?'Guten Morgen':h<18?'Guten Tag':'Guten Abend';
-  document.getElementById('dash-greeting').textContent=gr+', '+u.fn;
+  document.getElementById('dash-title').textContent=gr+', '+u.fn;
   document.getElementById('dash-sub').textContent=u.role.replace(/_/g,' ').toUpperCase()+' · '+u.company;
   const scores=STATE.attempts.map(a=>a.score);
   const avg=scores.length?Math.round(scores.reduce((s,v)=>s+v,0)/scores.length):null;
@@ -1439,21 +1700,17 @@ function renderDash(){
     :'<div style="grid-column:1/-1;padding:32px;text-align:center;color:rgba(255,255,255,0.2);font-size:13px;">Noch nicht eingeschrieben. <a href="#" onclick="showPage('programs')" style="color:#3b82f6;">Katalog öffnen →</a></div>';
 }
 
-// ══════════════════════════════════════════════════
-// PROGRAMS
-// ══════════════════════════════════════════════════
+// ══ PROGRAMS ══════════════════════════════
 function progHTML(p,enrolled){
   const lc={op:'lv-op',sup:'lv-sup',mgmt:'lv-mgmt',exec:'lv-exec'};
   const lt={op:'OPERATIONAL',sup:'SUPERVISORY',mgmt:'MANAGEMENT',exec:'EXECUTIVE'};
   return`<div class="prog-card ${p.level==='exec'?'exec-card':''}">
-    <div class="prog-level ${lc[p.level]||'lv-op'}">${lt[p.level]}</div>
+    <div class="prog-level ${lc[p.level]}">${lt[p.level]}</div>
     <div class="prog-title">${p.title}</div>
     <div class="prog-desc">${p.desc}</div>
     <div class="prog-footer">
       <div class="prog-mods">${p.mods} Module</div>
-      ${enrolled
-        ?`<button class="btn-start" onclick="startQuiz('${p.code}')">TEST STARTEN →</button>`
-        :`<button class="enroll-btn" onclick="enroll('${p.code}')">EINSCHREIBEN</button>`}
+      ${enrolled?`<button class="btn-start" onclick="startQuiz('${p.code}')">TEST STARTEN →</button>`:`<button class="btn-enroll" onclick="enroll('${p.code}')">EINSCHREIBEN</button>`}
     </div>
   </div>`;
 }
@@ -1461,16 +1718,9 @@ function progHTML(p,enrolled){
 function renderProgs(){
   document.getElementById('prog-catalog').innerHTML=PROGRAMS.map(p=>progHTML(p,STATE.enrolled.has(p.code))).join('');
 }
+function enroll(code){STATE.enrolled.add(code);showToast('Eingeschrieben!','green');renderProgs();}
 
-function enroll(code){
-  STATE.enrolled.add(code);
-  showToast('Erfolgreich eingeschrieben!','green');
-  renderProgs();
-}
-
-// ══════════════════════════════════════════════════
-// QUIZ
-// ══════════════════════════════════════════════════
+// ══ QUIZ ══════════════════════════════════
 function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 
 function startQuiz(code){
@@ -1480,11 +1730,11 @@ function startQuiz(code){
   const pool=shuffle([...QUESTIONS]).slice(0,count).map(q=>{
     if(q.type==='mc'){
       const idx=shuffle([0,1,2,3].slice(0,q.opts.length));
-      return{...q,_opts:idx.map(i=>q.opts[i]),_correct:idx.indexOf(q.correct)};
+      return{...q,_opts:idx.map(i=>q.opts[i]),_corr:idx.indexOf(q.correct)};
     }
-    return{...q,_opts:[],_correct:-1};
+    return{...q,_opts:[],_corr:-1};
   });
-  STATE.quizState={code,questions:pool,cur:0,answers:{},textAnswers:{},revealed:false,start:Date.now()};
+  STATE.quizState={code,questions:pool,cur:0,answers:{},textA:{},revealed:false,start:Date.now()};
   showPage('quiz');
   renderQ();
 }
@@ -1493,8 +1743,7 @@ function renderQ(){
   const qs=STATE.quizState;
   const q=qs.questions[qs.cur];
   const total=qs.questions.length;
-  const pct=((qs.cur+1)/total)*100;
-  document.getElementById('quiz-fill').style.width=pct+'%';
+  document.getElementById('quiz-fill').style.width=((qs.cur+1)/total*100)+'%';
   document.getElementById('quiz-ctr').textContent=`${qs.cur+1} / ${total}`;
   document.getElementById('quiz-topic').textContent=q.topic;
   document.getElementById('quiz-q').textContent=q.q;
@@ -1502,43 +1751,28 @@ function renderQ(){
   const ta=document.getElementById('quiz-ta');
   const expl=document.getElementById('quiz-expl');
   expl.style.display='none';
-
   if(q.type==='text'){
-    opts.innerHTML='';
-    ta.style.display='block';
-    ta.value=qs.textAnswers[q.id]||'';
-    ta.disabled=qs.revealed;
-    ta.oninput=()=>{qs.textAnswers[q.id]=ta.value;updateBtn();};
+    opts.innerHTML='';ta.style.display='block';ta.value=qs.textA[q.id]||'';ta.disabled=qs.revealed;
+    ta.oninput=()=>{qs.textA[q.id]=ta.value;updateBtn();};
   } else {
     ta.style.display='none';
     opts.innerHTML=(q._opts).map((opt,i)=>{
       let cls='q-opt';
-      if(qs.revealed){
-        if(i===q._correct) cls+=' correct';
-        else if(qs.answers[q.id]===i&&i!==q._correct) cls+=' wrong';
-        cls+=' revealed';
-      } else if(qs.answers[q.id]===i) cls+=' selected';
-      return`<div class="${cls}" onclick="selectOpt(${q.id},${i})">
-        <div class="opt-letter">${'ABCD'[i]}</div>
-        <div class="opt-text">${opt}</div>
-      </div>`;
+      if(qs.revealed){if(i===q._corr)cls+=' corr';else if(qs.answers[q.id]===i&&i!==q._corr)cls+=' wrong';cls+=' revealed';}
+      else if(qs.answers[q.id]===i)cls+=' sel';
+      return`<div class="${cls}" onclick="selOpt(${q.id},${i})"><div class="opt-l">${'ABCD'[i]}</div><div class="opt-txt">${opt}</div></div>`;
     }).join('');
   }
-
   if(qs.revealed){
     expl.style.display='block';
-    const ok=q.type==='text'?true:(qs.answers[q.id]===q._correct);
+    const ok=q.type==='text'?true:(qs.answers[q.id]===q._corr);
     document.getElementById('expl-lbl').textContent=ok&&q.type!=='text'?'✓ KORREKT':'ERKLÄRUNG';
     document.getElementById('expl-txt').textContent=q.exp;
   }
   updateBtn();
 }
 
-function selectOpt(qId,idx){
-  if(STATE.quizState.revealed) return;
-  STATE.quizState.answers[qId]=idx;
-  renderQ();
-}
+function selOpt(qId,idx){if(STATE.quizState.revealed)return;STATE.quizState.answers[qId]=idx;renderQ();}
 
 function updateBtn(){
   const qs=STATE.quizState;
@@ -1547,115 +1781,84 @@ function updateBtn(){
   const isLast=qs.cur===qs.questions.length-1;
   if(!qs.revealed){
     btn.textContent='Antwort bestätigen';
-    const has=q.type==='text'?(qs.textAnswers[q.id]||'').length>20:(qs.answers[q.id]!==undefined);
+    const has=q.type==='text'?(qs.textA[q.id]||'').length>20:(qs.answers[q.id]!==undefined);
     btn.disabled=!has;
-  } else {
-    btn.textContent=isLast?'Test abschließen ✓':'Nächste Frage →';
-    btn.disabled=false;
-  }
+  } else {btn.textContent=isLast?'Test abschließen ✓':'Nächste Frage →';btn.disabled=false;}
 }
 
 function quizAction(){
   const qs=STATE.quizState;
   if(!qs.revealed){qs.revealed=true;renderQ();}
-  else {
-    if(qs.cur===qs.questions.length-1) finishQuiz();
-    else{qs.cur++;qs.revealed=false;renderQ();}
-  }
+  else{if(qs.cur===qs.questions.length-1)finishQuiz();else{qs.cur++;qs.revealed=false;renderQ();}}
 }
 
 function finishQuiz(){
-  const qs=STATE.quizState;
-  let correct=0;
+  const qs=STATE.quizState;let correct=0;
   const review=qs.questions.map(q=>{
     const isMC=q.type==='mc';
-    const ok=isMC?(qs.answers[q.id]===q._correct):((qs.textAnswers[q.id]||'').length>50);
-    if(ok) correct++;
-    return{q:q.q,ok,type:q.type,
-      ca:isMC?(q._opts)[q._correct]:'Textantwort',
-      ua:isMC?(q._opts)[qs.answers[q.id]]||'—':(qs.textAnswers[q.id]||'').slice(0,80)+'...'};
+    const ok=isMC?(qs.answers[q.id]===q._corr):((qs.textA[q.id]||'').length>50);
+    if(ok)correct++;
+    return{q:q.q,ok,type:q.type,ca:isMC?(q._opts)[q._corr]:'Textantwort',ua:isMC?(q._opts)[qs.answers[q.id]]||'—':(qs.textA[q.id]||'').slice(0,80)+'...'};
   });
   const score=Math.round((correct/qs.questions.length)*100);
   const passed=score>=80;
   STATE.attempts.push({code:qs.code,score,passed,date:new Date().toISOString()});
   let certCode=null;
-  if(passed){
-    certCode=`CLS-${qs.code}-U${STATE.user.id}-${Date.now().toString(36).toUpperCase()}`;
-    STATE.certs.push({code:certCode,progCode:qs.code,score,issued:new Date().toISOString()});
-  }
+  if(passed){certCode=`CLS-${qs.code}-U${STATE.user.id}-${Date.now().toString(36).toUpperCase()}`;STATE.certs.push({code:certCode,progCode:qs.code,score,issued:new Date().toISOString()});}
   const hero=document.getElementById('result-hero');
   hero.className='result-hero '+(passed?'pass':'fail');
   document.getElementById('res-score').textContent=score+'%';
   document.getElementById('res-score').style.color=passed?'#10b981':'#ef4444';
   document.getElementById('res-verdict').textContent=passed?'✓ BESTANDEN':'✗ NICHT BESTANDEN';
   document.getElementById('res-verdict').style.color=passed?'#10b981':'#ef4444';
-  document.getElementById('res-cert').innerHTML=certCode?
-    `<div class="result-cert"><div class="rc-lbl">ZERTIFIKAT</div><div class="rc-code">${certCode}</div></div>`:'';
+  document.getElementById('res-cert').innerHTML=certCode?`<div class="res-cert"><div class="rc-lbl">ZERTIFIKAT</div><div class="rc-code">${certCode}</div></div>`:'';
   document.getElementById('res-review').innerHTML=review.map(r=>`
-    <div style="border-left:3px solid ${r.ok?'#10b981':'#ef4444'};padding:9px 14px;margin-bottom:7px;background:rgba(255,255,255,0.02);">
+    <div style="border-left:3px solid ${r.ok?'#10b981':'#ef4444'};padding:9px 13px;margin-bottom:7px;background:rgba(255,255,255,0.02);">
       <div style="font-size:12px;font-weight:700;color:#fff;margin-bottom:3px;">${r.q}</div>
-      ${r.type==='mc'?`<div style="font-size:11px;color:${r.ok?'#10b981':'#ef4444'};">${r.ok?'✓':'✗'} ${r.ua}</div>${!r.ok?`<div style="font-size:11px;color:#10b981;">✓ ${r.ca}</div>`:''}`:`<div style="font-size:11px;color:rgba(255,255,255,0.35);">${r.ua}</div>`}
+      ${r.type==='mc'?`<div style="font-size:11px;color:${r.ok?'#10b981':'#ef4444'};">${r.ok?'✓':'✗'} ${r.ua}</div>${!r.ok?`<div style="font-size:11px;color:#10b981;">✓ ${r.ca}</div>`:''}`:`<div style="font-size:11px;color:rgba(255,255,255,0.3);">${r.ua}</div>`}
     </div>`).join('');
   showPage('results');
-  if(passed) showToast('🏆 Zertifikat: '+certCode,'green');
+  if(passed)showToast('🏆 Zertifikat: '+certCode,'green');
   else showToast('Score: '+score+'% — 80% erforderlich','red');
 }
 
-// ══════════════════════════════════════════════════
-// ANALYTICS
-// ══════════════════════════════════════════════════
+// ══ ANALYTICS ══════════════════════════════
 function renderAna(){
   const maxH=80;
   document.getElementById('score-chart').innerHTML=STATE.attempts.length
-    ?STATE.attempts.slice(-8).map(a=>{
-        const h=Math.max(4,Math.round((a.score/100)*maxH));
-        const col=a.score>=80?'#10b981':a.score>=60?'#f59e0b':'#ef4444';
-        return`<div style="display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;">
-          <div style="font-size:8px;font-weight:700;color:${col};">${a.score}%</div>
-          <div style="width:100%;height:${h}px;background:${col};"></div>
-          <div style="font-size:7px;color:rgba(255,255,255,0.2);">${a.code.replace('CBT-','')}</div>
-        </div>`;}).join('')
-    :'<div style="color:rgba(255,255,255,0.2);font-size:12px;padding:20px;">Noch keine Tests absolviert</div>';
-
+    ?STATE.attempts.slice(-8).map(a=>{const h=Math.max(4,Math.round((a.score/100)*maxH));const col=a.score>=80?'#10b981':a.score>=60?'#f59e0b':'#ef4444';return`<div style="display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;"><div style="font-size:8px;font-weight:700;color:${col};">${a.score}%</div><div style="width:100%;height:${h}px;background:${col};"></div><div style="font-size:7px;color:rgba(255,255,255,0.2);">${a.code.replace('CBT-','')}</div></div>`;}).join('')
+    :'<div style="color:rgba(255,255,255,0.2);font-size:12px;padding:20px 0;">Noch keine Tests absolviert</div>';
   document.getElementById('cert-ana').innerHTML=STATE.certs.length
-    ?STATE.certs.map(c=>`<div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);padding:9px 12px;margin-bottom:5px;"><div style="font-size:11px;font-weight:700;color:#fff;">${c.progCode} — ${c.score}%</div><div style="font-size:9px;font-family:monospace;color:rgba(255,255,255,0.25);">${c.code}</div></div>`).join('')
+    ?STATE.certs.map(c=>`<div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);padding:9px 11px;margin-bottom:5px;"><div style="font-size:11px;font-weight:700;color:#fff;">${c.progCode} — ${c.score}%</div><div style="font-size:9px;font-family:monospace;color:rgba(255,255,255,0.22);">${c.code}</div></div>`).join('')
     :'<div style="color:rgba(255,255,255,0.2);font-size:11px;">Keine Zertifikate</div>';
-
-  const topics=['Human Factors','Führung','Kommunikation','Sicherheit','Operative Systeme','Recht'];
+  const topics=['Human Factors','Führung','Kommunikation','Sicherheit','Operative Systeme','Recht & Compliance'];
   const scores=[72,65,81,78,68,74];
   document.getElementById('topic-ana').innerHTML=topics.map((t,i)=>{
     const col=scores[i]>=80?'#10b981':scores[i]>=65?'#f59e0b':'#ef4444';
-    return`<div class="bar-row"><div class="bar-label">${t}</div><div class="bar-track"><div class="bar-fill" style="width:${scores[i]}%;background:${col};"></div></div><div class="bar-val" style="color:${col};">${scores[i]}%</div></div>`;
+    return`<div class="bar-row"><div class="bar-lbl">${t}</div><div class="bar-track"><div class="bar-fill" style="width:${scores[i]}%;background:${col};"></div></div><div class="bar-val" style="color:${col};">${scores[i]}%</div></div>`;
   }).join('');
 }
 
-// ══════════════════════════════════════════════════
-// PROFILE
-// ══════════════════════════════════════════════════
+// ══ PROFILE ══════════════════════════════
 function renderProfile(){
   const u=STATE.user;
   const init=(u.fn[0]||'')+(u.ln?.[0]||'');
   document.getElementById('pf-av').textContent=init||'?';
   document.getElementById('pf-name').textContent=u.fn+' '+(u.ln||'');
-  document.getElementById('pf-role').textContent=u.role.replace(/_/g,' ').toUpperCase();
+  document.getElementById('pf-role-lbl').textContent=u.role.replace(/_/g,' ').toUpperCase();
   document.getElementById('pf-co').textContent=u.company;
   document.getElementById('pf-plan').textContent=u.plan||'Starter';
-  document.getElementById('pf-joined').textContent=new Date().toLocaleDateString('de-AT');
-  document.getElementById('pf-cert-count').textContent=STATE.certs.length;
+  document.getElementById('pf-since').textContent=new Date().toLocaleDateString('de-AT');
+  document.getElementById('pf-certs-count').textContent=STATE.certs.length;
   document.getElementById('cert-list').innerHTML=STATE.certs.length
     ?STATE.certs.map(c=>`<div class="cert-item"><div><div class="ci-title">${c.progCode}</div><div class="ci-code">${c.code}</div></div><div class="ci-score">${c.score}%</div></div>`).join('')
-    :'<div style="color:rgba(255,255,255,0.2);font-size:12px;padding:16px;">Absolvieren Sie Tests um Zertifikate zu erhalten.</div>';
-  const isExec=['ceo','director'].includes(u.role);
-  document.getElementById('exec-box').style.display=isExec?'block':'none';
+    :'<div style="color:rgba(255,255,255,0.2);font-size:12px;padding:16px 0;">Absolvieren Sie Tests um Zertifikate zu erhalten.</div>';
+  document.getElementById('exec-box').style.display=['ceo','director'].includes(u.role)?'block':'none';
 }
 
-// ══════════════════════════════════════════════════
-// AI
-// ══════════════════════════════════════════════════
+// ══ AI ══════════════════════════════════
 function sendAI(){
-  const inp=document.getElementById('ai-inp');
-  const msg=inp.value.trim();
-  if(!msg) return;
+  const inp=document.getElementById('ai-inp');const msg=inp.value.trim();if(!msg)return;
   const msgs=document.getElementById('ai-msgs');
   msgs.innerHTML+=`<div class="ai-msg user"><div class="ai-av">👤</div><div class="ai-bubble">${msg}</div></div>`;
   inp.value='';
@@ -1667,71 +1870,67 @@ function sendAI(){
   msgs.scrollTop=msgs.scrollHeight;
 }
 
-// ══════════════════════════════════════════════════
-// PRICING
-// ══════════════════════════════════════════════════
+// ══ PRICING ══════════════════════════════
 function setDur(d,btn,ctx){
   currentDur=d;
-  const container=ctx==='main'?document.getElementById('dur-tabs'):document.getElementById('dur-tabs-app');
-  if(container) container.querySelectorAll('.dur-tab').forEach(b=>b.classList.remove('active'));
+  const tabsId=ctx==='main'?'dur-tabs':'dur-tabs-app';
+  const tabEl=document.getElementById(tabsId);
+  if(tabEl) tabEl.querySelectorAll('.dur-tab').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
   renderPricing(ctx);
 }
 
 function renderPricing(ctx){
   const p=PRICES[currentDur]||PRICES.monthly;
-  const periodLabels={monthly:'/ Nutzer / Monat','3months':'/ Nutzer / Monat (3 Mon.)','6months':'/ Nutzer / Monat (6 Mon.)','yearly':'/ Nutzer / Monat (jährlich)','2years':'/ Nutzer / Monat (2 Jahre)','5years':'/ Nutzer / Monat (5 Jahre)'};
+  const periods={monthly:'/ Nutzer / Monat','3months':'/ Nutzer / Monat (3 Mon.)','6months':'/ Nutzer / Monat (6 Mon.)',yearly:'/ Nutzer / Monat (jährl.)',  '2years':'/ Nutzer / Monat (2 J.)','5years':'/ Nutzer / Monat (5 J.)'};
   const plans=[
-    {name:'Starter',price:p.s,badge:null,features:['1 CBT-Programm','5 Module inklusive','Basis-Zertifikat','E-Mail-Support','DE + EN']},
-    {name:'Professional',price:p.p,badge:'EMPFOHLEN',features:['Alle 14 Programme','Unbegrenzte Module','Premium-Zertifikate','Analytics Dashboard','Prioritäts-Support','Alle 6 Sprachen','KI-Assistent'],feat:true},
-    {name:'Business',price:p.b,badge:null,features:['Alles aus Professional','Firmen-Dashboard','HR-Auswertungen','SCORM-Export','Compliance-Berichte','SLA Garantie']},
+    {name:'Starter',price:p.s,badge:null,feats:['1 CBT-Programm','5 Module','Basis-Zertifikat','E-Mail-Support','DE + EN']},
+    {name:'Professional',price:p.p,badge:'EMPFOHLEN',feats:['Alle 14 Programme','Unbegrenzte Module','Premium-Zertifikate','Analytics Dashboard','Prioritäts-Support','Alle 6 Sprachen','KI-Assistent'],feat:true},
+    {name:'Business',price:p.b,badge:null,feats:['Alles aus Professional','Firmen-Dashboard','SCORM-Export','Compliance-Berichte','SLA Garantie','Telefon-Support']},
   ];
   const id=ctx==='main'?'price-cards-main':'price-cards-app';
-  const el=document.getElementById(id);
-  if(!el) return;
+  const el=document.getElementById(id);if(!el)return;
   el.innerHTML=plans.map(plan=>`
-    <div class="price-card ${plan.feat?'featured':''}">
+    <div class="price-card ${plan.feat?'feat':''}">
       ${plan.badge?`<div class="pc-badge">${plan.badge}</div>`:''}
       <div class="pc-name">${plan.name}</div>
       <div class="pc-price"><sup>€</sup>${plan.price}</div>
-      <div class="pc-period">${periodLabels[currentDur]}</div>
-      <ul class="pc-features">${plan.features.map(f=>`<li>${f}</li>`).join('')}</ul>
-      <button class="btn-pc" onclick="openPayModal('${plan.name}','€${plan.price} ${periodLabels[currentDur]}')">JETZT STARTEN →</button>
+      <div class="pc-period">${periods[currentDur]}</div>
+      <ul class="pc-feats">${plan.feats.map(f=>`<li>${f}</li>`).join('')}</ul>
+      <button class="btn-pc" onclick="openPayModal('${plan.name}','€${plan.price} ${periods[currentDur]}')">JETZT STARTEN →</button>
     </div>`).join('');
 }
 
-// ══════════════════════════════════════════════════
-// PAYMENT
-// ══════════════════════════════════════════════════
+// ══ PAYMENT ══════════════════════════════
 function openPayModal(name,price){
-  document.getElementById('pay-plan-name').textContent=name+' Plan';
-  document.getElementById('pay-plan-price').textContent=price;
+  document.getElementById('pay-plan').textContent=name+' Plan';
+  document.getElementById('pay-price-sub').textContent=price;
   document.getElementById('pay-overlay').classList.add('show');
 }
 function closePayModal(){document.getElementById('pay-overlay').classList.remove('show');}
-function selectPayMethod(el){document.querySelectorAll('.pay-m').forEach(m=>m.classList.remove('active'));el.classList.add('active');}
-function processPayment(){closePayModal();showToast('Zahlung erfolgreich! Ihr Zugang ist aktiv.','green');}
+function selPay(el){document.querySelectorAll('.pay-m').forEach(m=>m.classList.remove('active'));el.classList.add('active');}
+function processPayment(){closePayModal();showToast('Zahlung erfolgreich! Zugang aktiv.','green');}
 
-// ══════════════════════════════════════════════════
-// TOAST
-// ══════════════════════════════════════════════════
-function showToast(msg,type=''){
-  const t=document.getElementById('toast');
-  t.textContent=msg;
-  t.className='toast show'+(type?' '+type:'');
-  setTimeout(()=>t.classList.remove('show'),3500);
+// ══ LANG ══════════════════════════════════
+function setLang(l,btn){
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.documentElement.dir=l==='ar'?'rtl':'ltr';
+  showToast('Sprache: '+l.toUpperCase(),'');
 }
 
-// ══════════════════════════════════════════════════
-// WEBSITE JS
-// ══════════════════════════════════════════════════
+// ══ TOAST ══════════════════════════════════
+function showToast(msg,type=''){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.className='toast show'+(type?' '+type:'');
+  setTimeout(()=>t.classList.remove('show'),3200);
+}
+
+// ══ WEBSITE JS ══════════════════════════════
 function handleSubmit(e){
   e.preventDefault&&e.preventDefault();
-  const btn=e.target||e;
-  const orig=btn.textContent;
-  btn.textContent='ANFRAGE GESENDET ✓';
-  btn.style.background='#16a34a';
-  btn.disabled=true;
+  const btn=e.target;const orig=btn.textContent;
+  btn.textContent='ANFRAGE GESENDET ✓';btn.style.background='#16a34a';btn.disabled=true;
   setTimeout(()=>{btn.textContent=orig;btn.style.background='';btn.disabled=false;},4000);
 }
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
@@ -1745,6 +1944,5 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
 renderPricing('main');
 renderPricing('app');
 </script>
-
 </body>
 </html>
