@@ -646,7 +646,7 @@ footer{background:var(--ink);padding:48px 0 24px;}
   }
   .app-topbar { padding: 0 12px; }
   .topbar-logo { width: auto; border-right: none; font-size: 17px; }
-  .topbar-lang { display: none; }
+  .topbar-lang { display: flex; flex-wrap:wrap; }
 
   /* Sidebar becomes horizontal top bar on mobile */
   .app-sidebar {
@@ -735,7 +735,15 @@ footer{background:var(--ink);padding:48px 0 24px;}
         <a href="#platform" class="nav-link">CBT Platform</a>
         <a href="#framework" class="nav-link">Framework</a>
         <a href="#contact" class="nav-link">Contact</a><a href="#" class="nav-link" onclick="showScreen('pricing')">Preise</a>
-        <button class="nav-cta" onclick="showScreen('login')">ANMELDEN →</button>
+        <div style="display:flex;align-items:center;gap:4px;margin-right:8px;">
+          <button class="lang-btn active" onclick="setLang('de',this)" style="padding:3px 6px;font-size:9px;">DE</button>
+          <button class="lang-btn" onclick="setLang('en',this)" style="padding:3px 6px;font-size:9px;">EN</button>
+          <button class="lang-btn" onclick="setLang('it',this)" style="padding:3px 6px;font-size:9px;">IT</button>
+          <button class="lang-btn" onclick="setLang('fr',this)" style="padding:3px 6px;font-size:9px;">FR</button>
+          <button class="lang-btn" onclick="setLang('es',this)" style="padding:3px 6px;font-size:9px;">ES</button>
+          <button class="lang-btn" onclick="setLang('ru',this)" style="padding:3px 6px;font-size:9px;">RU</button>
+        </div>
+        <button class="nav-cta" id="nav-login-btn" onclick="showScreen('login')">ANMELDEN →</button>
       </div>
     </div>
   </div>
@@ -1930,9 +1938,10 @@ let CURRENT_LANG='de';
 function setLang(l,btn){
   CURRENT_LANG=l;
   document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
+  document.querySelectorAll('.lang-btn').forEach(b=>{if(b.textContent===l.toUpperCase())b.classList.add('active');});
   document.documentElement.dir=l==='ar'?'rtl':'ltr';
   const t=TRANSLATIONS[l]||TRANSLATIONS.de;
+  const nlb=document.getElementById('nav-login-btn');if(nlb)nlb.textContent=t.login_btn;
   // Update hero
   const h1=document.querySelector('.hero h1');if(h1)h1.innerHTML=t.hero.replace(/(operations manual|Operations Manual|manuale operativo|manuel d'exploitation|manual de operaciones|операционным руководством|دليل العمليات)/,'<span class="accent">$1</span>');
   const desc=document.querySelector('.hero-desc');if(desc)desc.textContent=t.herosub;
