@@ -62,7 +62,11 @@ label{color:#6A8FC0;font-size:10px;font-weight:800;letter-spacing:1.5px;margin-b
 <div id="hdr">
   <div id="hdr-top">
     <span class="hdr-logo" onclick="goHome()">CLS<span style="font-weight:300;font-size:9px;letter-spacing:3px;margin-left:6px;opacity:.5;">SYSTEMS</span></span>
-    <button id="btn-logout" onclick="logout()">↩ Abmelden</button>
+    <div style="display:flex;align-items:center;gap:6px;">
+      <button onclick="setLang('de')" id="btn-de" style="background:#3BB5F0;color:#020B1A;border:none;border-radius:5px;padding:3px 8px;cursor:pointer;font-size:10px;font-weight:800;font-family:inherit;">DE</button>
+      <button onclick="setLang('en')" id="btn-en" style="background:transparent;color:#6A8FC0;border:1px solid #1A3260;border-radius:5px;padding:3px 8px;cursor:pointer;font-size:10px;font-weight:800;font-family:inherit;">EN</button>
+      <button id="btn-logout" onclick="logout()" style="display:none;background:transparent;border:1px solid #1A3260;border-radius:6px;color:#6A8FC0;padding:4px 10px;cursor:pointer;font-size:11px;font-weight:600;font-family:inherit;">↩ <span id="t-logout">Abmelden</span></button>
+    </div>
   </div>
   <div id="hdr-nav" style="display:none;">
     <button class="nav-tab" onclick="nav('dash')" data-v="dash">📚 Module</button>
@@ -121,7 +125,7 @@ label{color:#6A8FC0;font-size:10px;font-weight:800;letter-spacing:1.5px;margin-b
       <div style="display:flex;flex-direction:column;gap:13px;">
         <div><label>E-MAIL</label><input type="email" id="std-email" placeholder="max@airline.com"></div>
         <div><label>PASSWORT</label><input type="password" id="std-pw" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLoginStd()"></div>
-        <div class="info-box">💡 Demo: max@airline.com / Test1234</div>
+        <div class="info-box">💡 Demo: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2c414d546c4d455e40454249024f4341">[email&#160;protected]</a> / Test1234</div>
         <div id="std-err" class="err" style="display:none;"></div>
         <button class="btn btn-full" onclick="doLoginStd()">Anmelden →</button>
         <div style="display:flex;justify-content:space-between;font-size:12px;color:#4A7FAA;">
@@ -151,7 +155,7 @@ label{color:#6A8FC0;font-size:10px;font-weight:800;letter-spacing:1.5px;margin-b
           <label style="color:#666;font-size:12px;font-weight:600;margin-bottom:5px;">Name Ihrer ersten Flughafenstation?</label>
           <input id="ceo-sec" placeholder="z.B. Wien Schwechat" style="background:#FFF;border-color:#FFCCCC;color:#181818;">
         </div>
-        <div style="font-size:11px;color:#AA6666;background:#FFF8F8;border:1px solid #FFE0E0;border-radius:7px;padding:7px 11px;">💡 Demo: ceo@airline.com / Ceo12345</div>
+        <div style="font-size:11px;color:#AA6666;background:#FFF8F8;border:1px solid #FFE0E0;border-radius:7px;padding:7px 11px;">💡 Demo: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2043454f604149524c494e450e434f4d">[email&#160;protected]</a> / Ceo12345</div>
         <div id="ceo-err" class="err" style="display:none;background:#FFF0F0;color:#CC1111;"></div>
         <button onclick="doLoginCeo()" style="background:#CC1111;color:#FFF;border:none;border-radius:9px;padding:12px;font-weight:800;cursor:pointer;font-size:14px;font-family:inherit;">Anmelden →</button>
       </div>
@@ -264,7 +268,7 @@ label{color:#6A8FC0;font-size:10px;font-weight:800;letter-spacing:1.5px;margin-b
     <div id="ai-msgs" style="min-height:300px;max-height:50vh;overflow-y:auto;margin-bottom:16px;"></div>
     <div style="display:flex;gap:8px;">
       <input id="ai-inp" placeholder="Frage stellen..." onkeydown="if(event.key==='Enter')sendAI()" style="flex:1;">
-      <button class="btn" onclick="sendAI()">Senden</button>
+      <button class="btn" id="ai-send-btn" onclick="sendAI()">Senden</button>
     </div>
   </div>
 </div>
@@ -302,16 +306,16 @@ label{color:#6A8FC0;font-size:10px;font-weight:800;letter-spacing:1.5px;margin-b
     <div class="card">
       <div style="font-size:11px;font-weight:700;letter-spacing:1px;color:#6A8FC0;margin-bottom:12px;">LETZTE AKTIVITÄTEN</div>
       <div style="font-size:12px;color:#6A8FC0;line-height:2.2;">
-        <div>✅ max@airline.com — GHO-01 Zertifikat · heute 09:14</div>
-        <div>📝 anna@flyair.com — GHO-02 Exam gestartet · heute 08:52</div>
-        <div>🔓 thomas@ground.at — GHO-04 freigeschaltet · gestern 17:30</div>
+        <div>✅ <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="482529300829213a2421262d662b2725">[email&#160;protected]</a> — GHO-01 Zertifikat · heute 09:14</div>
+        <div>📝 <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e786898986a7818b9e868e95c984888a">[email&#160;protected]</a> — GHO-02 Exam gestartet · heute 08:52</div>
+        <div>🔓 <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="82f6eaedefe3f1c2e5f0edf7ece6ace3f6">[email&#160;protected]</a> — GHO-04 freigeschaltet · gestern 17:30</div>
         <div>⚠ 3 Nutzer — GHO-06 unter 80% · diese Woche</div>
       </div>
     </div>
   </div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 const MODS=[
   {id:1,code:"GHO-01",icon:"✈",cat:"Safety",dur:"4h",title:"Vorfeldsicherheit",desc:"Sicherheitsregeln, Mindestabstände, PPE, Notfallprozeduren, De-icing, Pushback Safety."},
   {id:2,code:"GHO-02",icon:"⚠",cat:"Compliance",dur:"6h",title:"Gefahrgut Grundlagen",desc:"IATA DGR Klassen 1–9, Shipper's Declaration, NOTOC, CAO, Lithium-Batterien."},
@@ -767,21 +771,43 @@ function renderAI(){
   el.scrollTop=el.scrollHeight;
 }
 
+
+// LANGUAGE SYSTEM
+var STATE_LANG={
+  de:{logout:'Abmelden',aiPlaceholder:'Frage stellen...',aiSend:'Senden',aiWelcome:'Willkommen beim CLS AI Aviation Trainer! Stell mir eine Frage zu Aviation Ground Handling.'},
+  en:{logout:'Logout',aiPlaceholder:'Ask a question...',aiSend:'Send',aiWelcome:'Welcome to the CLS AI Aviation Trainer! Ask me anything about Aviation Ground Handling.'}
+};
+
+function T(k){return(STATE_LANG[STATE.lang]||STATE_LANG.de)[k]||k;}
+
+function setLang(l){
+    ['de','en'].forEach(function(x){
+    var b=document.getElementById('btn-'+x);
+    if(b){b.style.background=x===l?'#3BB5F0':'transparent';b.style.color=x===l?'#020B1A':'#6A8FC0';}
+  });
+  var tl=document.getElementById('t-logout');if(tl)tl.textContent=T('logout');
+  var ai=document.getElementById('ai-inp');if(ai)ai.placeholder=T('aiPlaceholder');
+  var sb=document.getElementById('ai-send-btn');if(sb)sb.textContent=T('aiSend');
+}
+
 async function sendAI(){
-  const inp=document.getElementById('ai-inp');
-  const msg=inp.value.trim();if(!msg)return;
+  var inp=document.getElementById('ai-inp');
+  var msg=inp.value.trim();if(!msg)return;
   STATE.aiMsgs.push({r:'u',t:msg});inp.value='';renderAI();
+  var loadMsg={r:'a',t:'⏳ ...',lid:Date.now()};
+  STATE.aiMsgs.push(loadMsg);renderAI();
   try{
-    const msgs=STATE.aiMsgs.slice(1).map(m=>({role:m.r==='u'?'user':'assistant',content:m.t}));
-    const res=await fetch("https://api.anthropic.com/v1/messages",{
-      method:"POST",headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1000,
-        system:"Du bist ein Experte für Aviation Ground Handling Training (CLS). Beantworte Fragen zu Rampensicherheit, Gefahrgut, Passagierhandling und SMS auf Deutsch. Sei präzise und beziehe dich auf IATA, ICAO und EASA Standards.",
-        messages:msgs})
-    });
-    const d=await res.json();
-    STATE.aiMsgs.push({r:'a',t:d.content?.map(b=>b.text||'').join('')||'Fehler.'});
-  }catch{STATE.aiMsgs.push({r:'a',t:'Verbindungsfehler. Bitte erneut versuchen.'});}
+    var msgs=STATE.aiMsgs.filter(function(m){return!m.lid;}).map(function(m){return{role:m.r==='u'?'user':'assistant',content:m.t};});
+    var res=await fetch('/ai',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:msgs})});
+    var d=await res.json();
+    var reply=d.content?d.content.map(function(b){return b.text||'';}).join(''):'';
+    if(!reply)reply=    STATE.aiMsgs=STATE.aiMsgs.filter(function(m){return m.lid!==loadMsg.lid;});
+    STATE.aiMsgs.push({r:'a',t:reply});
+  }catch(e){
+    STATE.aiMsgs=STATE.aiMsgs.filter(function(m){return m.lid!==loadMsg.lid;});
+    STATE.aiMsgs.push({r:'a',t:  }
+  renderAI();
+}
   renderAI();
 }
 
@@ -811,19 +837,3 @@ function renderAnalytics(){
   ];
   document.getElementById('ana-bars').innerHTML=topics.map(t=>`
     <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
-      <div style="min-width:160px;font-size:11px;color:#6A8FC0;">${t.n}</div>
-      <div style="flex:1;background:#1A3260;border-radius:4px;height:8px;"><div style="width:${t.v}%;background:${t.v>=80?'#36B37E':t.v>=65?'#F0A03B':'#EF5350'};border-radius:4px;height:8px;"></div></div>
-      <div style="min-width:36px;font-size:12px;font-weight:700;color:${t.v>=80?'#36B37E':t.v>=65?'#F0A03B':'#EF5350'};text-align:right;">${t.v}%</div>
-    </div>`).join('');
-}
-
-function showToast(msg,type=''){
-  const t=document.getElementById('toast');
-  t.textContent=msg;t.className='toast show'+(type?' '+type:'');
-  setTimeout(()=>t.classList.remove('show'),3000);
-}
-
-nav('landing');
-</script>
-</body>
-</html>
