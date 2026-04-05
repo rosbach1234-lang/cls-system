@@ -1,0 +1,2493 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CLS — Clear Leadership Systems | Aviation Ground Operations</title>
+<meta name="description" content="Aviation ground handling CBT platform. 14 programs. From Ramp Agent to CEO.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   ROOT & RESET
+═══════════════════════════════════════════ */
+:root {
+  --bg: #050810;
+  --bg2: #0a0d1a;
+  --bg3: #0f1422;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.12);
+  --blue: #2563eb;
+  --blue2: #3b82f6;
+  --blue3: #60a5fa;
+  --green: #10b981;
+  --red: #ef4444;
+  --amber: #f59e0b;
+  --purple: #8b5cf6;
+  --white: #ffffff;
+  --t1: rgba(255,255,255,0.9);
+  --t2: rgba(255,255,255,0.55);
+  --t3: rgba(255,255,255,0.28);
+  --t4: rgba(255,255,255,0.12);
+  --sidebar-w: 232px;
+  --topbar-h: 54px;
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t1); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+button { cursor: pointer; font-family: inherit; }
+input, textarea, select { font-family: inherit; }
+a { text-decoration: none; color: inherit; }
+
+/* ═══════════════════════════════════════════
+   SCREEN SYSTEM — CRITICAL
+═══════════════════════════════════════════ */
+.screen { display: none; }
+.screen.active { display: block; }
+#screen-app.active { display: grid; }
+
+/* ═══════════════════════════════════════════
+   TOAST
+═══════════════════════════════════════════ */
+#toast {
+  position: fixed; bottom: 24px; right: 24px;
+  background: var(--bg3); border: 1px solid var(--border2);
+  color: var(--t1); padding: 11px 18px; font-size: 12px; font-weight: 500;
+  z-index: 9999; border-radius: 2px;
+  transform: translateY(80px); opacity: 0; transition: .3s;
+  max-width: 300px; pointer-events: none;
+}
+#toast.show { transform: translateY(0); opacity: 1; }
+#toast.green { border-left: 3px solid var(--green); }
+#toast.red { border-left: 3px solid var(--red); }
+
+/* ═══════════════════════════════════════════
+   WEBSITE — HOME SCREEN
+═══════════════════════════════════════════ */
+#screen-home { background: var(--bg); min-height: 100vh; }
+
+/* NAV */
+.site-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+  background: rgba(5,8,16,0.92); backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  height: 60px; display: flex; align-items: center;
+}
+.nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 28px; width: 100%; display: flex; align-items: center; justify-content: space-between; }
+.nav-logo { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800; color: var(--white); letter-spacing: -0.5px; }
+.nav-logo em { color: var(--blue2); font-style: normal; }
+.nav-links { display: flex; align-items: center; gap: 28px; }
+.nav-link { font-size: 13px; font-weight: 500; color: var(--t2); transition: color .15s; }
+.nav-link:hover { color: var(--white); }
+.btn-login-nav {
+  background: var(--blue); color: var(--white);
+  padding: 8px 20px; font-size: 13px; font-weight: 700;
+  border: none; letter-spacing: 0.3px; transition: background .15s;
+}
+.btn-login-nav:hover { background: #1d4ed8; }
+
+/* HERO */
+.site-hero {
+  min-height: 100vh; display: flex; align-items: center;
+  padding: 120px 28px 80px;
+  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(37,99,235,0.08) 0%, transparent 70%);
+  position: relative; overflow: hidden;
+}
+.site-hero::before {
+  content: ''; position: absolute; inset: 0;
+  background: repeating-linear-gradient(0deg, transparent, transparent 59px, rgba(255,255,255,0.02) 60px),
+              repeating-linear-gradient(90deg, transparent, transparent 59px, rgba(255,255,255,0.02) 60px);
+}
+.hero-inner { max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
+.hero-tag { display: inline-flex; align-items: center; gap: 8px; font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--blue3); margin-bottom: 22px; }
+.hero-tag::before { content: ''; width: 28px; height: 1px; background: var(--blue3); }
+.hero-h1 { font-family: 'Syne', sans-serif; font-size: clamp(40px,6vw,78px); font-weight: 800; line-height: 1.04; letter-spacing: -2px; color: var(--white); margin-bottom: 22px; }
+.hero-h1 .hl { color: var(--blue3); }
+.hero-desc { font-size: 17px; color: var(--t2); line-height: 1.75; max-width: 520px; margin-bottom: 38px; }
+.hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn-primary { background: var(--blue); color: var(--white); padding: 13px 28px; font-size: 14px; font-weight: 700; border: none; letter-spacing: 0.3px; transition: background .15s; display: inline-block; }
+.btn-primary:hover { background: #1d4ed8; }
+.btn-outline { background: transparent; border: 1px solid var(--border2); color: var(--t1); padding: 13px 24px; font-size: 14px; font-weight: 500; letter-spacing: 0.2px; transition: all .15s; display: inline-block; }
+.btn-outline:hover { border-color: rgba(255,255,255,0.35); }
+.hero-stats { display: flex; gap: 40px; margin-top: 56px; padding-top: 40px; border-top: 1px solid var(--border); flex-wrap: wrap; }
+.hstat-n { font-family: 'JetBrains Mono', monospace; font-size: 34px; font-weight: 500; color: var(--white); }
+.hstat-l { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--t3); margin-top: 3px; }
+
+/* MARQUEE */
+.marquee-bar { background: var(--blue); padding: 12px 0; overflow: hidden; }
+.marquee-track { display: flex; width: max-content; animation: scroll 22s linear infinite; }
+.marquee-item { font-size: 10px; font-weight: 800; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.65); padding: 0 32px; white-space: nowrap; }
+.marquee-item span { color: rgba(255,255,255,0.3); }
+@keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* SECTIONS */
+.site-section { padding: 100px 28px; }
+.section-inner { max-width: 1200px; margin: 0 auto; }
+.section-tag { font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--blue3); margin-bottom: 14px; }
+.section-h { font-family: 'Syne', sans-serif; font-size: clamp(26px,4vw,44px); font-weight: 800; line-height: 1.15; letter-spacing: -1px; color: var(--white); margin-bottom: 14px; }
+.section-sub { font-size: 15px; color: var(--t2); line-height: 1.75; max-width: 540px; }
+
+/* PROBLEM CARDS */
+.prob-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; margin-top: 0; }
+.prob-cards { display: flex; flex-direction: column; gap: 8px; }
+.prob-card { background: var(--bg2); border: 1px solid var(--border); border-left: 3px solid var(--red); padding: 16px 18px; }
+.prob-card.amber { border-left-color: var(--amber); }
+.prob-card.gray { border-left-color: rgba(255,255,255,0.2); }
+.prob-card h4 { font-size: 13px; font-weight: 700; color: var(--t1); margin-bottom: 3px; }
+.prob-card p { font-size: 11px; color: var(--t3); line-height: 1.6; }
+.cost-box { background: var(--bg3); border: 1px solid var(--border); padding: 20px; margin-top: 10px; display: flex; justify-content: space-between; align-items: center; }
+.cost-n { font-family: 'JetBrains Mono', monospace; font-size: 26px; color: var(--amber); font-weight: 500; }
+.cost-l { font-size: 10px; color: var(--t3); line-height: 1.6; text-align: right; }
+
+/* SOLUTION GRID */
+.sol-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: var(--border); margin-top: 48px; }
+.sol-card { background: var(--bg); padding: 28px 22px; }
+.sol-card.alt { background: var(--bg2); }
+.sol-n { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--blue3); margin-bottom: 14px; display: block; }
+.sol-card h3 { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; color: var(--t1); margin-bottom: 8px; line-height: 1.3; }
+.sol-card p { font-size: 12px; color: var(--t3); line-height: 1.7; }
+.sol-price { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--blue2); margin-top: 18px; font-weight: 500; }
+
+/* PROGRAMS SECTION */
+.programs-section { background: var(--bg); }
+.prog-tiles { display: grid; grid-template-columns: repeat(6,1fr); gap: 1px; background: var(--border); margin: 40px 0; }
+.prog-tile { background: var(--bg2); padding: 18px 14px; transition: background .15s; }
+.prog-tile:hover { background: var(--bg3); }
+.pt-code { font-family: 'JetBrains Mono', monospace; font-size: 8px; color: var(--blue3); margin-bottom: 7px; display: block; letter-spacing: 1px; }
+.pt-title { font-size: 11px; font-weight: 600; color: var(--t1); line-height: 1.4; margin-bottom: 12px; }
+.pt-level { font-size: 8px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; }
+.lv-op { color: var(--blue3); }
+.lv-sup { color: var(--amber); }
+.lv-mgmt { color: var(--purple); }
+.lv-exec { color: #f97316; }
+.pt-new { display: inline-block; background: var(--red); color: #fff; font-size: 7px; font-weight: 800; padding: 1px 5px; margin-left: 4px; vertical-align: middle; letter-spacing: 0.5px; }
+.prog-features { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; }
+.prog-feat { border: 1px solid var(--border); padding: 18px; }
+.prog-feat h4 { font-size: 12px; font-weight: 700; color: var(--t1); margin-bottom: 5px; }
+.prog-feat p { font-size: 11px; color: var(--t3); line-height: 1.6; }
+
+/* CONTACT */
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
+.contact-info h2 { font-family: 'Syne', sans-serif; font-size: 32px; font-weight: 800; color: var(--t1); margin-bottom: 16px; letter-spacing: -0.5px; }
+.contact-info p { font-size: 14px; color: var(--t2); line-height: 1.75; margin-bottom: 28px; }
+.ci-block { border: 1px solid var(--border); padding: 16px 18px; margin-bottom: 10px; }
+.ci-lbl { font-size: 9px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--blue3); margin-bottom: 4px; }
+.ci-val { font-size: 13px; font-weight: 600; color: var(--t1); }
+.ci-sub { font-size: 11px; color: var(--t3); margin-top: 2px; }
+.contact-form { background: var(--bg2); border: 1px solid var(--border); padding: 32px; }
+.cf-title { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 800; color: var(--t1); margin-bottom: 20px; }
+.cf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.cf-field { margin-bottom: 13px; }
+.cf-field label { display: block; font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--t3); margin-bottom: 5px; }
+.cf-field input, .cf-field select, .cf-field textarea { width: 100%; background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: var(--t1); padding: 10px 12px; font-size: 13px; outline: none; transition: border-color .15s; resize: none; }
+.cf-field input:focus, .cf-field select:focus, .cf-field textarea:focus { border-color: var(--blue); }
+.cf-field select option { background: #111827; }
+.btn-cf { width: 100%; background: var(--blue); color: #fff; border: none; padding: 13px; font-size: 13px; font-weight: 700; letter-spacing: 0.4px; transition: background .15s; }
+.btn-cf:hover { background: #1d4ed8; }
+
+/* FOOTER */
+.site-footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 48px 28px 24px; }
+.footer-inner { max-width: 1200px; margin: 0 auto; }
+.footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 36px; }
+.footer-logo { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800; color: var(--t1); letter-spacing: -0.5px; margin-bottom: 10px; }
+.footer-logo em { color: var(--blue2); font-style: normal; }
+.footer-desc { font-size: 12px; color: var(--t3); line-height: 1.75; }
+.footer-col h4 { font-size: 9px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--t3); margin-bottom: 14px; }
+.footer-col a, .footer-col p { display: block; font-size: 12px; color: var(--t3); margin-bottom: 7px; transition: color .15s; cursor: pointer; }
+.footer-col a:hover, .footer-col p:hover { color: var(--t1); }
+.footer-bottom { border-top: 1px solid var(--border); padding-top: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+.footer-copy { font-size: 11px; color: var(--t3); }
+.footer-legal { display: flex; gap: 20px; }
+.footer-legal a { font-size: 11px; color: var(--t3); transition: color .15s; }
+.footer-legal a:hover { color: var(--t1); }
+
+/* ═══════════════════════════════════════════
+   LOGIN SCREEN
+═══════════════════════════════════════════ */
+#screen-login {
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+.login-wrap { width: 100%; max-width: 400px; }
+.login-logo { text-align: center; margin-bottom: 28px; }
+.login-logo-text { font-family: 'Syne', sans-serif; font-size: 54px; font-weight: 800; color: #fff; letter-spacing: -3px; line-height: 1; }
+.login-logo-text em { color: var(--blue2); font-style: normal; }
+.login-tagline { font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--t3); margin-top: 5px; }
+.login-box { background: var(--bg2); border: 1px solid var(--border); padding: 26px; }
+.login-tabs { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 20px; }
+.ltab { background: transparent; border: none; border-bottom: 2px solid transparent; margin-bottom: -1px; color: var(--t3); padding: 8px 14px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; transition: all .15s; }
+.ltab.active { color: var(--white); border-bottom-color: var(--blue); }
+.lf { margin-bottom: 11px; }
+.lf label { display: block; font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--t3); margin-bottom: 4px; }
+.lf input, .lf select { width: 100%; background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: var(--t1); padding: 9px 12px; font-size: 13px; outline: none; transition: border-color .15s; }
+.lf input:focus, .lf select:focus { border-color: var(--blue); }
+.lf select option { background: #111827; }
+.lf-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.btn-login { width: 100%; background: var(--blue); color: #fff; border: none; padding: 11px; font-size: 13px; font-weight: 700; letter-spacing: 0.4px; margin-top: 6px; transition: background .15s; }
+.btn-login:hover { background: #1d4ed8; }
+.demo-box { margin-top: 14px; padding: 11px 13px; background: rgba(245,158,11,0.05); border: 1px solid rgba(245,158,11,0.15); }
+.demo-title { font-size: 9px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--amber); margin-bottom: 7px; }
+.demo-item { font-size: 11px; font-family: 'JetBrains Mono', monospace; color: var(--t3); padding: 3px 0; cursor: pointer; transition: color .15s; }
+.demo-item:hover { color: var(--t1); }
+.btn-back-login { display: block; text-align: center; width: 100%; background: transparent; border: none; color: var(--t3); font-size: 12px; margin-top: 14px; transition: color .15s; padding: 6px; }
+.btn-back-login:hover { color: var(--t1); }
+
+/* ═══════════════════════════════════════════
+   APP SCREEN
+═══════════════════════════════════════════ */
+#screen-app {
+  grid-template-columns: var(--sidebar-w) 1fr;
+  grid-template-rows: var(--topbar-h) 1fr;
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+/* TOPBAR */
+.app-topbar {
+  grid-column: 1 / -1;
+  background: rgba(5,8,16,0.98);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+}
+.topbar-brand {
+  width: var(--sidebar-w);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 18px;
+  border-right: 1px solid var(--border);
+  font-family: 'Syne', sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--white);
+  letter-spacing: -0.5px;
+  flex-shrink: 0;
+}
+.topbar-brand em { color: var(--blue2); font-style: normal; }
+.topbar-right { display: flex; align-items: center; gap: 14px; padding: 0 18px; }
+.topbar-langs { display: flex; gap: 2px; }
+.tlang { background: rgba(255,255,255,0.05); border: none; color: var(--t3); padding: 4px 8px; font-size: 10px; font-weight: 700; transition: all .15s; letter-spacing: 0.5px; }
+.tlang.active { background: var(--blue); color: #fff; }
+.topbar-user { display: flex; align-items: center; gap: 9px; }
+.tu-avatar { width: 30px; height: 30px; background: var(--blue); display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 800; color: #fff; flex-shrink: 0; }
+.tu-info { display: flex; flex-direction: column; }
+.tu-name { font-size: 12px; font-weight: 600; color: var(--t1); line-height: 1; }
+.tu-role { font-size: 9px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--t3); margin-top: 2px; }
+.btn-logout { background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: var(--t3); padding: 5px 13px; font-size: 11px; font-weight: 600; transition: all .15s; }
+.btn-logout:hover { color: var(--t1); border-color: var(--border2); }
+
+/* HAUPTMENÜ SIDEBAR */
+.app-sidebar {
+  background: var(--bg2);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  position: sticky;
+  top: var(--topbar-h);
+  height: calc(100vh - var(--topbar-h));
+}
+.sb-user-section {
+  padding: 16px;
+  border-bottom: 1px solid var(--border);
+}
+.sb-av { width: 38px; height: 38px; background: var(--blue); display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 800; color: #fff; margin-bottom: 8px; }
+.sb-uname { font-size: 13px; font-weight: 700; color: var(--t1); }
+.sb-urole { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--t3); margin-top: 1px; }
+.sb-uplan { display: inline-block; background: rgba(37,99,235,0.15); border: 1px solid rgba(37,99,235,0.3); color: var(--blue3); font-size: 9px; font-weight: 700; padding: 2px 8px; letter-spacing: 0.5px; margin-top: 5px; }
+.sb-group { padding: 14px 0 4px; }
+.sb-group-label { font-size: 9px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--t3); padding: 0 16px 5px; display: block; }
+.sb-item {
+  display: flex; align-items: center; gap: 9px;
+  padding: 9px 16px;
+  font-size: 12.5px; font-weight: 600;
+  color: var(--t3);
+  border-left: 2px solid transparent;
+  transition: all .15s;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.sb-item:hover { color: var(--t1); background: rgba(255,255,255,0.03); }
+.sb-item.active { color: var(--t1); border-left-color: var(--blue); background: rgba(37,99,235,0.07); }
+.sb-icon { width: 16px; text-align: center; font-size: 13px; flex-shrink: 0; }
+.sb-divider { height: 1px; background: var(--border); margin: 6px 16px; }
+
+/* APP CONTENT */
+.app-content { overflow-y: auto; height: calc(100vh - var(--topbar-h)); }
+.app-page { display: none; padding: 28px 32px; }
+.app-page.active { display: block; }
+.pg-header { margin-bottom: 22px; }
+.pg-title { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800; color: var(--t1); margin-bottom: 3px; }
+.pg-sub { font-size: 12px; color: var(--t3); }
+
+/* KPI ROW */
+.kpi-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 22px; }
+.kpi { background: var(--bg2); border: 1px solid var(--border); padding: 16px 18px; border-top: 2px solid transparent; }
+.kpi.k-blue { border-top-color: var(--blue); }
+.kpi.k-green { border-top-color: var(--green); }
+.kpi.k-amber { border-top-color: var(--amber); }
+.kpi.k-purple { border-top-color: var(--purple); }
+.kpi-val { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800; color: var(--t1); line-height: 1; }
+.kpi-lbl { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--t3); margin-top: 4px; }
+
+/* PROGRAM CARDS */
+.pg-label { font-size: 9px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--t3); margin-bottom: 11px; }
+.prog-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 9px; }
+.prog-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-left: 3px solid var(--border);
+  padding: 15px 16px; transition: all .18s;
+}
+.prog-card:hover { background: var(--bg3); border-color: var(--border2); }
+.prog-card.exec-card { border-left-color: #f97316; background: rgba(249,115,22,0.04); }
+.prog-card.enrolled { border-left-color: var(--blue); }
+.plevel { font-size: 9px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 5px; }
+.ptitle { font-size: 13px; font-weight: 700; color: var(--t1); margin-bottom: 3px; }
+.pdesc { font-size: 11px; color: var(--t3); line-height: 1.55; margin-bottom: 10px; }
+.pfooter { display: flex; justify-content: space-between; align-items: center; }
+.pmods { font-size: 9px; font-family: 'JetBrains Mono', monospace; color: var(--t3); }
+.btn-enroll { background: transparent; border: 1px solid var(--border2); color: var(--t3); padding: 4px 11px; font-size: 10px; font-weight: 700; transition: all .15s; }
+.btn-enroll:hover { color: var(--t1); border-color: var(--t1); }
+.btn-start-quiz { background: rgba(37,99,235,0.12); border: 1px solid rgba(37,99,235,0.3); color: var(--blue3); padding: 4px 11px; font-size: 10px; font-weight: 700; transition: all .15s; }
+.btn-start-quiz:hover { background: var(--blue); color: #fff; border-color: var(--blue); }
+
+/* QUIZ */
+.quiz-wrap { max-width: 680px; }
+.quiz-toprow { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.quiz-badge { font-size: 9px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--blue3); }
+.quiz-ctr { font-size: 11px; font-family: 'JetBrains Mono', monospace; color: var(--t3); }
+.quiz-pb { background: rgba(255,255,255,0.07); height: 2px; margin-bottom: 28px; }
+.quiz-pb-fill { height: 2px; background: var(--blue); transition: width .3s; }
+.quiz-topic { font-size: 9px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--t3); margin-bottom: 9px; }
+.quiz-q { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700; color: var(--t1); line-height: 1.45; margin-bottom: 20px; }
+.quiz-options { display: flex; flex-direction: column; gap: 7px; }
+.qopt { display: flex; align-items: flex-start; gap: 11px; padding: 10px 13px; border: 1px solid var(--border); cursor: pointer; transition: all .15s; }
+.qopt:hover:not(.locked) { border-color: var(--border2); background: rgba(255,255,255,0.02); }
+.qopt.selected { border-color: var(--blue); background: rgba(37,99,235,0.08); }
+.qopt.correct { border-color: var(--green); background: rgba(16,185,129,0.08); }
+.qopt.wrong { border-color: var(--red); background: rgba(239,68,68,0.08); }
+.qopt-letter { width: 24px; height: 24px; background: rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; font-family: 'JetBrains Mono', monospace; color: var(--t3); flex-shrink: 0; }
+.qopt.selected .qopt-letter { background: var(--blue); color: #fff; }
+.qopt.correct .qopt-letter { background: var(--green); color: #fff; }
+.qopt.wrong .qopt-letter { background: var(--red); color: #fff; }
+.qopt-text { font-size: 13px; color: var(--t2); line-height: 1.5; padding-top: 2px; }
+.quiz-textarea { width: 100%; background: rgba(255,255,255,0.03); border: 1px solid var(--border); color: var(--t1); padding: 12px; font-size: 12px; min-height: 130px; resize: vertical; outline: none; margin-top: 10px; transition: border-color .15s; }
+.quiz-textarea:focus { border-color: var(--blue); }
+.quiz-textarea::placeholder { color: var(--t3); }
+.quiz-expl { margin-top: 14px; padding: 12px 15px; background: rgba(255,255,255,0.02); border-left: 3px solid var(--blue); }
+.quiz-expl-lbl { font-size: 9px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--blue3); margin-bottom: 5px; }
+.quiz-expl-txt { font-size: 12px; color: var(--t3); line-height: 1.7; }
+.quiz-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; gap: 10px; }
+.btn-q-back { background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: var(--t3); padding: 10px 18px; font-size: 12px; font-weight: 700; transition: all .15s; }
+.btn-q-back:hover { color: var(--t1); }
+.btn-q-action { background: var(--blue); color: #fff; border: none; padding: 10px 22px; font-size: 12px; font-weight: 700; transition: background .15s; }
+.btn-q-action:hover { background: #1d4ed8; }
+.btn-q-action:disabled { opacity: .3; cursor: not-allowed; }
+
+/* RESULTS */
+.result-wrap { max-width: 680px; }
+.result-hero { padding: 40px; text-align: center; margin-bottom: 16px; border: 1px solid var(--border); }
+.result-hero.pass { background: rgba(16,185,129,0.06); border-color: rgba(16,185,129,0.2); }
+.result-hero.fail { background: rgba(239,68,68,0.06); border-color: rgba(239,68,68,0.2); }
+.result-score { font-family: 'Syne', sans-serif; font-size: 80px; font-weight: 800; line-height: 1; }
+.result-verdict { font-size: 16px; font-weight: 700; margin-top: 6px; }
+.result-cert { display: inline-block; border: 1px solid var(--border2); padding: 9px 20px; margin-top: 16px; }
+.rc-lbl { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--t3); }
+.rc-code { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--t1); margin-top: 2px; }
+.review-item { border-left: 3px solid var(--border2); padding: 9px 13px; margin-bottom: 7px; background: rgba(255,255,255,0.02); }
+.review-item.ok { border-left-color: var(--green); }
+.review-item.bad { border-left-color: var(--red); }
+.ri-q { font-size: 12px; font-weight: 600; color: var(--t1); margin-bottom: 3px; }
+.ri-ans { font-size: 11px; }
+
+/* ANALYTICS */
+.ana-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.ana-card { background: var(--bg2); border: 1px solid var(--border); }
+.ana-card-h { padding: 11px 14px; border-bottom: 1px solid var(--border); font-size: 9px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: var(--t3); }
+.ana-card-b { padding: 14px; }
+.bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 9px; }
+.bar-lbl { font-size: 10px; color: var(--t3); min-width: 120px; }
+.bar-track { flex: 1; background: rgba(255,255,255,0.06); height: 4px; }
+.bar-fill { height: 4px; transition: width .5s; }
+.bar-val { font-size: 9px; font-family: 'JetBrains Mono', monospace; font-weight: 700; min-width: 32px; text-align: right; }
+.chart-bars { height: 88px; display: flex; align-items: flex-end; gap: 5px; }
+.chart-bar-col { display: flex; flex-direction: column; align-items: center; gap: 3px; flex: 1; }
+.chart-bar-val { font-size: 8px; font-weight: 700; }
+.chart-bar-fill { width: 100%; }
+.chart-bar-lbl { font-size: 7px; color: var(--t3); }
+
+/* PROFILE */
+.profile-layout { display: grid; grid-template-columns: 210px 1fr; gap: 14px; }
+.profile-card { background: var(--bg2); border: 1px solid var(--border); padding: 18px; }
+.pf-av { width: 48px; height: 48px; background: var(--blue); display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 800; color: #fff; margin: 0 auto 10px; }
+.pf-name { font-size: 14px; font-weight: 700; color: var(--t1); text-align: center; }
+.pf-role-badge { font-size: 9px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: var(--blue3); text-align: center; margin-top: 2px; }
+.pf-co { font-size: 11px; color: var(--t3); text-align: center; margin-top: 2px; }
+.pf-stat { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid var(--border); font-size: 11px; }
+.pf-sl { color: var(--t3); }
+.pf-sr { font-weight: 700; font-family: 'JetBrains Mono', monospace; color: var(--t1); }
+.cert-item { background: var(--bg2); border: 1px solid var(--border); padding: 10px 13px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.ci-t { font-size: 12px; font-weight: 600; color: var(--t1); }
+.ci-c { font-size: 9px; font-family: 'JetBrains Mono', monospace; color: var(--t3); margin-top: 2px; }
+.ci-s { font-size: 18px; font-weight: 700; color: var(--green); font-family: 'JetBrains Mono', monospace; }
+.exec-box { background: rgba(249,115,22,0.05); border: 1px solid rgba(249,115,22,0.2); border-left: 4px solid #f97316; padding: 16px; margin-top: 14px; }
+.exec-lbl { font-size: 9px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: #f97316; margin-bottom: 6px; }
+.exec-title { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; color: var(--t1); margin-bottom: 5px; }
+.exec-desc { font-size: 11px; color: var(--t3); line-height: 1.65; margin-bottom: 12px; }
+.btn-exec { background: #f97316; color: #0a0a0f; border: none; padding: 8px 18px; font-size: 11px; font-weight: 700; }
+
+/* SECURITY */
+.sec-warning { background: rgba(239,68,68,0.05); border: 1px solid rgba(239,68,68,0.2); border-left: 4px solid var(--red); padding: 14px 18px; margin-bottom: 14px; }
+.sec-warn-lbl { font-size: 9px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: var(--red); margin-bottom: 3px; }
+.sec-days { font-family: 'Syne', sans-serif; font-size: 36px; font-weight: 800; color: var(--t1); }
+.sec-days-sub { font-size: 11px; color: var(--t3); }
+.btn-change-pw { background: var(--blue); color: #fff; border: none; padding: 8px 16px; font-size: 11px; font-weight: 700; margin-top: 10px; }
+.sec-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 9px; }
+.sec-item { background: var(--bg2); border: 1px solid var(--border); padding: 13px; }
+.sec-ico { font-size: 16px; margin-bottom: 6px; }
+.sec-lbl { font-size: 11px; font-weight: 700; color: var(--t1); margin-bottom: 2px; }
+.sec-status-ok { font-size: 9px; font-weight: 700; letter-spacing: 1px; color: var(--green); }
+
+/* AI TRAINER */
+.ai-lang-row { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 14px; align-items: center; }
+.ai-lang-label { font-size: 9px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--t3); margin-right: 4px; }
+.ai-lang-btn { background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: var(--t3); padding: 5px 11px; font-size: 11px; font-weight: 600; transition: all .15s; }
+.ai-lang-btn.active { background: var(--blue); border-color: var(--blue); color: #fff; }
+.ai-quick-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+.ai-quick-btn { background: rgba(37,99,235,0.06); border: 1px solid rgba(37,99,235,0.2); color: var(--blue3); padding: 6px 11px; font-size: 11px; font-weight: 600; transition: all .15s; text-align: left; }
+.ai-quick-btn:hover { background: rgba(37,99,235,0.15); }
+.ai-layout { display: flex; flex-direction: column; height: calc(100vh - 280px); }
+.ai-msgs { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 11px; padding-bottom: 14px; }
+.ai-msg { display: flex; gap: 9px; align-items: flex-start; }
+.ai-msg.user { flex-direction: row-reverse; }
+.ai-av { width: 28px; height: 28px; background: var(--blue); display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; }
+.ai-bubble { max-width: 560px; padding: 10px 13px; font-size: 12.5px; line-height: 1.7; color: var(--t2); }
+.ai-msg:not(.user) .ai-bubble { background: rgba(255,255,255,0.03); border: 1px solid var(--border); }
+.ai-msg.user .ai-bubble { background: rgba(37,99,235,0.12); border: 1px solid rgba(37,99,235,0.22); color: var(--t1); }
+.ai-typing { opacity: 0.5; }
+.ai-input-row { display: flex; gap: 7px; border-top: 1px solid var(--border); padding-top: 12px; }
+.ai-inp { flex: 1; background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: var(--t1); padding: 10px 13px; font-size: 13px; outline: none; transition: border-color .15s; }
+.ai-inp:focus { border-color: var(--blue); }
+.ai-inp::placeholder { color: var(--t3); }
+.btn-ai-send { background: var(--blue); border: none; color: #fff; padding: 10px 18px; font-size: 12px; font-weight: 700; transition: background .15s; white-space: nowrap; }
+.btn-ai-send:hover { background: #1d4ed8; }
+.btn-ai-send:disabled { opacity: .4; cursor: not-allowed; }
+
+/* PRICING */
+.dur-tabs { display: inline-flex; background: rgba(255,255,255,0.04); border: 1px solid var(--border); padding: 3px; gap: 2px; margin-bottom: 22px; flex-wrap: wrap; }
+.dur-tab { background: transparent; border: none; color: var(--t3); padding: 6px 13px; font-size: 11px; font-weight: 700; transition: all .15s; letter-spacing: 0.3px; }
+.dur-tab.active { background: var(--blue); color: #fff; }
+.price-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--border); margin-bottom: 2px; }
+.price-card { background: var(--bg); padding: 26px 20px; position: relative; }
+.price-card.feat { background: rgba(37,99,235,0.05); }
+.pc-badge { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: var(--blue); color: #fff; font-size: 9px; font-weight: 800; padding: 2px 12px; letter-spacing: 1px; white-space: nowrap; }
+.pc-name { font-size: 9px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--t3); margin-bottom: 12px; }
+.pc-price { font-family: 'Syne', sans-serif; font-size: 40px; font-weight: 800; color: var(--t1); line-height: 1; }
+.pc-price sup { font-size: 16px; vertical-align: top; margin-top: 7px; }
+.pc-period { font-size: 11px; color: var(--t3); margin-top: 3px; margin-bottom: 16px; }
+.pc-feats { list-style: none; margin-bottom: 20px; }
+.pc-feats li { font-size: 12px; color: var(--t2); padding: 5px 0; border-bottom: 1px solid var(--border); display: flex; gap: 7px; }
+.pc-feats li::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink: 0; }
+.btn-pc { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: var(--t1); padding: 10px; font-size: 12px; font-weight: 700; transition: all .15s; }
+.btn-pc:hover { background: rgba(255,255,255,0.1); }
+.price-card.feat .btn-pc { background: var(--blue); border-color: var(--blue); }
+.ent-band { background: rgba(37,99,235,0.04); border: 1px solid rgba(37,99,235,0.15); padding: 28px; display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: center; margin-top: 2px; }
+.ent-title { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 800; color: var(--t1); margin-bottom: 5px; }
+.ent-desc { font-size: 12px; color: var(--t3); line-height: 1.7; max-width: 500px; }
+.btn-ent { background: var(--amber); color: #0a0a0f; border: none; padding: 11px 22px; font-size: 12px; font-weight: 700; white-space: nowrap; }
+
+/* LEGAL / PRICING SCREENS */
+#screen-legal, #screen-pricing {
+  background: var(--bg);
+  min-height: 100vh;
+  padding: 40px 28px 80px;
+}
+.sub-inner { max-width: 900px; margin: 0 auto; }
+.btn-back-sub { background: transparent; border: none; color: var(--t3); font-size: 12px; display: flex; align-items: center; gap: 6px; margin-bottom: 24px; padding: 0; transition: color .15s; }
+.btn-back-sub:hover { color: var(--t1); }
+.sub-title { font-family: 'Syne', sans-serif; font-size: 34px; font-weight: 800; color: var(--t1); letter-spacing: -1px; margin-bottom: 6px; }
+.sub-desc { font-size: 13px; color: var(--t3); margin-bottom: 32px; }
+.legal-section { margin-bottom: 26px; padding-bottom: 26px; border-bottom: 1px solid var(--border); }
+.ls-num { font-size: 9px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--blue3); margin-bottom: 5px; }
+.ls-title { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 700; color: var(--t1); margin-bottom: 8px; }
+.ls-body { font-size: 13px; color: var(--t3); line-height: 1.85; }
+.ls-body strong { color: var(--t1); }
+.disclaimer-box { background: rgba(239,68,68,0.05); border: 1px solid rgba(239,68,68,0.18); border-left: 4px solid var(--red); padding: 13px 16px; margin: 13px 0; font-size: 12px; color: var(--t3); line-height: 1.75; }
+
+/* PAYMENT MODAL */
+.pay-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.88); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 20px; }
+.pay-overlay.open { display: flex; }
+.pay-modal { background: var(--bg2); border: 1px solid var(--border); max-width: 440px; width: 100%; padding: 28px; }
+.pay-modal-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px; }
+.pay-modal-title { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 800; color: var(--t1); }
+.pay-modal-price { font-size: 12px; color: var(--t3); margin-bottom: 16px; }
+.btn-pay-close { background: rgba(255,255,255,0.07); border: none; color: var(--t1); width: 28px; height: 28px; font-size: 14px; }
+.pay-methods { display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; margin-bottom: 14px; }
+.pm { background: rgba(255,255,255,0.04); border: 1px solid var(--border); padding: 9px; text-align: center; cursor: pointer; transition: all .15s; }
+.pm.active { border-color: var(--blue); background: rgba(37,99,235,0.1); }
+.pm-ico { font-size: 17px; margin-bottom: 3px; }
+.pm-lbl { font-size: 9px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--t3); }
+.pf { margin-bottom: 11px; }
+.pf label { display: block; font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--t3); margin-bottom: 4px; }
+.pf input { width: 100%; background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: var(--t1); padding: 9px 11px; font-size: 13px; outline: none; transition: border-color .15s; }
+.pf input:focus { border-color: var(--blue); }
+.pf-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.btn-pay-go { width: 100%; background: var(--blue); color: #fff; border: none; padding: 12px; font-size: 13px; font-weight: 700; margin-top: 4px; transition: background .15s; }
+.btn-pay-go:hover { background: #1d4ed8; }
+.pay-security { font-size: 10px; color: var(--t3); text-align: center; margin-top: 10px; }
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════ */
+@media (max-width: 900px) {
+  :root { --sidebar-w: 0px; }
+  #screen-app { grid-template-columns: 1fr; }
+  .app-sidebar { display: none; }
+  .topbar-brand { width: auto; border-right: none; }
+  .topbar-langs { display: none; }
+  .kpi-row { grid-template-columns: repeat(2,1fr); }
+  .prog-grid { grid-template-columns: 1fr; }
+  .ana-grid { grid-template-columns: 1fr; }
+  .profile-layout { grid-template-columns: 1fr; }
+  .sec-grid { grid-template-columns: 1fr 1fr; }
+  .price-cards { grid-template-columns: 1fr; }
+  .ent-band { grid-template-columns: 1fr; }
+  .prob-grid { grid-template-columns: 1fr; }
+  .sol-grid { grid-template-columns: 1fr 1fr; }
+  .prog-tiles { grid-template-columns: repeat(3,1fr); }
+  .prog-features { grid-template-columns: 1fr 1fr; }
+  .contact-grid { grid-template-columns: 1fr; }
+  .footer-top { grid-template-columns: 1fr 1fr; }
+  .site-nav .nav-links { display: none; }
+  .app-page { padding: 18px 16px; }
+}
+
+@media (max-width: 480px) {
+  .hero-h1 { letter-spacing: -1px; }
+  .kpi-row { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .kpi-val { font-size: 22px; }
+  .sec-grid { grid-template-columns: 1fr; }
+  .sol-grid { grid-template-columns: 1fr; }
+  .prog-tiles { grid-template-columns: repeat(2,1fr); }
+  .prog-features { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div id="toast"></div>
+
+<!-- PAYMENT MODAL -->
+<div class="pay-overlay" id="pay-overlay">
+  <div class="pay-modal">
+    <div class="pay-modal-top">
+      <div class="pay-modal-title" id="pm-title">Professional Plan</div>
+      <button class="btn-pay-close" onclick="closePayModal()">✕</button>
+    </div>
+    <div class="pay-modal-price" id="pm-price">€79 / Nutzer / Monat</div>
+    <div class="pay-methods">
+      <div class="pm active" onclick="selPM(this)"><div class="pm-ico">💳</div><div class="pm-lbl">Karte</div></div>
+      <div class="pm" onclick="selPM(this)"><div class="pm-ico">🅿</div><div class="pm-lbl">PayPal</div></div>
+      <div class="pm" onclick="selPM(this)"><div class="pm-ico">💰</div><div class="pm-lbl">Guthaben</div></div>
+    </div>
+    <div class="pf"><label>Karteninhaber</label><input type="text" placeholder="Max Mustermann"></div>
+    <div class="pf"><label>Kartennummer</label><input type="text" placeholder="4242 4242 4242 4242" maxlength="19"></div>
+    <div class="pf-2">
+      <div class="pf"><label>Ablaufdatum</label><input type="text" placeholder="MM/YY"></div>
+      <div class="pf"><label>CVV</label><input type="text" placeholder="123" maxlength="4"></div>
+    </div>
+    <button class="btn-pay-go" onclick="processPayment()">JETZT BEZAHLEN →</button>
+    <div class="pay-security">🔒 256-bit SSL · PCI-DSS · Verschlüsselt</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+  HOME SCREEN
+═══════════════════════════════════════════ -->
+<div class="screen active" id="screen-home">
+  <nav class="site-nav">
+    <div class="nav-inner">
+      <div class="nav-logo">CL<em>S</em></div>
+      <div class="nav-links">
+        <a class="nav-link" href="#solutions">Solutions</a>
+        <a class="nav-link" href="#platform">CBT Platform</a>
+        <a class="nav-link" href="#framework">Framework</a>
+        <a class="nav-link" href="#contact">Kontakt</a>
+        <a class="nav-link" href="#" onclick="showScreen('pricing')">Preise</a>
+      </div>
+      <button class="btn-login-nav" onclick="showScreen('login')">ANMELDEN →</button>
+    </div>
+  </nav>
+
+  <section class="site-hero">
+    <div class="hero-inner">
+      <div class="hero-tag">Clear Leadership Systems · Aviation Ground Operations</div>
+      <h1 class="hero-h1">Die Lücke zwischen<br>Ihrem <span class="hl">Operations Manual</span><br>und dem Ramp.</h1>
+      <p class="hero-desc">CLS liefert strukturiertes Consulting und Computer Based Training für Aviation Ground Handling — aufgebaut aus 10+ Jahren frontline Operational Experience. Nicht Theorie. Realität.</p>
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="smoothTo('contact')">Audit anfragen →</button>
+        <button class="btn-outline" onclick="showScreen('login')">CBT Platform öffnen</button>
+      </div>
+      <div class="hero-stats">
+        <div><div class="hstat-n">10+</div><div class="hstat-l">Jahre Operational</div></div>
+        <div><div class="hstat-n">14</div><div class="hstat-l">CBT Programme</div></div>
+        <div><div class="hstat-n">40+</div><div class="hstat-l">Framework Module</div></div>
+        <div><div class="hstat-n">€50K</div><div class="hstat-l">Ø Missloading-Kosten</div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="marquee-bar">
+    <div class="marquee-track">
+      <span class="marquee-item">GROUND HANDLING CONSULTING <span>·</span></span>
+      <span class="marquee-item">SUPERVISOR DEVELOPMENT <span>·</span></span>
+      <span class="marquee-item">CBT PLATFORM <span>·</span></span>
+      <span class="marquee-item">OPERATIONAL REALITY AUDIT <span>·</span></span>
+      <span class="marquee-item">HUMAN FACTORS TRAINING <span>·</span></span>
+      <span class="marquee-item">SAFETY MANAGEMENT SYSTEMS <span>·</span></span>
+      <span class="marquee-item">DEFICIENCY ANALYTICS <span>·</span></span>
+      <span class="marquee-item">KI-LERNASSISTENT <span>·</span></span>
+      <span class="marquee-item">GROUND HANDLING CONSULTING <span>·</span></span>
+      <span class="marquee-item">SUPERVISOR DEVELOPMENT <span>·</span></span>
+      <span class="marquee-item">CBT PLATFORM <span>·</span></span>
+      <span class="marquee-item">OPERATIONAL REALITY AUDIT <span>·</span></span>
+      <span class="marquee-item">HUMAN FACTORS TRAINING <span>·</span></span>
+      <span class="marquee-item">SAFETY MANAGEMENT SYSTEMS <span>·</span></span>
+      <span class="marquee-item">DEFICIENCY ANALYTICS <span>·</span></span>
+      <span class="marquee-item">KI-LERNASSISTENT <span>·</span></span>
+    </div>
+  </div>
+
+  <section class="site-section" id="solutions" style="background:var(--bg2);">
+    <div class="section-inner">
+      <div class="prob-grid">
+        <div>
+          <div class="section-tag">Das Problem</div>
+          <h2 class="section-h">Ihre Operation läuft auf Erfahrung. Erfahrung ist nicht skalierbar.</h2>
+          <p class="section-sub">Ground Handling Operationen weltweit verlassen sich auf manuelle Prozesse, fragmentierte Kommunikation und Supervisoren ohne Leadership Training.</p>
+          <br>
+          <button class="btn-primary" onclick="smoothTo('solutions-products')" style="font-size:13px;">Wie CLS das löst →</button>
+        </div>
+        <div>
+          <div class="prob-cards">
+            <div class="prob-card"><h4>⚠ Supervisoren ohne Leadership Training</h4><p>Beste Ramp Agents werden Supervisoren — ohne strukturierte Entwicklung. Vorhersehbare Ergebnisse.</p></div>
+            <div class="prob-card"><h4>📡 Communication Architecture Failure</h4><p>Fehlende Bestätigungsschleifen, unvollständige Übergaben, Sprachbarrieren. Jeder Vorfall hat eine Kommunikationskomponente.</p></div>
+            <div class="prob-card amber"><h4>🔄 Normalization of Deviation</h4><p>Shortcuts werden Standard. Risikoблindheit entwickelt sich schrittweise — unsichtbar bis zum Auslöser.</p></div>
+            <div class="prob-card gray"><h4>📉 Kein strukturiertes CBT für diese Industrie</h4><p>Jedes Unternehmen baut Training inkonsistent, teuer und ohne aviation-spezifische Human Factors Expertise.</p></div>
+          </div>
+          <div class="cost-box">
+            <div><div class="cost-n">€10K–50K</div><div style="font-size:10px;color:var(--t3);margin-top:2px;">pro Missloading-Ereignis</div></div>
+            <div class="cost-l">Ein verhinderter Vorfall<br>deckt den kompletten Audit-Preis</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="site-section" id="solutions-products">
+    <div class="section-inner">
+      <div style="text-align:center;margin-bottom:0;">
+        <div class="section-tag">Was CLS liefert</div>
+        <h2 class="section-h">Vier Produkte. Ein System.</h2>
+      </div>
+      <div class="sol-grid">
+        <div class="sol-card"><span class="sol-n">01</span><h3>Operational Reality Audit</h3><p>On-site oder remote Gap-Analyse zwischen dokumentierten Prozessen und was wirklich auf dem Ramp passiert.</p><div class="sol-price">€2.500 – €8.000</div></div>
+        <div class="sol-card alt"><span class="sol-n">02</span><h3>CBT Platform Subscription</h3><p>14 Programme für alle Organisationsebenen vom Ramp Agent bis CEO. Modul-gesperrte Progression, 2-Versuch-Limit, 180-Tage Sperre.</p><div class="sol-price">€150 – €500 / Nutzer / Jahr</div></div>
+        <div class="sol-card"><span class="sol-n">03</span><h3>Supervisor Leadership Program</h3><p>Strukturierter 10-Modul Entwicklungspfad. Remote oder vor Ort. Gruppen- und Einzelformat.</p><div class="sol-price">€500 – €1.500 / Teilnehmer</div></div>
+        <div class="sol-card alt"><span class="sol-n">04</span><h3>KI-Lernassistent</h3><p>Powered by Claude AI. Analysiert Testergebnisse, erklärt Konzepte, empfiehlt Lernpfade. 6 Sprachen.</p><div class="sol-price">Im Platform-Abo enthalten</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="site-section programs-section" id="platform" style="background:var(--bg2);">
+    <div class="section-inner">
+      <div class="section-tag">CBT Platform</div>
+      <h2 class="section-h">Jede Rolle. Jede Ebene.<br>Eine Plattform.</h2>
+      <div class="prog-tiles">
+        <div class="prog-tile"><span class="pt-code">CBT-RA</span><div class="pt-title">Ramp Agent Core Training</div><span class="pt-level lv-op">OPERATIONAL · 8 MOD</span></div>
+        <div class="prog-tile"><span class="pt-code">CBT-LM</span><div class="pt-title">Loading Master / Load Control</div><span class="pt-level lv-op">OPERATIONAL · 6 MOD</span></div>
+        <div class="prog-tile"><span class="pt-code">CBT-CS</span><div class="pt-title">Check-in & Service Agent</div><span class="pt-level lv-op">OPERATIONAL · 5 MOD</span></div>
+        <div class="prog-tile"><span class="pt-code">CBT-TE</span><div class="pt-title">Trainee Experience (0–90 Tage)</div><span class="pt-level lv-op">OPERATIONAL · 5 MOD</span></div>
+        <div class="prog-tile"><span class="pt-code">CBT-RS</span><div class="pt-title">Ramp Supervisor Development</div><span class="pt-level lv-sup">SUPERVISORY · 10 MOD</span></div>
+        <div class="prog-tile"><span class="pt-code">CBT-TC</span><div class="pt-title">Turnaround Coordinator</div><span class="pt-level lv-sup">SUPERVISORY · 6 MOD</span></div>
+        <div class="prog-tile"><span class="pt-code">CBT-DM</span><div class="pt-title">Duty Manager Program</div><span class="pt-level lv-mgmt">MANAGEMENT · 10 MOD</span></div>
+        <div class="prog-tile"><span class="pt-code">CBT-SM</span><div class="pt-title">Station Manager Program</div><span class="pt-level lv-mgmt">MANAGEMENT · 8 MOD</span></div>
+        <div class="prog-tile"><span class="pt-code">CBT-TR</span><div class="pt-title">Trainer & Training Dept.</div><span class="pt-level lv-mgmt">MANAGEMENT · 7 MOD</span></div>
+        <div class="prog-tile"><span class="pt-code">CBT-HR</span><div class="pt-title">Human Resources Aviation</div><span class="pt-level lv-mgmt">MANAGEMENT · 6 MOD</span></div>
+        <div class="prog-tile"><span class="pt-code">CBT-AL</span><div class="pt-title">Airline Operations Integration</div><span class="pt-level lv-mgmt">MANAGEMENT · 7 MOD</span></div>
+        <div class="prog-tile"><span class="pt-code">CBT-EX</span><div class="pt-title">Executive Leadership</div><span class="pt-level lv-exec">EXECUTIVE · 8 MOD</span></div>
+        <div class="prog-tile"><span class="pt-code">CBT-SC <span class="pt-new">NEW</span></span><div class="pt-title">Security & Safety Compliance</div><span class="pt-level lv-exec">SECURITY · 6 MOD</span></div>
+        <div class="prog-tile"><span class="pt-code">CBT-LG <span class="pt-new">NEW</span></span><div class="pt-title">Luftrecht & Internationales Recht</div><span class="pt-level lv-exec">EXECUTIVE · 8 MOD</span></div>
+      </div>
+      <div class="prog-features">
+        <div class="prog-feat"><h4>🔒 2-Versuch-Limit</h4><p>Max. 2 Versuche pro Modul. Scheitern → 180-Tage Sperre. Keine Abkürzungen. Das ist Aviation.</p></div>
+        <div class="prog-feat"><h4>🎲 Randomisierte Fragen</h4><p>Jeder Neuversuch zieht aus einem größeren Pool. Verhindert Auswendiglernen. Erzwingt Verständnis.</p></div>
+        <div class="prog-feat"><h4>🌐 6 Sprachen</h4><p>DE, EN, FR, ES, RU, AR. KI-Trainer antwortet in der gewählten Sprache nativ.</p></div>
+        <div class="prog-feat"><h4>📊 Deficiency Analytics</h4><p>Themen-Level Scoring bei jedem Versuch. Management-Dashboard zeigt Schwachstellen bevor Vorfälle passieren.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="site-section" id="framework">
+    <div class="section-inner">
+      <div class="section-tag">CLS Framework</div>
+      <h2 class="section-h">8 Blöcke. 40+ Module.<br>Ein komplettes System.</h2>
+      <div class="sol-grid" style="margin-top:36px;">
+        <div class="sol-card"><span class="sol-n">BLOCK A · MOD 01–05</span><h3>Human Factors</h3><p>Kognitive Überlastung, Situationsbewusstsein, Normalization of Deviation, Stress, Workload-Architektur.</p></div>
+        <div class="sol-card alt"><span class="sol-n">BLOCK B · MOD 06–10</span><h3>Leadership & Supervision</h3><p>Leadership-Gap, Supervisor-Entwicklung, KPIs, Mitarbeiteranalyse, Briefing-Standards, Fehlerkultur.</p></div>
+        <div class="sol-card"><span class="sol-n">BLOCK C · MOD 11–15</span><h3>Kommunikation</h3><p>Kommunikations-Architektur, Missverständnisquellen, Sprachbarrieren, Cross-Departmental.</p></div>
+        <div class="sol-card alt"><span class="sol-n">BLOCK D · MOD 16–20</span><h3>Operative Systeme</h3><p>SOPs vs. Realität, Turnaround-Management, IROPS, Multi-Airline, Load Planning & Weight & Balance.</p></div>
+        <div class="sol-card"><span class="sol-n">BLOCK E · MOD 21–25</span><h3>Technology & Future</h3><p>KI & Automatisierung, Digital Twin Operations, Autonomous GSE, Green Operations.</p></div>
+        <div class="sol-card alt"><span class="sol-n">BLOCK F · MOD 26–28</span><h3>Consulting Framework</h3><p>Operational Reality Audit Methodik, CLS Consulting-Ansatz.</p></div>
+        <div class="sol-card" style="position:relative;"><span class="sol-n">BLOCK G · MOD 29–34 <span class="pt-new">NEW</span></span><h3>Safety, Security & Regulatory</h3><p>Airside Authority, Runway Safety, Airport Security, Compliance, Aviation Law, Root Cause Analysis.</p></div>
+        <div class="sol-card alt" style="position:relative;"><span class="sol-n">BLOCK H · MOD 35–40 <span class="pt-new">NEW</span></span><h3>PR, Social Media & Brand</h3><p>Corporate Communication, Crisis Comms, Social Media Strategy, Brand Management.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="site-section" id="contact" style="background:var(--bg2);">
+    <div class="section-inner">
+      <div class="contact-grid">
+        <div class="contact-info">
+          <div class="section-tag">Kontakt</div>
+          <h2>Ein Gespräch.<br>Das reicht.</h2>
+          <p>Ob Handling-Unternehmen, Airline oder Trainingsorganisation — starten Sie mit einem 30-Minuten-Call.</p>
+          <div class="ci-block"><div class="ci-lbl">Für Handling-Unternehmen</div><div class="ci-val">Operational Reality Audit</div><div class="ci-sub">Kostenlose 60-Min Discovery Session</div></div>
+          <div class="ci-block"><div class="ci-lbl">Für Airlines</div><div class="ci-val">CBT-AL + Analytics</div><div class="ci-sub">Handler-Performance Gap Analysis + Per-Seat Lizenzierung</div></div>
+          <div class="ci-block"><div class="ci-lbl">Direktkontakt</div><div class="ci-val">ceo@clear-leadership-systems.com</div><div class="ci-sub">Antwort innerhalb 24h · EN / DE / AT</div></div>
+        </div>
+        <div class="contact-form">
+          <div class="cf-title">Audit oder Demo anfragen</div>
+          <div class="cf-row">
+            <div class="cf-field"><label>Vorname</label><input type="text" placeholder="Max"></div>
+            <div class="cf-field"><label>Nachname</label><input type="text" placeholder="Mustermann"></div>
+          </div>
+          <div class="cf-field"><label>Firmen-E-Mail</label><input type="email" placeholder="name@unternehmen.com"></div>
+          <div class="cf-field"><label>Unternehmen & Rolle</label><input type="text" placeholder="Fraport Ground Services · Ops Manager"></div>
+          <div class="cf-field">
+            <label>Anfrage-Typ</label>
+            <select>
+              <option>Operational Reality Audit</option>
+              <option>CBT Platform Demo</option>
+              <option>Supervisor Leadership Program</option>
+              <option>Enterprise Lizenz</option>
+              <option>Partnership / Advisory</option>
+            </select>
+          </div>
+          <div class="cf-field"><label>Nachricht (optional)</label><textarea rows="3" placeholder="Beschreiben Sie kurz Ihre Situation..."></textarea></div>
+          <button class="btn-cf" onclick="submitContact(this)">ANFRAGE SENDEN →</button>
+          <div style="margin-top:10px;font-size:10px;color:var(--t3);">Ihre Daten werden niemals verkauft oder weitergegeben.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div>
+          <div class="footer-logo">CL<em>S</em></div>
+          <p class="footer-desc">Clear Leadership Systems — Aviation Ground Operations Consulting & CBT Platform. Aufgebaut aus 10+ Jahren frontline Erfahrung am Flughafen Wien. Weltweit.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Produkte</h4>
+          <a onclick="smoothTo('solutions-products')">Operational Reality Audit</a>
+          <a onclick="showScreen('login')">CBT Platform</a>
+          <a onclick="smoothTo('solutions-products')">Supervisor Program</a>
+          <a onclick="showScreen('pricing')">Preise</a>
+        </div>
+        <div class="footer-col">
+          <h4>Programme</h4>
+          <p>CBT-RA · Ramp Agent</p>
+          <p>CBT-RS · Supervisor</p>
+          <p>CBT-DM · Duty Manager</p>
+          <p>CBT-EX · Executive</p>
+          <p>+ 10 weitere</p>
+        </div>
+        <div class="footer-col">
+          <h4>Kontakt</h4>
+          <p>ceo@clear-leadership-systems.com</p>
+          <p>Wien, Österreich · Weltweit</p>
+          <p style="margin-top:10px;">© 2025 CLS · Alle Rechte vorbehalten</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-copy">© 2025 CLS — Clear Leadership Systems. Alle Rechte vorbehalten.</div>
+        <div class="footer-legal">
+          <a onclick="showScreen('legal')">Impressum</a>
+          <a onclick="showScreen('legal')">Datenschutz</a>
+          <a onclick="showScreen('legal')">AGB</a>
+          <a onclick="showScreen('legal')">Copyright</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- ═══════════════════════════════════════════
+  LOGIN SCREEN
+═══════════════════════════════════════════ -->
+<div class="screen" id="screen-login">
+  <div class="login-wrap">
+    <div class="login-logo">
+      <div class="login-logo-text">CL<em>S</em></div>
+      <div class="login-tagline">Clear Leadership Systems</div>
+    </div>
+    <div class="login-box">
+      <div class="login-tabs">
+        <button class="ltab active" onclick="switchLoginTab('login',this)">ANMELDEN</button>
+        <button class="ltab" onclick="switchLoginTab('register',this)">REGISTRIEREN</button>
+      </div>
+      <div id="login-form">
+        <div class="lf"><label>Firmen-E-Mail</label><input type="email" id="li-email" placeholder="name@unternehmen.com"></div>
+        <div class="lf"><label>Passwort</label><input type="password" id="li-pw" placeholder="••••••••"></div>
+        <button class="btn-login" onclick="doLogin()">ANMELDEN →</button>
+      </div>
+      <div id="register-form" style="display:none;">
+        <div class="lf-2">
+          <div class="lf"><label>Vorname</label><input type="text" id="r-fn" placeholder="Max"></div>
+          <div class="lf"><label>Nachname</label><input type="text" id="r-ln" placeholder="Muster"></div>
+        </div>
+        <div class="lf">
+          <label>Rolle</label>
+          <select id="r-role">
+            <option value="ramp_agent">Ramp Agent</option>
+            <option value="loading_master">Loading Master</option>
+            <option value="checkin_agent">Check-in Agent</option>
+            <option value="supervisor">Ramp Supervisor</option>
+            <option value="duty_manager">Duty Manager</option>
+            <option value="station_manager">Station Manager</option>
+            <option value="trainer">Trainer</option>
+            <option value="hr_manager">HR Manager</option>
+            <option value="ceo">CEO / Direktor</option>
+            <option value="it">IT / Security</option>
+            <option value="legal">Legal / Recht</option>
+          </select>
+        </div>
+        <div class="lf"><label>Unternehmen</label><input type="text" id="r-co" placeholder="Handling GmbH"></div>
+        <div class="lf"><label>Firmen-E-Mail</label><input type="email" id="r-email" placeholder="name@firma.com"></div>
+        <div class="lf"><label>Passwort</label><input type="password" id="r-pw" placeholder="Min. 8 Zeichen"></div>
+        <button class="btn-login" onclick="doRegister()">KONTO ERSTELLEN →</button>
+      </div>
+      <div class="demo-box">
+        <div class="demo-title">DEMO-ZUGÄNGE</div>
+        <div class="demo-item" onclick="fillDemo('supervisor@fraport.de','demo123')">supervisor@fraport.de / demo123</div>
+        <div class="demo-item" onclick="fillDemo('ceo@menzies.com','demo123')">ceo@menzies.com / demo123</div>
+        <div class="demo-item" onclick="fillDemo('trainer@swissport.com','demo123')">trainer@swissport.com / demo123</div>
+      </div>
+    </div>
+    <button class="btn-back-login" onclick="showScreen('home')">← Zurück zur Website</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+  APP SCREEN
+═══════════════════════════════════════════ -->
+<div class="screen" id="screen-app">
+
+  <div class="app-topbar">
+    <div class="topbar-brand">CL<em>S</em></div>
+    <div class="topbar-right">
+      <div class="topbar-langs">
+        <button class="tlang active" onclick="setLang('de',this)">DE</button>
+        <button class="tlang" onclick="setLang('en',this)">EN</button>
+        <button class="tlang" onclick="setLang('fr',this)">FR</button>
+        <button class="tlang" onclick="setLang('es',this)">ES</button>
+        <button class="tlang" onclick="setLang('ru',this)">RU</button>
+        <button class="tlang" onclick="setLang('ar',this)">AR</button>
+      </div>
+      <div class="topbar-user">
+        <div class="tu-avatar" id="tb-av">?</div>
+        <div class="tu-info">
+          <div class="tu-name" id="tb-name">–</div>
+          <div class="tu-role" id="tb-role">–</div>
+        </div>
+      </div>
+      <button class="btn-logout" onclick="doLogout()">Abmelden</button>
+    </div>
+  </div>
+
+  <!-- HAUPTMENÜ SIDEBAR -->
+  <div class="app-sidebar">
+    <div class="sb-user-section">
+      <div class="sb-av" id="sb-av">?</div>
+      <div class="sb-uname" id="sb-uname">–</div>
+      <div class="sb-urole" id="sb-urole">–</div>
+      <div class="sb-uplan" id="sb-uplan">Starter</div>
+    </div>
+
+    <div class="sb-group">
+      <span class="sb-group-label">HAUPTMENÜ</span>
+      <div class="sb-item active" onclick="showPage('dashboard')"><span class="sb-icon">📊</span>Dashboard</div>
+      <div class="sb-item" onclick="showPage('programs')"><span class="sb-icon">📚</span>Programme</div>
+      <div class="sb-item" onclick="showPage('analytics')"><span class="sb-icon">📈</span>Analytics</div>
+      <div class="sb-item" onclick="showPage('ai')"><span class="sb-icon">🤖</span>KI-Assistent</div>
+    </div>
+    <div class="sb-divider"></div>
+    <div class="sb-group">
+      <span class="sb-group-label">KONTO & SYSTEM</span>
+      <div class="sb-item" onclick="showPage('profile')"><span class="sb-icon">👤</span>Mein Profil</div>
+      <div class="sb-item" onclick="showPage('security')"><span class="sb-icon">🔒</span>Sicherheit</div>
+      <div class="sb-item" onclick="showPage('pricing-app')"><span class="sb-icon">💳</span>Tarife & Zahlung</div>
+    </div>
+    <div class="sb-divider"></div>
+    <div class="sb-group">
+      <span class="sb-group-label">WEBSITE</span>
+      <div class="sb-item" onclick="showScreen('home')"><span class="sb-icon">🌐</span>Zur Website</div>
+      <div class="sb-item" onclick="showScreen('legal')"><span class="sb-icon">⚖️</span>Rechtliches</div>
+    </div>
+  </div>
+
+  <!-- APP CONTENT -->
+  <div class="app-content">
+
+    <!-- DASHBOARD -->
+    <div class="app-page active" id="page-dashboard">
+      <div class="pg-header">
+        <div class="pg-title" id="dash-title">Guten Tag</div>
+        <div class="pg-sub" id="dash-sub"></div>
+      </div>
+      <div class="kpi-row">
+        <div class="kpi k-blue"><div class="kpi-val" id="kpi-e">0</div><div class="kpi-lbl">Programme</div></div>
+        <div class="kpi k-green"><div class="kpi-val" id="kpi-p">0</div><div class="kpi-lbl">Bestanden</div></div>
+        <div class="kpi k-amber"><div class="kpi-val" id="kpi-c">0</div><div class="kpi-lbl">Zertifikate</div></div>
+        <div class="kpi k-purple"><div class="kpi-val" id="kpi-s">—</div><div class="kpi-lbl">Ø Score</div></div>
+      </div>
+      <div class="pg-label">MEINE PROGRAMME</div>
+      <div class="prog-grid" id="dash-progs"></div>
+    </div>
+
+    <!-- PROGRAMS -->
+    <div class="app-page" id="page-programs">
+      <div class="pg-header">
+        <div class="pg-title">Programm-Katalog</div>
+        <div class="pg-sub">14 CBT-Programme · Ramp Agent bis CEO · Einschreiben und sofort starten</div>
+      </div>
+      <div class="prog-grid" id="prog-catalog"></div>
+    </div>
+
+    <!-- QUIZ -->
+    <div class="app-page" id="page-quiz">
+      <div class="quiz-wrap">
+        <div class="quiz-toprow">
+          <span class="quiz-badge" id="quiz-badge">MODULE QUIZ</span>
+          <span class="quiz-ctr" id="quiz-ctr">1 / 5</span>
+        </div>
+        <div class="quiz-pb"><div class="quiz-pb-fill" id="quiz-fill" style="width:20%"></div></div>
+        <div class="quiz-topic" id="quiz-topic"></div>
+        <div class="quiz-q" id="quiz-q"></div>
+        <div class="quiz-options" id="quiz-opts"></div>
+        <textarea class="quiz-textarea" id="quiz-ta" style="display:none;" placeholder="Antwort ausführlich beschreiben (min. 80 Wörter)..."></textarea>
+        <div class="quiz-expl" id="quiz-expl" style="display:none;">
+          <div class="quiz-expl-lbl" id="quiz-expl-lbl">ERKLÄRUNG</div>
+          <div class="quiz-expl-txt" id="quiz-expl-txt"></div>
+        </div>
+        <div class="quiz-footer">
+          <button class="btn-q-back" onclick="showPage('programs')">← Zurück</button>
+          <button class="btn-q-action" id="quiz-btn" onclick="quizAction()" disabled>Antwort bestätigen</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="app-page" id="page-results">
+      <div class="result-wrap">
+        <div class="result-hero" id="result-hero">
+          <div class="result-score" id="res-score">0%</div>
+          <div class="result-verdict" id="res-verdict"></div>
+          <div id="res-cert"></div>
+        </div>
+        <div class="pg-label" style="margin-bottom:10px;">AUSWERTUNG</div>
+        <div id="res-review"></div>
+        <div style="display:flex;gap:8px;margin-top:16px;">
+          <button style="flex:1;background:rgba(255,255,255,0.04);border:1px solid var(--border);color:var(--t2);padding:11px;font-size:11px;font-weight:700;cursor:pointer;" onclick="showPage('programs')">← Zurück zu Programme</button>
+          <button style="flex:1;background:var(--green);border:none;color:#fff;padding:11px;font-size:11px;font-weight:700;cursor:pointer;" onclick="showPage('analytics')">Analytics ansehen →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ANALYTICS -->
+    <div class="app-page" id="page-analytics">
+      <div class="pg-header">
+        <div class="pg-title">Performance Analytics</div>
+        <div class="pg-sub">Persönliche Lernkurve · Kompetenzanalyse · Zertifikate</div>
+      </div>
+      <div class="ana-grid">
+        <div class="ana-card">
+          <div class="ana-card-h">SCORE-VERLAUF</div>
+          <div class="ana-card-b"><div class="chart-bars" id="score-chart"></div></div>
+        </div>
+        <div class="ana-card">
+          <div class="ana-card-h">ZERTIFIKATE</div>
+          <div class="ana-card-b"><div id="cert-ana"></div></div>
+        </div>
+        <div class="ana-card" style="grid-column:1/-1;">
+          <div class="ana-card-h">KOMPETENZ-ANALYSE NACH THEMENBEREICH</div>
+          <div class="ana-card-b"><div id="topic-ana"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI TRAINER -->
+    <div class="app-page" id="page-ai">
+      <div class="pg-header">
+        <div class="pg-title">🤖 KI-Lernassistent</div>
+        <div class="pg-sub">Powered by Claude AI · Eigenständig · Analysiert Ihre Ergebnisse in Echtzeit</div>
+      </div>
+      <div class="ai-lang-row">
+        <span class="ai-lang-label">SPRACHE:</span>
+        <button class="ai-lang-btn active" onclick="setAILang('de',this)">🇩🇪 Deutsch</button>
+        <button class="ai-lang-btn" onclick="setAILang('en',this)">🇬🇧 English</button>
+        <button class="ai-lang-btn" onclick="setAILang('fr',this)">🇫🇷 Français</button>
+        <button class="ai-lang-btn" onclick="setAILang('es',this)">🇪🇸 Español</button>
+        <button class="ai-lang-btn" onclick="setAILang('ru',this)">🇷🇺 Русский</button>
+        <button class="ai-lang-btn" onclick="setAILang('ar',this)">🇸🇦 العربية</button>
+      </div>
+      <div class="ai-quick-row">
+        <button class="ai-quick-btn" onclick="quickAsk('Analysiere meine letzten Testergebnisse und zeige mir meine Schwächen.')">📊 Schwächen analysieren</button>
+        <button class="ai-quick-btn" onclick="quickAsk('Was ist Normalization of Deviation und warum ist es im Ground Handling gefährlich?')">📚 Konzept erklären</button>
+        <button class="ai-quick-btn" onclick="quickAsk('Welches Programm empfiehlst du mir basierend auf meiner Rolle?')">🎯 Lernpfad empfehlen</button>
+        <button class="ai-quick-btn" onclick="quickAsk('Erkläre Human Factors im Aviation Ground Handling mit einem praktischen Beispiel.')">✈️ Human Factors</button>
+      </div>
+      <div class="ai-layout">
+        <div class="ai-msgs" id="ai-msgs">
+          <div class="ai-msg">
+            <div class="ai-av">🤖</div>
+            <div class="ai-bubble">Guten Tag! Ich bin Ihr persönlicher CLS KI-Trainer, powered by Claude AI.<br><br>Ich helfe Ihnen mit:<br>• <strong>Testergebnis-Analyse</strong> — Was bedeuten Ihre Scores?<br>• <strong>Konzepte erklären</strong> — Human Factors, IROPS, Luftrecht...<br>• <strong>Lernpfad</strong> — Welches Programm als nächstes?<br>• <strong>Praxis-Szenarien</strong> — aus dem echten Ground Handling<br><br>Tippen Sie Ihre Frage oder nutzen Sie die Schnell-Buttons.</div>
+          </div>
+        </div>
+        <div class="ai-input-row">
+          <input type="text" class="ai-inp" id="ai-inp" placeholder="Frage stellen..." onkeydown="if(event.key==='Enter'&&!event.shiftKey)sendAI()">
+          <button class="btn-ai-send" id="ai-send-btn" onclick="sendAI()">SENDEN →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROFILE -->
+    <div class="app-page" id="page-profile">
+      <div class="pg-header">
+        <div class="pg-title">Mein Profil</div>
+        <div class="pg-sub">Persönliche Daten · Zertifikate · Executive-Zugang</div>
+      </div>
+      <div class="profile-layout">
+        <div class="profile-card">
+          <div class="pf-av" id="pf-av">?</div>
+          <div class="pf-name" id="pf-name">–</div>
+          <div class="pf-role-badge" id="pf-role">–</div>
+          <div class="pf-co" id="pf-co">–</div>
+          <div class="pf-stat"><span class="pf-sl">Plan</span><span class="pf-sr" id="pf-plan">Starter</span></div>
+          <div class="pf-stat"><span class="pf-sl">Seit</span><span class="pf-sr" id="pf-since">–</span></div>
+          <div class="pf-stat"><span class="pf-sl">Zertifikate</span><span class="pf-sr" id="pf-cert-n">0</span></div>
+          <div class="pf-stat" style="border:none;"><span class="pf-sl">Absolvierte Tests</span><span class="pf-sr" id="pf-tests">0</span></div>
+        </div>
+        <div>
+          <div class="pg-label">MEINE ZERTIFIKATE</div>
+          <div id="cert-list"></div>
+          <div class="exec-box" id="exec-box" style="display:none;">
+            <div class="exec-lbl">⭐ EXECUTIVE ACCESS</div>
+            <div class="exec-title">CEO & Vorstand — Spezieller Zugang</div>
+            <div class="exec-desc">Erweiterte Programme auf Diplomarbeit-Niveau: Luftrecht, internationales Handelsrecht, M&A, Board-Governance, KI-Strategie, Krisenmanagement.</div>
+            <button class="btn-exec" onclick="enroll('CBT-EX');showPage('programs')">EXECUTIVE PROGRAMM →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECURITY -->
+    <div class="app-page" id="page-security">
+      <div class="pg-header">
+        <div class="pg-title">Sicherheitszentrum</div>
+        <div class="pg-sub">Account-Sicherheit · Passwort-Rotation · Login-Protokoll</div>
+      </div>
+      <div class="sec-warning">
+        <div class="sec-warn-lbl">PASSWORT-ROTATION ERFORDERLICH IN</div>
+        <div class="sec-days">47</div>
+        <div class="sec-days-sub">Tagen — Pflicht alle 60 Tage</div>
+        <button class="btn-change-pw" onclick="toast('Passwort-Änderung eingeleitet','green')">JETZT ÄNDERN</button>
+      </div>
+      <div class="sec-grid">
+        <div class="sec-item"><div class="sec-ico">🔐</div><div class="sec-lbl">Passwortstärke</div><div class="sec-status-ok">● STARK</div></div>
+        <div class="sec-item"><div class="sec-ico">🛡</div><div class="sec-lbl">Session-Verschlüsselung</div><div class="sec-status-ok">● JWT AKTIV</div></div>
+        <div class="sec-item"><div class="sec-ico">🔄</div><div class="sec-lbl">Auto-Rotation</div><div class="sec-status-ok">● 60 TAGE</div></div>
+        <div class="sec-item"><div class="sec-ico">🌐</div><div class="sec-lbl">HTTPS / SSL</div><div class="sec-status-ok">● AKTIV</div></div>
+        <div class="sec-item"><div class="sec-ico">🚫</div><div class="sec-lbl">Brute-Force-Schutz</div><div class="sec-status-ok">● 5 VERSUCHE</div></div>
+        <div class="sec-item"><div class="sec-ico">📋</div><div class="sec-lbl">Zugriffsprotokoll</div><div class="sec-status-ok">● MONITORING</div></div>
+      </div>
+    </div>
+
+    <!-- PRICING IN APP -->
+    <div class="app-page" id="page-pricing-app">
+      <div class="pg-header">
+        <div class="pg-title">Tarife & Zahlung</div>
+        <div class="pg-sub">Flexible Laufzeiten · Kreditkarte, PayPal, Guthaben · Jederzeit kündbar</div>
+      </div>
+      <div class="dur-tabs" id="dur-tabs-app">
+        <button class="dur-tab active" onclick="setDur('monthly',this,'app')">Monatlich</button>
+        <button class="dur-tab" onclick="setDur('6months',this,'app')">6 Monate</button>
+        <button class="dur-tab" onclick="setDur('yearly',this,'app')">Jährlich −15%</button>
+        <button class="dur-tab" onclick="setDur('2years',this,'app')">2 Jahre −25%</button>
+        <button class="dur-tab" onclick="setDur('5years',this,'app')">5 Jahre −35%</button>
+      </div>
+      <div class="price-cards" id="price-cards-app"></div>
+      <div class="ent-band">
+        <div><div class="ent-title">Enterprise & Airlines</div><div class="ent-desc">Fraport, Swissport, Menzies, dnata. Unbegrenzte Nutzer, White-Label, SCORM, Compliance-Reporting.</div></div>
+        <button class="btn-ent" onclick="toast('Enterprise-Anfrage gesendet. Wir melden uns in 24h.','green')">KONTAKT →</button>
+      </div>
+    </div>
+
+  </div><!-- end app-content -->
+</div><!-- end screen-app -->
+
+<!-- LEGAL SCREEN -->
+<div class="screen" id="screen-legal">
+  <div class="sub-inner">
+    <button class="btn-back-sub" onclick="showScreen('home')">← Zurück zur Website</button>
+    <div class="sub-title">Rechtliche Grundlagen</div>
+    <div class="sub-desc">CLS — Clear Leadership Systems · Österreichisches Recht · Wien</div>
+    <div class="disclaimer-box"><strong>KERNAUSSAGE:</strong> CLS analysiert und schult. Personalentscheidungen liegen ausschließlich beim Auftraggeber. CLS haftet nicht für unternehmerische Entscheidungen auf Basis von CLS-Analysen.</div>
+    <div class="legal-section"><div class="ls-num">§ 1</div><div class="ls-title">Geltungsbereich</div><div class="ls-body">Diese AGB gelten für alle Leistungen von <strong>CLS — Clear Leadership Systems</strong>. Mit Beauftragung oder Registrierung erkennt der Auftraggeber diese AGB an. Sitz: Wien, Österreich.</div></div>
+    <div class="legal-section"><div class="ls-num">§ 2</div><div class="ls-title">Leistungsbeschreibung</div><div class="ls-body">CLS erbringt CBT-Schulungsprogramme, Wissensstandsanalysen, Consulting und Analytics. Alle Leistungen haben <strong>ausschließlich informatorischen und schulenden Charakter</strong>. CLS trifft keine Personalentscheidungen.</div></div>
+    <div class="legal-section"><div class="ls-num">§ 3</div><div class="ls-title">Haftungsausschluss</div><div class="ls-body">CLS haftet <strong>NICHT</strong> für Entscheidungen des Auftraggebers auf Basis von CLS-Analysen, wirtschaftliche oder personelle Folgen, Personalabbau oder Umstrukturierungen. Haftung begrenzt auf das vereinbarte Honorar.</div><div class="disclaimer-box">Alle CLS-Berichte: "Diese Analyse ist eine Informationsgrundlage. CLS ist nicht für Personalentscheidungen verantwortlich."</div></div>
+    <div class="legal-section"><div class="ls-num">§ 4</div><div class="ls-title">Personalmaßnahmen</div><div class="ls-body">Der Auftraggeber trägt volle Verantwortung für arbeitsrechtliche Zulässigkeit, Betriebsrat-Einbindung (ArbVG §§ 96ff) und Kündigungsschutz.</div></div>
+    <div class="legal-section"><div class="ls-num">§ 5</div><div class="ls-title">Datenschutz & DSGVO</div><div class="ls-body">DSGVO-konformer Betrieb. EU-Datenzentren. AES-256 Verschlüsselung. JWT-Authentifizierung. 60-Tage Passwort-Rotation. Keine Datenweitergabe ohne Einwilligung.</div></div>
+    <div class="legal-section"><div class="ls-num">§ 6</div><div class="ls-title">Keine Garantie</div><div class="ls-body">CLS übernimmt <strong>keine Garantie</strong> für bestimmte Lernergebnisse oder wirtschaftliche Auswirkungen nach Schulungen.</div></div>
+    <div class="legal-section"><div class="ls-num">§ 7</div><div class="ls-title">Urheberrecht</div><div class="ls-body">Alle CLS-Inhalte sind urheberrechtlich geschützt. Weitergabe oder kommerzielle Nutzung ohne schriftliche Zustimmung ist verboten.</div></div>
+    <div class="legal-section" style="border:none;"><div class="ls-num">§ 8</div><div class="ls-title">Gerichtsstand</div><div class="ls-body">Österreichisches Recht. Gerichtsstand Wien. © 2025 CLS — Clear Leadership Systems.</div></div>
+  </div>
+</div>
+
+<!-- PRICING SCREEN -->
+<div class="screen" id="screen-pricing">
+  <div class="sub-inner">
+    <button class="btn-back-sub" onclick="showScreen('home')">← Zurück zur Website</button>
+    <div class="sub-title">Flexible Tarife.</div>
+    <div class="sub-desc">Kein Kleingedrucktes. Jederzeit kündbar. Kreditkarte, PayPal oder Guthaben.</div>
+    <div class="dur-tabs" id="dur-tabs-main">
+      <button class="dur-tab active" onclick="setDur('monthly',this,'main')">Monatlich</button>
+      <button class="dur-tab" onclick="setDur('3months',this,'main')">3 Monate</button>
+      <button class="dur-tab" onclick="setDur('6months',this,'main')">6 Monate</button>
+      <button class="dur-tab" onclick="setDur('yearly',this,'main')">Jährlich −15%</button>
+      <button class="dur-tab" onclick="setDur('2years',this,'main')">2 Jahre −25%</button>
+      <button class="dur-tab" onclick="setDur('5years',this,'main')">5 Jahre −35%</button>
+    </div>
+    <div class="price-cards" id="price-cards-main"></div>
+    <div class="ent-band" style="margin-top:2px;">
+      <div><div class="ent-title">Enterprise & Airlines</div><div class="ent-desc">Fraport, Swissport, Menzies, dnata. Unbegrenzte Nutzer, White-Label, SCORM, Compliance-Reporting, dedizierter Manager.</div></div>
+      <button class="btn-ent" onclick="toast('Enterprise-Anfrage gesendet. Wir melden uns in 24h.','green')">KONTAKT AUFNEHMEN →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════
+// COMPLETE TRANSLATIONS — 6 LANGUAGES
+// ═══════════════════════════════════════════
+const T = {
+  de: {
+    // NAV
+    nav_solutions: 'Solutions', nav_platform: 'CBT Platform', nav_framework: 'Framework',
+    nav_contact: 'Kontakt', nav_prices: 'Preise', nav_login: 'ANMELDEN →',
+    // HERO
+    hero_tag: 'Clear Leadership Systems · Aviation Ground Operations',
+    hero_h1a: 'Die Lücke zwischen', hero_h1b: 'Ihrem', hero_h1c: 'Operations Manual',
+    hero_h1d: 'und dem Ramp.',
+    hero_desc: 'CLS liefert strukturiertes Consulting und Computer Based Training für Aviation Ground Handling — aufgebaut aus 10+ Jahren frontline Operational Experience. Nicht Theorie. Realität.',
+    hero_btn1: 'Audit anfragen →', hero_btn2: 'CBT Platform öffnen',
+    stat1: 'Jahre Operational', stat2: 'CBT Programme', stat3: 'Framework Module', stat4: 'Ø Missloading-Kosten',
+    // SIDEBAR
+    sb_main: 'HAUPTMENÜ', sb_dashboard: 'Dashboard', sb_programs: 'Programme',
+    sb_analytics: 'Analytics', sb_ai: 'KI-Assistent',
+    sb_account: 'KONTO & SYSTEM', sb_profile: 'Mein Profil', sb_security: 'Sicherheit',
+    sb_pricing: 'Tarife & Zahlung', sb_website: 'WEBSITE', sb_tosite: 'Zur Website', sb_legal: 'Rechtliches',
+    // DASHBOARD
+    dash_enrolled: 'Programme', dash_passed: 'Bestanden', dash_certs: 'Zertifikate', dash_avg: 'Ø Score',
+    dash_my_programs: 'MEINE PROGRAMME',
+    dash_empty: 'Noch nicht eingeschrieben.',
+    dash_open_catalog: 'Katalog öffnen →',
+    // PROGRAMS
+    prog_title: 'Programm-Katalog',
+    prog_sub: '14 CBT-Programme · Ramp Agent bis CEO · Einschreiben und sofort starten',
+    btn_enroll: 'EINSCHREIBEN', btn_start: 'TEST STARTEN →',
+    lv_op: 'OPERATIONAL', lv_sup: 'SUPERVISORY', lv_mgmt: 'MANAGEMENT', lv_exec: 'EXECUTIVE',
+    // QUIZ
+    quiz_confirm: 'Antwort bestätigen', quiz_next: 'Nächste Frage →', quiz_finish: 'Test abschließen ✓',
+    quiz_back: '← Zurück', quiz_expl_correct: '✓ KORREKT', quiz_expl: 'ERKLÄRUNG',
+    quiz_ta_placeholder: 'Antwort ausführlich beschreiben (min. 80 Wörter)...',
+    // RESULTS
+    res_passed: '✓ BESTANDEN', res_failed: '✗ NICHT BESTANDEN',
+    res_cert_lbl: 'ZERTIFIKAT', res_review: 'AUSWERTUNG',
+    res_btn_back: '← Zurück zu Programme', res_btn_ana: 'Analytics ansehen →',
+    // ANALYTICS
+    ana_title: 'Performance Analytics', ana_sub: 'Persönliche Lernkurve · Kompetenzanalyse · Zertifikate',
+    ana_score: 'SCORE-VERLAUF', ana_certs: 'ZERTIFIKATE', ana_topics: 'KOMPETENZ-ANALYSE NACH THEMENBEREICH',
+    ana_empty_chart: 'Noch keine Tests absolviert',
+    ana_empty_certs: 'Keine Zertifikate — absolvieren Sie Tests',
+    ana_topics_list: ['Human Factors','Führung & Leadership','Kommunikation','Sicherheitskultur','Operative Systeme','Recht & Compliance'],
+    // AI
+    ai_title: '🤖 KI-Lernassistent', ai_sub: 'Powered by Claude AI · Eigenständig · Analysiert Ihre Ergebnisse in Echtzeit',
+    ai_lang_label: 'SPRACHE:',
+    ai_q1: '📊 Schwächen analysieren', ai_q2: '📚 Konzept erklären', ai_q3: '🎯 Lernpfad empfehlen', ai_q4: '✈️ Human Factors',
+    ai_q1_text: 'Analysiere meine letzten Testergebnisse und zeige mir meine Schwächen.',
+    ai_q2_text: 'Was ist Normalization of Deviation und warum ist es im Ground Handling gefährlich?',
+    ai_q3_text: 'Welches Programm empfiehlst du mir basierend auf meiner Rolle?',
+    ai_q4_text: 'Erkläre Human Factors im Aviation Ground Handling mit einem praktischen Beispiel.',
+    ai_placeholder: 'Frage stellen...',
+    ai_send: 'SENDEN →',
+    ai_welcome: 'Guten Tag! Ich bin Ihr persönlicher CLS KI-Trainer, powered by Claude AI.<br><br>Ich helfe Ihnen mit:<br>• <strong>Testergebnis-Analyse</strong> — Was bedeuten Ihre Scores?<br>• <strong>Konzepte erklären</strong> — Human Factors, IROPS, Luftrecht...<br>• <strong>Lernpfad</strong> — Welches Programm als nächstes?<br>• <strong>Praxis-Szenarien</strong> — aus dem echten Ground Handling<br><br>Tippen Sie Ihre Frage oder nutzen Sie die Schnell-Buttons.',
+    // PROFILE
+    pf_title: 'Mein Profil', pf_sub: 'Persönliche Daten · Zertifikate · Executive-Zugang',
+    pf_plan: 'Plan', pf_since: 'Seit', pf_certs: 'Zertifikate', pf_tests: 'Absolvierte Tests',
+    pf_certs_label: 'MEINE ZERTIFIKATE',
+    pf_empty_certs: 'Absolvieren Sie Tests um Zertifikate zu erhalten.',
+    pf_exec_lbl: '⭐ EXECUTIVE ACCESS', pf_exec_title: 'CEO & Vorstand — Spezieller Zugang',
+    pf_exec_desc: 'Erweiterte Programme auf Diplomarbeit-Niveau: Luftrecht, M&A, Board-Governance, KI-Strategie.',
+    pf_exec_btn: 'EXECUTIVE PROGRAMM →',
+    // SECURITY
+    sec_title: 'Sicherheitszentrum', sec_sub: 'Account-Sicherheit · Passwort-Rotation · Login-Protokoll',
+    sec_warn_lbl: 'PASSWORT-ROTATION ERFORDERLICH IN', sec_days_sub: 'Tagen — Pflicht alle 60 Tage',
+    sec_change_btn: 'JETZT ÄNDERN',
+    sec_items: ['Passwortstärke','Session-Verschlüsselung','Auto-Rotation','HTTPS / SSL','Brute-Force-Schutz','Zugriffsprotokoll'],
+    sec_statuses: ['● STARK','● JWT AKTIV','● 60 TAGE','● AKTIV','● 5 VERSUCHE','● MONITORING'],
+    // PRICING
+    pricing_title: 'Tarife & Zahlung', pricing_sub: 'Flexible Laufzeiten · Kreditkarte, PayPal, Guthaben · Jederzeit kündbar',
+    dur_monthly: 'Monatlich', dur_6m: '6 Monate', dur_yearly: 'Jährlich −15%', dur_2y: '2 Jahre −25%', dur_5y: '5 Jahre −35%',
+    ent_title: 'Enterprise & Airlines', ent_desc: 'Fraport, Swissport, Menzies, dnata. Unbegrenzte Nutzer, White-Label, SCORM, Compliance-Reporting.',
+    ent_btn: 'KONTAKT →',
+    // LOGIN
+    login_tab: 'ANMELDEN', register_tab: 'REGISTRIEREN',
+    login_email: 'Firmen-E-Mail', login_pw: 'Passwort',
+    login_btn: 'ANMELDEN →', register_btn: 'KONTO ERSTELLEN →',
+    demo_title: 'DEMO-ZUGÄNGE', btn_back_site: '← Zurück zur Website',
+    reg_fn: 'Vorname', reg_ln: 'Nachname', reg_role: 'Rolle', reg_co: 'Unternehmen',
+    // TOAST
+    toast_enrolled: 'Eingeschrieben in',
+    toast_login: 'Willkommen',
+    toast_logout_hint: '',
+    toast_lang: 'Sprache',
+    // TOPBAR
+    tb_logout: 'Abmelden',
+  },
+  en: {
+    nav_solutions: 'Solutions', nav_platform: 'CBT Platform', nav_framework: 'Framework',
+    nav_contact: 'Contact', nav_prices: 'Pricing', nav_login: 'LOGIN →',
+    hero_tag: 'Clear Leadership Systems · Aviation Ground Operations',
+    hero_h1a: 'The gap between', hero_h1b: 'your', hero_h1c: 'Operations Manual',
+    hero_h1d: 'and the ramp.',
+    hero_desc: 'CLS delivers structured consulting and Computer Based Training for aviation ground handling — built from 10+ years of frontline operational experience. Not theory. Reality.',
+    hero_btn1: 'Request an Audit →', hero_btn2: 'Open CBT Platform',
+    stat1: 'Years Operational', stat2: 'CBT Programs', stat3: 'Framework Modules', stat4: 'Avg. Missloading Cost',
+    sb_main: 'MAIN MENU', sb_dashboard: 'Dashboard', sb_programs: 'Programs',
+    sb_analytics: 'Analytics', sb_ai: 'AI Assistant',
+    sb_account: 'ACCOUNT & SYSTEM', sb_profile: 'My Profile', sb_security: 'Security',
+    sb_pricing: 'Plans & Billing', sb_website: 'WEBSITE', sb_tosite: 'Back to Website', sb_legal: 'Legal',
+    dash_enrolled: 'Programs', dash_passed: 'Passed', dash_certs: 'Certificates', dash_avg: 'Avg. Score',
+    dash_my_programs: 'MY PROGRAMS', dash_empty: 'Not enrolled yet.', dash_open_catalog: 'Open catalog →',
+    prog_title: 'Program Catalog', prog_sub: '14 CBT Programs · Ramp Agent to CEO · Enroll and start immediately',
+    btn_enroll: 'ENROLL', btn_start: 'START TEST →',
+    lv_op: 'OPERATIONAL', lv_sup: 'SUPERVISORY', lv_mgmt: 'MANAGEMENT', lv_exec: 'EXECUTIVE',
+    quiz_confirm: 'Confirm answer', quiz_next: 'Next question →', quiz_finish: 'Finish test ✓',
+    quiz_back: '← Back', quiz_expl_correct: '✓ CORRECT', quiz_expl: 'EXPLANATION',
+    quiz_ta_placeholder: 'Describe your answer in detail (min. 80 words)...',
+    res_passed: '✓ PASSED', res_failed: '✗ NOT PASSED',
+    res_cert_lbl: 'CERTIFICATE', res_review: 'REVIEW',
+    res_btn_back: '← Back to Programs', res_btn_ana: 'View Analytics →',
+    ana_title: 'Performance Analytics', ana_sub: 'Personal learning curve · Competency analysis · Certificates',
+    ana_score: 'SCORE HISTORY', ana_certs: 'CERTIFICATES', ana_topics: 'COMPETENCY ANALYSIS BY TOPIC',
+    ana_empty_chart: 'No tests completed yet',
+    ana_empty_certs: 'No certificates — complete tests to earn them',
+    ana_topics_list: ['Human Factors','Leadership','Communication','Safety Culture','Operational Systems','Law & Compliance'],
+    ai_title: '🤖 AI Learning Assistant', ai_sub: 'Powered by Claude AI · Autonomous · Analyzes your results in real time',
+    ai_lang_label: 'LANGUAGE:',
+    ai_q1: '📊 Analyze weaknesses', ai_q2: '📚 Explain concept', ai_q3: '🎯 Recommend path', ai_q4: '✈️ Human Factors',
+    ai_q1_text: 'Analyze my latest test results and show me my weaknesses.',
+    ai_q2_text: 'What is Normalization of Deviation and why is it dangerous in ground handling?',
+    ai_q3_text: 'Which program do you recommend based on my role?',
+    ai_q4_text: 'Explain Human Factors in aviation ground handling with a practical example.',
+    ai_placeholder: 'Ask a question...', ai_send: 'SEND →',
+    ai_welcome: 'Hello! I\'m your personal CLS AI Trainer, powered by Claude AI.<br><br>I can help you with:<br>• <strong>Test result analysis</strong> — What do your scores mean?<br>• <strong>Explaining concepts</strong> — Human Factors, IROPS, Aviation Law...<br>• <strong>Learning path</strong> — Which program next?<br>• <strong>Practice scenarios</strong> — from real ground handling<br><br>Type your question or use the quick buttons.',
+    pf_title: 'My Profile', pf_sub: 'Personal data · Certificates · Executive access',
+    pf_plan: 'Plan', pf_since: 'Member since', pf_certs: 'Certificates', pf_tests: 'Tests completed',
+    pf_certs_label: 'MY CERTIFICATES', pf_empty_certs: 'Complete tests to earn certificates.',
+    pf_exec_lbl: '⭐ EXECUTIVE ACCESS', pf_exec_title: 'CEO & Board — Special Access',
+    pf_exec_desc: 'Advanced programs at thesis level: Aviation Law, M&A, Board Governance, AI Strategy.',
+    pf_exec_btn: 'EXECUTIVE PROGRAM →',
+    sec_title: 'Security Center', sec_sub: 'Account security · Password rotation · Login log',
+    sec_warn_lbl: 'PASSWORD ROTATION REQUIRED IN', sec_days_sub: 'days — mandatory every 60 days',
+    sec_change_btn: 'CHANGE NOW',
+    sec_items: ['Password strength','Session encryption','Auto-rotation','HTTPS / SSL','Brute-force protection','Access log'],
+    sec_statuses: ['● STRONG','● JWT ACTIVE','● 60 DAYS','● ACTIVE','● 5 ATTEMPTS','● MONITORING'],
+    pricing_title: 'Plans & Billing', pricing_sub: 'Flexible terms · Credit card, PayPal, credits · Cancel anytime',
+    dur_monthly: 'Monthly', dur_6m: '6 Months', dur_yearly: 'Yearly −15%', dur_2y: '2 Years −25%', dur_5y: '5 Years −35%',
+    ent_title: 'Enterprise & Airlines', ent_desc: 'Fraport, Swissport, Menzies, dnata. Unlimited users, white-label, SCORM, compliance reporting.',
+    ent_btn: 'CONTACT →',
+    login_tab: 'SIGN IN', register_tab: 'REGISTER',
+    login_email: 'Company Email', login_pw: 'Password',
+    login_btn: 'SIGN IN →', register_btn: 'CREATE ACCOUNT →',
+    demo_title: 'DEMO CREDENTIALS', btn_back_site: '← Back to Website',
+    reg_fn: 'First Name', reg_ln: 'Last Name', reg_role: 'Role', reg_co: 'Company',
+    toast_enrolled: 'Enrolled in', toast_login: 'Welcome', toast_lang: 'Language',
+    tb_logout: 'Sign out',
+  },
+  fr: {
+    nav_solutions: 'Solutions', nav_platform: 'Plateforme CBT', nav_framework: 'Framework',
+    nav_contact: 'Contact', nav_prices: 'Tarifs', nav_login: 'CONNEXION →',
+    hero_tag: 'Clear Leadership Systems · Opérations au Sol Aviation',
+    hero_h1a: 'L\'écart entre', hero_h1b: 'votre', hero_h1c: 'manuel opérationnel',
+    hero_h1d: 'et la piste.',
+    hero_desc: 'CLS fournit du conseil structuré et une formation CBT pour la manutention au sol aviation — construit sur 10+ ans d\'expérience opérationnelle de terrain.',
+    hero_btn1: 'Demander un audit →', hero_btn2: 'Ouvrir la plateforme CBT',
+    stat1: 'Ans opérationnel', stat2: 'Programmes CBT', stat3: 'Modules framework', stat4: 'Coût moyen incident',
+    sb_main: 'MENU PRINCIPAL', sb_dashboard: 'Tableau de bord', sb_programs: 'Programmes',
+    sb_analytics: 'Analytique', sb_ai: 'Assistant IA',
+    sb_account: 'COMPTE & SYSTÈME', sb_profile: 'Mon profil', sb_security: 'Sécurité',
+    sb_pricing: 'Tarifs & Paiement', sb_website: 'SITE WEB', sb_tosite: 'Retour au site', sb_legal: 'Mentions légales',
+    dash_enrolled: 'Programmes', dash_passed: 'Réussis', dash_certs: 'Certificats', dash_avg: 'Score moy.',
+    dash_my_programs: 'MES PROGRAMMES', dash_empty: 'Pas encore inscrit.', dash_open_catalog: 'Ouvrir le catalogue →',
+    prog_title: 'Catalogue des programmes', prog_sub: '14 programmes CBT · De l\'agent de piste au CEO',
+    btn_enroll: "S'INSCRIRE", btn_start: 'COMMENCER →',
+    lv_op: 'OPÉRATIONNEL', lv_sup: 'SUPERVISION', lv_mgmt: 'MANAGEMENT', lv_exec: 'EXÉCUTIF',
+    quiz_confirm: 'Confirmer la réponse', quiz_next: 'Question suivante →', quiz_finish: 'Terminer le test ✓',
+    quiz_back: '← Retour', quiz_expl_correct: '✓ CORRECT', quiz_expl: 'EXPLICATION',
+    quiz_ta_placeholder: 'Décrivez votre réponse en détail (min. 80 mots)...',
+    res_passed: '✓ RÉUSSI', res_failed: '✗ NON RÉUSSI',
+    res_cert_lbl: 'CERTIFICAT', res_review: 'ÉVALUATION',
+    res_btn_back: '← Retour aux programmes', res_btn_ana: 'Voir les analyses →',
+    ana_title: 'Analyse des performances', ana_sub: 'Courbe d\'apprentissage · Analyse des compétences',
+    ana_score: 'HISTORIQUE DES SCORES', ana_certs: 'CERTIFICATS', ana_topics: 'ANALYSE PAR THÈME',
+    ana_empty_chart: 'Aucun test effectué', ana_empty_certs: 'Aucun certificat',
+    ana_topics_list: ['Facteurs humains','Leadership','Communication','Culture sécurité','Systèmes opérationnels','Droit'],
+    ai_title: '🤖 Assistant d\'apprentissage IA', ai_sub: 'Propulsé par Claude AI · Analyse vos résultats en temps réel',
+    ai_lang_label: 'LANGUE :', ai_q1: '📊 Analyser les faiblesses', ai_q2: '📚 Expliquer un concept',
+    ai_q3: '🎯 Recommander un parcours', ai_q4: '✈️ Facteurs humains',
+    ai_q1_text: 'Analysez mes derniers résultats et montrez-moi mes faiblesses.',
+    ai_q2_text: 'Qu\'est-ce que la normalisation des écarts et pourquoi est-elle dangereuse?',
+    ai_q3_text: 'Quel programme recommandez-vous selon mon rôle?',
+    ai_q4_text: 'Expliquez les facteurs humains dans la manutention au sol avec un exemple pratique.',
+    ai_placeholder: 'Posez une question...', ai_send: 'ENVOYER →',
+    ai_welcome: 'Bonjour! Je suis votre formateur IA CLS, propulsé par Claude AI.<br><br>Je peux vous aider avec:<br>• <strong>Analyse des résultats</strong><br>• <strong>Expliquer des concepts</strong><br>• <strong>Parcours d\'apprentissage</strong><br><br>Posez votre question ou utilisez les boutons rapides.',
+    pf_title: 'Mon profil', pf_sub: 'Données personnelles · Certificats',
+    pf_plan: 'Plan', pf_since: 'Membre depuis', pf_certs: 'Certificats', pf_tests: 'Tests effectués',
+    pf_certs_label: 'MES CERTIFICATS', pf_empty_certs: 'Effectuez des tests pour obtenir des certificats.',
+    pf_exec_lbl: '⭐ ACCÈS EXÉCUTIF', pf_exec_title: 'CEO & Conseil — Accès spécial',
+    pf_exec_desc: 'Programmes avancés: Droit aérien, M&A, Gouvernance.',
+    pf_exec_btn: 'PROGRAMME EXÉCUTIF →',
+    sec_title: 'Centre de sécurité', sec_sub: 'Sécurité du compte · Rotation du mot de passe',
+    sec_warn_lbl: 'ROTATION DU MOT DE PASSE REQUISE DANS', sec_days_sub: 'jours — obligatoire tous les 60 jours',
+    sec_change_btn: 'CHANGER MAINTENANT',
+    sec_items: ['Solidité mot de passe','Chiffrement session','Auto-rotation','HTTPS / SSL','Protection brute-force','Journal d\'accès'],
+    sec_statuses: ['● FORT','● JWT ACTIF','● 60 JOURS','● ACTIF','● 5 ESSAIS','● SURVEILLANCE'],
+    pricing_title: 'Tarifs & Paiement', pricing_sub: 'Termes flexibles · Carte, PayPal, crédits',
+    dur_monthly: 'Mensuel', dur_6m: '6 Mois', dur_yearly: 'Annuel −15%', dur_2y: '2 Ans −25%', dur_5y: '5 Ans −35%',
+    ent_title: 'Entreprise & Compagnies aériennes', ent_desc: 'Utilisateurs illimités, marque blanche, SCORM.',
+    ent_btn: 'CONTACT →',
+    login_tab: 'CONNEXION', register_tab: "S'INSCRIRE",
+    login_email: 'E-mail professionnel', login_pw: 'Mot de passe',
+    login_btn: 'SE CONNECTER →', register_btn: 'CRÉER UN COMPTE →',
+    demo_title: 'COMPTES DÉMO', btn_back_site: '← Retour au site',
+    reg_fn: 'Prénom', reg_ln: 'Nom', reg_role: 'Rôle', reg_co: 'Entreprise',
+    toast_enrolled: 'Inscrit en', toast_login: 'Bienvenue', toast_lang: 'Langue',
+    tb_logout: 'Déconnexion',
+  },
+  es: {
+    nav_solutions: 'Soluciones', nav_platform: 'Plataforma CBT', nav_framework: 'Framework',
+    nav_contact: 'Contacto', nav_prices: 'Precios', nav_login: 'INICIAR SESIÓN →',
+    hero_tag: 'Clear Leadership Systems · Operaciones en Tierra de Aviación',
+    hero_h1a: 'La brecha entre', hero_h1b: 'su', hero_h1c: 'manual operativo',
+    hero_h1d: 'y la pista.',
+    hero_desc: 'CLS ofrece consultoría estructurada y formación CBT para el handling aeronáutico — construido desde 10+ años de experiencia operacional de primera línea.',
+    hero_btn1: 'Solicitar auditoría →', hero_btn2: 'Abrir plataforma CBT',
+    stat1: 'Años operacional', stat2: 'Programas CBT', stat3: 'Módulos framework', stat4: 'Coste medio incidente',
+    sb_main: 'MENÚ PRINCIPAL', sb_dashboard: 'Panel', sb_programs: 'Programas',
+    sb_analytics: 'Analíticas', sb_ai: 'Asistente IA',
+    sb_account: 'CUENTA & SISTEMA', sb_profile: 'Mi perfil', sb_security: 'Seguridad',
+    sb_pricing: 'Tarifas & Pago', sb_website: 'SITIO WEB', sb_tosite: 'Volver al sitio', sb_legal: 'Legal',
+    dash_enrolled: 'Programas', dash_passed: 'Aprobados', dash_certs: 'Certificados', dash_avg: 'Puntuación media',
+    dash_my_programs: 'MIS PROGRAMAS', dash_empty: 'Aún no inscrito.', dash_open_catalog: 'Abrir catálogo →',
+    prog_title: 'Catálogo de programas', prog_sub: '14 programas CBT · De agente de rampa a CEO',
+    btn_enroll: 'INSCRIBIRSE', btn_start: 'INICIAR TEST →',
+    lv_op: 'OPERACIONAL', lv_sup: 'SUPERVISIÓN', lv_mgmt: 'GESTIÓN', lv_exec: 'EJECUTIVO',
+    quiz_confirm: 'Confirmar respuesta', quiz_next: 'Siguiente pregunta →', quiz_finish: 'Finalizar test ✓',
+    quiz_back: '← Atrás', quiz_expl_correct: '✓ CORRECTO', quiz_expl: 'EXPLICACIÓN',
+    quiz_ta_placeholder: 'Describa su respuesta detalladamente (mín. 80 palabras)...',
+    res_passed: '✓ APROBADO', res_failed: '✗ NO APROBADO',
+    res_cert_lbl: 'CERTIFICADO', res_review: 'EVALUACIÓN',
+    res_btn_back: '← Volver a programas', res_btn_ana: 'Ver analíticas →',
+    ana_title: 'Análisis de rendimiento', ana_sub: 'Curva de aprendizaje · Análisis de competencias',
+    ana_score: 'HISTORIAL DE PUNTUACIONES', ana_certs: 'CERTIFICADOS', ana_topics: 'ANÁLISIS POR TEMA',
+    ana_empty_chart: 'Ningún test completado', ana_empty_certs: 'Sin certificados',
+    ana_topics_list: ['Factores humanos','Liderazgo','Comunicación','Cultura de seguridad','Sistemas operativos','Derecho'],
+    ai_title: '🤖 Asistente de aprendizaje IA', ai_sub: 'Impulsado por Claude AI · Analiza sus resultados en tiempo real',
+    ai_lang_label: 'IDIOMA:', ai_q1: '📊 Analizar debilidades', ai_q2: '📚 Explicar concepto',
+    ai_q3: '🎯 Recomendar ruta', ai_q4: '✈️ Factores humanos',
+    ai_q1_text: 'Analiza mis últimos resultados y muéstrame mis debilidades.',
+    ai_q2_text: '¿Qué es la normalización de desviaciones y por qué es peligrosa?',
+    ai_q3_text: '¿Qué programa me recomiendas según mi rol?',
+    ai_q4_text: 'Explica los factores humanos en el handling aeronáutico con un ejemplo práctico.',
+    ai_placeholder: 'Hacer una pregunta...', ai_send: 'ENVIAR →',
+    ai_welcome: '¡Hola! Soy su formador IA de CLS, impulsado por Claude AI.<br><br>Puedo ayudarle con:<br>• <strong>Análisis de resultados</strong><br>• <strong>Explicar conceptos</strong><br>• <strong>Ruta de aprendizaje</strong><br><br>Escriba su pregunta o use los botones rápidos.',
+    pf_title: 'Mi perfil', pf_sub: 'Datos personales · Certificados',
+    pf_plan: 'Plan', pf_since: 'Miembro desde', pf_certs: 'Certificados', pf_tests: 'Tests completados',
+    pf_certs_label: 'MIS CERTIFICADOS', pf_empty_certs: 'Complete tests para obtener certificados.',
+    pf_exec_lbl: '⭐ ACCESO EJECUTIVO', pf_exec_title: 'CEO & Consejo — Acceso especial',
+    pf_exec_desc: 'Programas avanzados: Derecho aéreo, M&A, Gobernanza corporativa.',
+    pf_exec_btn: 'PROGRAMA EJECUTIVO →',
+    sec_title: 'Centro de seguridad', sec_sub: 'Seguridad de cuenta · Rotación de contraseña',
+    sec_warn_lbl: 'ROTACIÓN DE CONTRASEÑA REQUERIDA EN', sec_days_sub: 'días — obligatorio cada 60 días',
+    sec_change_btn: 'CAMBIAR AHORA',
+    sec_items: ['Seguridad contraseña','Cifrado sesión','Auto-rotación','HTTPS / SSL','Protección fuerza bruta','Registro de acceso'],
+    sec_statuses: ['● FUERTE','● JWT ACTIVO','● 60 DÍAS','● ACTIVO','● 5 INTENTOS','● MONITOREADO'],
+    pricing_title: 'Tarifas & Pago', pricing_sub: 'Plazos flexibles · Tarjeta, PayPal, créditos',
+    dur_monthly: 'Mensual', dur_6m: '6 Meses', dur_yearly: 'Anual −15%', dur_2y: '2 Años −25%', dur_5y: '5 Años −35%',
+    ent_title: 'Empresa & Aerolíneas', ent_desc: 'Usuarios ilimitados, marca blanca, SCORM.',
+    ent_btn: 'CONTACTO →',
+    login_tab: 'INICIAR SESIÓN', register_tab: 'REGISTRARSE',
+    login_email: 'Email corporativo', login_pw: 'Contraseña',
+    login_btn: 'INICIAR SESIÓN →', register_btn: 'CREAR CUENTA →',
+    demo_title: 'CUENTAS DEMO', btn_back_site: '← Volver al sitio',
+    reg_fn: 'Nombre', reg_ln: 'Apellido', reg_role: 'Rol', reg_co: 'Empresa',
+    toast_enrolled: 'Inscrito en', toast_login: 'Bienvenido', toast_lang: 'Idioma',
+    tb_logout: 'Cerrar sesión',
+  },
+  ru: {
+    nav_solutions: 'Решения', nav_platform: 'CBT Платформа', nav_framework: 'Фреймворк',
+    nav_contact: 'Контакт', nav_prices: 'Цены', nav_login: 'ВОЙТИ →',
+    hero_tag: 'Clear Leadership Systems · Наземное Обслуживание Авиации',
+    hero_h1a: 'Разрыв между', hero_h1b: 'вашим', hero_h1c: 'операционным руководством',
+    hero_h1d: 'и перроном.',
+    hero_desc: 'CLS предоставляет структурированный консалтинг и CBT обучение для наземного обслуживания авиации — на основе 10+ лет опыта работы на передовой.',
+    hero_btn1: 'Запросить аудит →', hero_btn2: 'Открыть CBT платформу',
+    stat1: 'Лет опыта', stat2: 'CBT Программы', stat3: 'Модули фреймворка', stat4: 'Средние потери',
+    sb_main: 'ГЛАВНОЕ МЕНЮ', sb_dashboard: 'Панель', sb_programs: 'Программы',
+    sb_analytics: 'Аналитика', sb_ai: 'ИИ Ассистент',
+    sb_account: 'АККАУНТ & СИСТЕМА', sb_profile: 'Мой профиль', sb_security: 'Безопасность',
+    sb_pricing: 'Тарифы & Оплата', sb_website: 'ВЕБ-САЙТ', sb_tosite: 'На сайт', sb_legal: 'Правовые',
+    dash_enrolled: 'Программы', dash_passed: 'Пройдено', dash_certs: 'Сертификаты', dash_avg: 'Средний балл',
+    dash_my_programs: 'МОИ ПРОГРАММЫ', dash_empty: 'Ещё не записаны.', dash_open_catalog: 'Открыть каталог →',
+    prog_title: 'Каталог программ', prog_sub: '14 CBT программ · От агента перрона до CEO',
+    btn_enroll: 'ЗАПИСАТЬСЯ', btn_start: 'НАЧАТЬ ТЕСТ →',
+    lv_op: 'ОПЕРАЦИОННЫЙ', lv_sup: 'НАДЗОРНЫЙ', lv_mgmt: 'МЕНЕДЖМЕНТ', lv_exec: 'ИСПОЛНИТЕЛЬНЫЙ',
+    quiz_confirm: 'Подтвердить ответ', quiz_next: 'Следующий вопрос →', quiz_finish: 'Завершить тест ✓',
+    quiz_back: '← Назад', quiz_expl_correct: '✓ ПРАВИЛЬНО', quiz_expl: 'ОБЪЯСНЕНИЕ',
+    quiz_ta_placeholder: 'Опишите ваш ответ подробно (мин. 80 слов)...',
+    res_passed: '✓ ПРОЙДЕНО', res_failed: '✗ НЕ ПРОЙДЕНО',
+    res_cert_lbl: 'СЕРТИФИКАТ', res_review: 'АНАЛИЗ',
+    res_btn_back: '← К программам', res_btn_ana: 'Аналитика →',
+    ana_title: 'Аналитика производительности', ana_sub: 'Кривая обучения · Анализ компетенций',
+    ana_score: 'ИСТОРИЯ БАЛЛОВ', ana_certs: 'СЕРТИФИКАТЫ', ana_topics: 'АНАЛИЗ ПО ТЕМАМ',
+    ana_empty_chart: 'Тесты не пройдены', ana_empty_certs: 'Нет сертификатов',
+    ana_topics_list: ['Человеческий фактор','Лидерство','Коммуникация','Культура безопасности','Операционные системы','Право'],
+    ai_title: '🤖 ИИ Учебный Ассистент', ai_sub: 'На базе Claude AI · Анализирует результаты в реальном времени',
+    ai_lang_label: 'ЯЗЫК:', ai_q1: '📊 Анализ слабых мест', ai_q2: '📚 Объяснить концепцию',
+    ai_q3: '🎯 Рекомендовать путь', ai_q4: '✈️ Человеческий фактор',
+    ai_q1_text: 'Проанализируй мои последние результаты и покажи слабые места.',
+    ai_q2_text: 'Что такое нормализация отклонений и почему она опасна?',
+    ai_q3_text: 'Какую программу порекомендуешь для моей роли?',
+    ai_q4_text: 'Объясни человеческий фактор в наземном обслуживании на практическом примере.',
+    ai_placeholder: 'Задайте вопрос...', ai_send: 'ОТПРАВИТЬ →',
+    ai_welcome: 'Здравствуйте! Я ваш персональный ИИ-тренер CLS на базе Claude AI.<br><br>Я помогу вам с:<br>• <strong>Анализ результатов</strong><br>• <strong>Объяснение концепций</strong><br>• <strong>Рекомендации по обучению</strong><br><br>Задайте вопрос или используйте быстрые кнопки.',
+    pf_title: 'Мой профиль', pf_sub: 'Личные данные · Сертификаты',
+    pf_plan: 'План', pf_since: 'Участник с', pf_certs: 'Сертификаты', pf_tests: 'Пройдено тестов',
+    pf_certs_label: 'МОИ СЕРТИФИКАТЫ', pf_empty_certs: 'Пройдите тесты для получения сертификатов.',
+    pf_exec_lbl: '⭐ ИСПОЛНИТЕЛЬНЫЙ ДОСТУП', pf_exec_title: 'CEO & Совет — Специальный доступ',
+    pf_exec_desc: 'Расширенные программы: Авиационное право, M&A, Корпоративное управление.',
+    pf_exec_btn: 'ИСПОЛНИТЕЛЬНАЯ ПРОГРАММА →',
+    sec_title: 'Центр безопасности', sec_sub: 'Безопасность аккаунта · Ротация пароля',
+    sec_warn_lbl: 'РОТАЦИЯ ПАРОЛЯ ТРЕБУЕТСЯ ЧЕРЕЗ', sec_days_sub: 'дней — обязательно каждые 60 дней',
+    sec_change_btn: 'ИЗМЕНИТЬ СЕЙЧАС',
+    sec_items: ['Надёжность пароля','Шифрование сессии','Авто-ротация','HTTPS / SSL','Защита от взлома','Журнал доступа'],
+    sec_statuses: ['● НАДЁЖНЫЙ','● JWT АКТИВЕН','● 60 ДНЕЙ','● АКТИВЕН','● 5 ПОПЫТОК','● МОНИТОРИНГ'],
+    pricing_title: 'Тарифы & Оплата', pricing_sub: 'Гибкие условия · Карта, PayPal, баланс',
+    dur_monthly: 'Ежемесячно', dur_6m: '6 Месяцев', dur_yearly: 'Ежегодно −15%', dur_2y: '2 Года −25%', dur_5y: '5 Лет −35%',
+    ent_title: 'Предприятие & Авиалинии', ent_desc: 'Неограниченные пользователи, белая метка, SCORM.',
+    ent_btn: 'КОНТАКТ →',
+    login_tab: 'ВОЙТИ', register_tab: 'РЕГИСТРАЦИЯ',
+    login_email: 'Корпоративный e-mail', login_pw: 'Пароль',
+    login_btn: 'ВОЙТИ →', register_btn: 'СОЗДАТЬ АККАУНТ →',
+    demo_title: 'ДЕМО-АККАУНТЫ', btn_back_site: '← На сайт',
+    reg_fn: 'Имя', reg_ln: 'Фамилия', reg_role: 'Роль', reg_co: 'Компания',
+    toast_enrolled: 'Записан в', toast_login: 'Добро пожаловать', toast_lang: 'Язык',
+    tb_logout: 'Выйти',
+  },
+  ar: {
+    nav_solutions: 'الحلول', nav_platform: 'منصة CBT', nav_framework: 'الإطار',
+    nav_contact: 'اتصل بنا', nav_prices: 'الأسعار', nav_login: 'تسجيل الدخول →',
+    hero_tag: 'CLS — أنظمة القيادة الواضحة · عمليات الطيران الأرضية',
+    hero_h1a: 'الفجوة بين', hero_h1b: '', hero_h1c: 'دليل العمليات',
+    hero_h1d: 'وساحة الطائرات.',
+    hero_desc: 'تقدم CLS استشارات منظمة وتدريباً CBT لعمليات الطيران الأرضية — مبني على أكثر من 10 سنوات من الخبرة الميدانية.',
+    hero_btn1: 'طلب تدقيق →', hero_btn2: 'فتح منصة CBT',
+    stat1: 'سنوات تشغيلية', stat2: 'برامج CBT', stat3: 'وحدات الإطار', stat4: 'متوسط تكلفة الحوادث',
+    sb_main: 'القائمة الرئيسية', sb_dashboard: 'لوحة التحكم', sb_programs: 'البرامج',
+    sb_analytics: 'التحليلات', sb_ai: 'مساعد الذكاء الاصطناعي',
+    sb_account: 'الحساب والنظام', sb_profile: 'ملفي الشخصي', sb_security: 'الأمان',
+    sb_pricing: 'الخطط والفواتير', sb_website: 'الموقع', sb_tosite: 'العودة للموقع', sb_legal: 'قانوني',
+    dash_enrolled: 'البرامج', dash_passed: 'ناجح', dash_certs: 'شهادات', dash_avg: 'متوسط النتيجة',
+    dash_my_programs: 'برامجي', dash_empty: 'غير مسجل بعد.', dash_open_catalog: 'فتح الكتالوج →',
+    prog_title: 'كتالوج البرامج', prog_sub: '14 برنامج CBT · من عامل المنصة إلى المدير التنفيذي',
+    btn_enroll: 'التسجيل', btn_start: 'بدء الاختبار →',
+    lv_op: 'تشغيلي', lv_sup: 'إشرافي', lv_mgmt: 'إداري', lv_exec: 'تنفيذي',
+    quiz_confirm: 'تأكيد الإجابة', quiz_next: 'السؤال التالي →', quiz_finish: 'إنهاء الاختبار ✓',
+    quiz_back: '← رجوع', quiz_expl_correct: '✓ صحيح', quiz_expl: 'شرح',
+    quiz_ta_placeholder: 'صف إجابتك بالتفصيل (80 كلمة على الأقل)...',
+    res_passed: '✓ ناجح', res_failed: '✗ غير ناجح',
+    res_cert_lbl: 'شهادة', res_review: 'مراجعة',
+    res_btn_back: '← العودة للبرامج', res_btn_ana: 'عرض التحليلات →',
+    ana_title: 'تحليل الأداء', ana_sub: 'منحنى التعلم · تحليل الكفاءات',
+    ana_score: 'سجل النتائج', ana_certs: 'الشهادات', ana_topics: 'تحليل حسب الموضوع',
+    ana_empty_chart: 'لم يتم إجراء اختبارات', ana_empty_certs: 'لا توجد شهادات',
+    ana_topics_list: ['العوامل البشرية','القيادة','التواصل','ثقافة السلامة','الأنظمة التشغيلية','القانون'],
+    ai_title: '🤖 مساعد التعلم بالذكاء الاصطناعي', ai_sub: 'مدعوم بـ Claude AI · يحلل نتائجك في الوقت الفعلي',
+    ai_lang_label: 'اللغة:', ai_q1: '📊 تحليل نقاط الضعف', ai_q2: '📚 شرح مفهوم',
+    ai_q3: '🎯 توصية مسار', ai_q4: '✈️ العوامل البشرية',
+    ai_q1_text: 'حلل نتائجي الأخيرة وأظهر لي نقاط ضعفي.',
+    ai_q2_text: 'ما هي تطبيع الانحرافات ولماذا هي خطيرة في المناولة الأرضية؟',
+    ai_q3_text: 'ما البرنامج الذي توصي به بناءً على دوري؟',
+    ai_q4_text: 'اشرح العوامل البشرية في المناولة الأرضية بمثال عملي.',
+    ai_placeholder: 'اطرح سؤالاً...', ai_send: 'إرسال →',
+    ai_welcome: 'مرحباً! أنا مدربك الشخصي بالذكاء الاصطناعي من CLS.<br><br>يمكنني مساعدتك في:<br>• <strong>تحليل النتائج</strong><br>• <strong>شرح المفاهيم</strong><br>• <strong>مسار التعلم</strong><br><br>اكتب سؤالك أو استخدم الأزرار السريعة.',
+    pf_title: 'ملفي الشخصي', pf_sub: 'البيانات الشخصية · الشهادات',
+    pf_plan: 'الخطة', pf_since: 'عضو منذ', pf_certs: 'الشهادات', pf_tests: 'الاختبارات المكتملة',
+    pf_certs_label: 'شهاداتي', pf_empty_certs: 'أكمل الاختبارات للحصول على شهادات.',
+    pf_exec_lbl: '⭐ وصول تنفيذي', pf_exec_title: 'CEO ومجلس الإدارة — وصول خاص',
+    pf_exec_desc: 'برامج متقدمة: قانون الطيران، الاندماجات، حوكمة الشركات.',
+    pf_exec_btn: 'البرنامج التنفيذي →',
+    sec_title: 'مركز الأمان', sec_sub: 'أمان الحساب · تدوير كلمة المرور',
+    sec_warn_lbl: 'تدوير كلمة المرور مطلوب في', sec_days_sub: 'أيام — إلزامي كل 60 يوماً',
+    sec_change_btn: 'تغيير الآن',
+    sec_items: ['قوة كلمة المرور','تشفير الجلسة','التدوير التلقائي','HTTPS / SSL','الحماية من الاختراق','سجل الوصول'],
+    sec_statuses: ['● قوي','● JWT نشط','● 60 يوماً','● نشط','● 5 محاولات','● مراقبة'],
+    pricing_title: 'الخطط والفواتير', pricing_sub: 'شروط مرنة · بطاقة، PayPal، رصيد',
+    dur_monthly: 'شهري', dur_6m: '6 أشهر', dur_yearly: 'سنوي −15%', dur_2y: 'سنتان −25%', dur_5y: '5 سنوات −35%',
+    ent_title: 'المؤسسات وشركات الطيران', ent_desc: 'مستخدمون غير محدودين، العلامة البيضاء، SCORM.',
+    ent_btn: 'اتصل بنا →',
+    login_tab: 'تسجيل الدخول', register_tab: 'التسجيل',
+    login_email: 'البريد الإلكتروني للشركة', login_pw: 'كلمة المرور',
+    login_btn: 'دخول →', register_btn: 'إنشاء حساب →',
+    demo_title: 'حسابات تجريبية', btn_back_site: '← العودة للموقع',
+    reg_fn: 'الاسم الأول', reg_ln: 'اسم العائلة', reg_role: 'الدور', reg_co: 'الشركة',
+    toast_enrolled: 'مسجل في', toast_login: 'مرحباً', toast_lang: 'اللغة',
+    tb_logout: 'تسجيل الخروج',
+  },
+};
+
+// ═══════════════════════════════════════════
+// APPLY TRANSLATIONS TO ENTIRE UI
+// ═══════════════════════════════════════════
+let currentLang = 'de';
+
+function applyLang(lang) {
+  currentLang = lang;
+  const t = T[lang] || T.de;
+  document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  document.documentElement.lang = lang;
+
+  // Helper: set text if element exists
+  const s = (id, text) => { const el = document.getElementById(id); if (el) el.textContent = text; };
+  const si = (id, html) => { const el = document.getElementById(id); if (el) el.innerHTML = html; };
+  const sa = (sel, attr, val) => { const el = document.querySelector(sel); if (el) el.setAttribute(attr, val); };
+  const sAll = (sel, text) => document.querySelectorAll(sel).forEach(el => el.textContent = text);
+
+  // TOPBAR
+  s('tb-lang-label', t.toast_lang);
+  const logoutBtn = document.querySelector('.btn-logout');
+  if (logoutBtn) logoutBtn.textContent = t.tb_logout;
+
+  // SIDEBAR LABELS
+  const sbGroups = document.querySelectorAll('.sb-group-label');
+  if (sbGroups[0]) sbGroups[0].textContent = t.sb_main;
+  if (sbGroups[1]) sbGroups[1].textContent = t.sb_account;
+  if (sbGroups[2]) sbGroups[2].textContent = t.sb_website;
+
+  // SIDEBAR ITEMS — find by icon content
+  document.querySelectorAll('.sb-item').forEach(item => {
+    const icon = item.querySelector('.sb-icon')?.textContent;
+    const map = {
+      '📊': t.sb_dashboard, '📚': t.sb_programs, '📈': t.sb_analytics,
+      '🤖': t.sb_ai, '👤': t.sb_profile, '🔒': t.sb_security,
+      '💳': t.sb_pricing, '🌐': t.sb_tosite, '⚖️': t.sb_legal,
+    };
+    if (icon && map[icon]) {
+      const textNode = [...item.childNodes].find(n => n.nodeType === 3 && n.textContent.trim());
+      if (textNode) textNode.textContent = map[icon];
+      else item.lastChild.textContent = map[icon];
+    }
+  });
+
+  // DASHBOARD
+  s('kpi-e', document.getElementById('kpi-e')?.textContent); // keep value
+  document.querySelectorAll('.kpi-lbl')[0]?.setAttribute('data-i18n', 'dash_enrolled');
+  const kpiLabels = document.querySelectorAll('.kpi-lbl');
+  if (kpiLabels[0]) kpiLabels[0].textContent = t.dash_enrolled;
+  if (kpiLabels[1]) kpiLabels[1].textContent = t.dash_passed;
+  if (kpiLabels[2]) kpiLabels[2].textContent = t.dash_certs;
+  if (kpiLabels[3]) kpiLabels[3].textContent = t.dash_avg;
+  const dashLabel = document.querySelector('#page-dashboard .pg-label');
+  if (dashLabel) dashLabel.textContent = t.dash_my_programs;
+
+  // PROGRAMS PAGE
+  const progPage = document.getElementById('page-programs');
+  if (progPage) {
+    const h = progPage.querySelector('.pg-title');
+    const sub = progPage.querySelector('.pg-sub');
+    if (h) h.textContent = t.prog_title;
+    if (sub) sub.textContent = t.prog_sub;
+  }
+
+  // ANALYTICS PAGE
+  const anaPage = document.getElementById('page-analytics');
+  if (anaPage) {
+    const h = anaPage.querySelector('.pg-title');
+    const sub = anaPage.querySelector('.pg-sub');
+    if (h) h.textContent = t.ana_title;
+    if (sub) sub.textContent = t.ana_sub;
+    const heads = anaPage.querySelectorAll('.ana-card-h');
+    if (heads[0]) heads[0].textContent = t.ana_score;
+    if (heads[1]) heads[1].textContent = t.ana_certs;
+    if (heads[2]) heads[2].textContent = t.ana_topics;
+  }
+
+  // AI PAGE
+  const aiPage = document.getElementById('page-ai');
+  if (aiPage) {
+    const h = aiPage.querySelector('.pg-title');
+    const sub = aiPage.querySelector('.pg-sub');
+    if (h) h.textContent = t.ai_title;
+    if (sub) sub.textContent = t.ai_sub;
+    const langLabel = aiPage.querySelector('.ai-lang-label');
+    if (langLabel) langLabel.textContent = t.ai_lang_label;
+    const quickBtns = aiPage.querySelectorAll('.ai-quick-btn');
+    const qTexts = [t.ai_q1, t.ai_q2, t.ai_q3, t.ai_q4];
+    const qPrompts = [t.ai_q1_text, t.ai_q2_text, t.ai_q3_text, t.ai_q4_text];
+    quickBtns.forEach((btn, i) => {
+      if (qTexts[i]) {
+        btn.textContent = qTexts[i];
+        btn.onclick = () => quickAsk(qPrompts[i]);
+      }
+    });
+    const aiInp = document.getElementById('ai-inp');
+    if (aiInp) aiInp.placeholder = t.ai_placeholder;
+    const aiSend = document.querySelector('.btn-ai-send');
+    if (aiSend) aiSend.textContent = t.ai_send;
+  }
+
+  // PROFILE PAGE
+  const pfPage = document.getElementById('page-profile');
+  if (pfPage) {
+    const h = pfPage.querySelector('.pg-title');
+    const sub = pfPage.querySelector('.pg-sub');
+    if (h) h.textContent = t.pf_title;
+    if (sub) sub.textContent = t.pf_sub;
+    const pfLabel = pfPage.querySelector('.pg-label');
+    if (pfLabel) pfLabel.textContent = t.pf_certs_label;
+    // Profile stats labels
+    const pfStats = pfPage.querySelectorAll('.pf-sl');
+    const statKeys = ['pf_plan','pf_since','pf_certs','pf_tests'];
+    pfStats.forEach((el, i) => { if (t[statKeys[i]]) el.textContent = t[statKeys[i]]; });
+    // Exec box
+    const execLbl = pfPage.querySelector('.exec-lbl');
+    const execTitle = pfPage.querySelector('.exec-title');
+    const execDesc = pfPage.querySelector('.exec-desc');
+    const execBtn = pfPage.querySelector('.btn-exec');
+    if (execLbl) execLbl.textContent = t.pf_exec_lbl;
+    if (execTitle) execTitle.textContent = t.pf_exec_title;
+    if (execDesc) execDesc.textContent = t.pf_exec_desc;
+    if (execBtn) execBtn.textContent = t.pf_exec_btn;
+  }
+
+  // SECURITY PAGE
+  const secPage = document.getElementById('page-security');
+  if (secPage) {
+    const h = secPage.querySelector('.pg-title');
+    const sub = secPage.querySelector('.pg-sub');
+    if (h) h.textContent = t.sec_title;
+    if (sub) sub.textContent = t.sec_sub;
+    const warnLbl = secPage.querySelector('.sec-warn-lbl');
+    if (warnLbl) warnLbl.textContent = t.sec_warn_lbl;
+    const daysSub = secPage.querySelector('.sec-days-sub');
+    if (daysSub) daysSub.textContent = t.sec_days_sub;
+    const changeBtn = secPage.querySelector('.btn-change-pw');
+    if (changeBtn) changeBtn.textContent = t.sec_change_btn;
+    const secLabels = secPage.querySelectorAll('.sec-lbl');
+    const secStatuses = secPage.querySelectorAll('.sec-status-ok');
+    secLabels.forEach((el, i) => { if (t.sec_items[i]) el.textContent = t.sec_items[i]; });
+    secStatuses.forEach((el, i) => { if (t.sec_statuses[i]) el.textContent = t.sec_statuses[i]; });
+  }
+
+  // PRICING-APP PAGE
+  const pricingApp = document.getElementById('page-pricing-app');
+  if (pricingApp) {
+    const h = pricingApp.querySelector('.pg-title');
+    const sub = pricingApp.querySelector('.pg-sub');
+    if (h) h.textContent = t.pricing_title;
+    if (sub) sub.textContent = t.pricing_sub;
+    const entTitle = pricingApp.querySelector('.ent-title');
+    const entDesc = pricingApp.querySelector('.ent-desc');
+    const entBtn = pricingApp.querySelector('.btn-ent');
+    if (entTitle) entTitle.textContent = t.ent_title;
+    if (entDesc) entDesc.textContent = t.ent_desc;
+    if (entBtn) entBtn.textContent = t.ent_btn;
+    // Duration tabs
+    const durTabs = pricingApp.querySelectorAll('.dur-tab');
+    const durKeys = ['dur_monthly','dur_6m','dur_yearly','dur_2y','dur_5y'];
+    durTabs.forEach((tab, i) => { if (t[durKeys[i]]) tab.textContent = t[durKeys[i]]; });
+    // Re-render pricing with new lang
+    renderPricing('app');
+  }
+
+  // LOGIN SCREEN
+  const loginTabs = document.querySelectorAll('.ltab');
+  if (loginTabs[0]) loginTabs[0].textContent = t.login_tab;
+  if (loginTabs[1]) loginTabs[1].textContent = t.register_tab;
+  const liEmailLabel = document.querySelector('#login-form .lf:first-child label');
+  const liPwLabel = document.querySelector('#login-form .lf:last-of-type label');
+  if (liEmailLabel) liEmailLabel.textContent = t.login_email;
+  if (liPwLabel) liPwLabel.textContent = t.login_pw;
+  const loginBtn = document.querySelector('.btn-login');
+  if (loginBtn) loginBtn.textContent = t.login_btn;
+  const demoTitle = document.querySelector('.demo-title');
+  if (demoTitle) demoTitle.textContent = t.demo_title;
+  const backBtn = document.querySelector('.btn-back-login');
+  if (backBtn) backBtn.textContent = t.btn_back_site;
+
+  // QUIZ (dynamic labels)
+  currentT = t;
+
+  // Re-render current active page content if needed
+  if (STATE.user) {
+    const activePage = document.querySelector('.app-page.active');
+    if (activePage) {
+      const pageId = activePage.id.replace('page-', '');
+      if (pageId === 'analytics') renderAna();
+      else if (pageId === 'profile') renderProfile();
+      else if (pageId === 'dashboard') renderDash();
+      else if (pageId === 'programs') renderProgs();
+    }
+  }
+
+  // Update AI language too
+  currentAILang = lang;
+
+  toast(t.toast_lang + ': ' + lang.toUpperCase(), '');
+}
+
+// Store current translations for use in dynamic renders
+let currentT = T.de;
+
+
+</script>
+
+<script>
+// ═══════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════
+const DEMO_USERS = [
+  { id:1, email:'supervisor@fraport.de', pw:'demo123', fn:'Thomas', ln:'Weber', role:'supervisor', company:'Fraport Ground Services', plan:'Professional' },
+  { id:2, email:'ceo@menzies.com', pw:'demo123', fn:'Sarah', ln:'Mitchell', role:'ceo', company:'Menzies Aviation', plan:'Enterprise' },
+  { id:3, email:'trainer@swissport.com', pw:'demo123', fn:'Klaus', ln:'Schneider', role:'trainer', company:'Swissport', plan:'Professional' },
+];
+
+const PROGRAMS = [
+  { code:'CBT-RA', level:'op', title:'Ramp Agent Core Training', desc:'GSE-Sicherheit, Loading, Pushback, Emergency-Verfahren.', mods:8 },
+  { code:'CBT-LM', level:'op', title:'Loading Master / Load Control', desc:'Gewicht & Balance, DG-Cargo, Beladungsplanung, BAS/DCS.', mods:6 },
+  { code:'CBT-CS', level:'op', title:'Check-in & Service Agent', desc:'Passagierabfertigung, DCS-Systeme, spezielle PAX.', mods:5 },
+  { code:'CBT-TE', level:'op', title:'Trainee Experience (0–90 Tage)', desc:'Airport-Orientierung, Grundlagen, 90-Tage-Bewertung.', mods:5 },
+  { code:'CBT-RS', level:'sup', title:'Ramp Supervisor Development', desc:'Leadership, Briefing-Standards, KPIs, IROPS-Management.', mods:10 },
+  { code:'CBT-TC', level:'sup', title:'Turnaround Coordinator', desc:'Turnaround-Management, Critical Path, Multi-Airline-Umgebung.', mods:6 },
+  { code:'CBT-DM', level:'mgmt', title:'Duty Manager Program', desc:'IROPS, SLA, KPI, Krisenentscheidung unter Druck.', mods:10 },
+  { code:'CBT-SM', level:'mgmt', title:'Station Manager Program', desc:'P&L-Bewusstsein, Airline-Relations, Qualitätsaudits.', mods:8 },
+  { code:'CBT-TR', level:'mgmt', title:'Trainer & Training Dept.', desc:'Erwachsenenlernen, CBT-Methodik, Kompetenz-Assessment.', mods:7 },
+  { code:'CBT-HR', level:'mgmt', title:'HR & Arbeitsrecht Aviation', desc:'Arbeitsrecht AT/EU, Assessment, Mitarbeitergespräche.', mods:6 },
+  { code:'CBT-AL', level:'mgmt', title:'Airline Operations Integration', desc:'Handler-Airline-Interface, SLA, Delay-Management.', mods:7 },
+  { code:'CBT-SC', level:'exec', title:'Security & Safety Compliance', desc:'ICAO/EASA, Airside, SMS, Root Cause Analysis.', mods:6 },
+  { code:'CBT-EX', level:'exec', title:'Executive Leadership', desc:'Systemisches Risiko, M&A, Board-Governance, Haftung.', mods:8 },
+  { code:'CBT-LG', level:'exec', title:'Luftrecht & Internationales Recht', desc:'Luftrecht, Wettbewerbsrecht, Vertragsrecht, IATA.', mods:8 },
+];
+
+// QUESTION POOL — 20 questions, randomly drawn
+const QUESTION_POOL = [
+  { id:1, type:'mc', topic:'Human Factors', q:'Wenn ein Fehler das Flugzeug erreicht, zeigt dies primär:', opts:['Individuelle Nachlässigkeit','Geräteausfall','System- und Führungsversagen','Schlechtes Wetter'], correct:2, exp:'Fehler sind Systemergebnisse — das System hat versagt, nicht die einzelne Person. Das ist die Grundlage der Just Culture.' },
+  { id:2, type:'mc', topic:'Normalization of Deviation', q:'Normalisierung von Abweichungen beschreibt:', opts:['Eine genehmigte Prozessänderung','Einen plötzlichen Regelverstoß','Den schrittweisen Prozess durch den Nicht-Standard zur Norm wird','Einen dokumentierten Workaround'], correct:2, exp:'SCHRITTWEISE und ORGANISATORISCH — das macht sie unsichtbar und gefährlich. Der Challenger-Unfall ist das bekannteste Beispiel.' },
+  { id:3, type:'mc', topic:'Briefing Standards', q:'Das Primärziel eines Vor-Schicht-Briefings ist:', opts:['Delays der letzten Schicht vorlesen','Schriftliches Material verteilen','Gemeinsames Situationsbewusstsein aller Teammitglieder schaffen','Leistungsüberprüfungen durchführen'], correct:2, exp:'Ausrichtung ist das Ziel — nicht nur Informationsübertragung. Das 8-Minuten-Briefing schafft ein gemeinsames mentales Modell.' },
+  { id:4, type:'mc', topic:'IROPS Management', q:'Ein effektiver Duty Manager in einer IROPS-Situation:', opts:['Wartet auf Anweisungen von oben','Handelt sofort ohne Kommunikation','Priorisiert, delegiert und kommuniziert gleichzeitig','Fokussiert sich ausschließlich auf eine Aufgabe'], correct:2, exp:'IROPS erfordert paralleles Handeln: Priorisierung nach Dringlichkeit, klare Delegation, kontinuierliche Kommunikation mit allen Stakeholdern.' },
+  { id:5, type:'mc', topic:'Safety Culture', q:'Eine starke Sicherheitskultur zeichnet sich aus durch:', opts:['Bestrafung aller Fehler unabhängig vom Kontext','Offene Fehlerkultur und Just Culture','Verschweigen von Vorfällen zur Image-Wahrung','Maximale Kontrolle aller Mitarbeiter'], correct:1, exp:'Just Culture — offen über Fehler sprechen ohne Angst vor Bestrafung — ist das Fundament jeder starken Sicherheitskultur.' },
+  { id:6, type:'mc', topic:'Kommunikation', q:'Was ist die gefährlichste Form der Kommunikationslücke im Ground Handling?', opts:['Zu viele Informationen weitergeben','Annahmen statt explizite Bestätigungen','Verwendung von Fachbegriffen','Zu formelle Sprache'], correct:1, exp:'Annahmen ("er weiß das schon") sind die häufigste Ursache von Kommunikationsfehlern. Explizite Bestätigung ist Pflicht.' },
+  { id:7, type:'mc', topic:'Luftrecht', q:'Das Standard Ground Handling Agreement (SGHA) definiert:', opts:['Unbegrenzte Haftung des Handlers','Keine Haftung des Handlers','Haftungsgrenzen zwischen Handler und Airline','Staatliche Vorgaben für Ground Handling'], correct:2, exp:'Das SGHA definiert Haftungsgrenzen in SDR (Special Drawing Rights). Darüber hinaus braucht es spezifische Vereinbarungen.' },
+  { id:8, type:'mc', topic:'Cybersecurity', q:'Sicherste Authentifizierungsmethode in operativen Aviations-Systemen:', opts:['Passwort allein (min. 8 Zeichen)','Multi-Faktor-Authentifizierung (MFA)','Biometrie allein','IP-basierte Erkennung'], correct:1, exp:'MFA kombiniert etwas das man weiß (Passwort) mit etwas das man hat (Token) oder ist (Biometrie) — signifikant sicherer als Single-Factor.' },
+  { id:9, type:'mc', topic:'Arbeitsrecht', q:'Eine Änderungskündigung in Österreich ist:', opts:['Eine sofort wirksame Kündigung','Ordentliche Kündigung mit Wiedereinstellungsangebot zu geänderten Bedingungen','Nur bei grobem Fehlverhalten möglich','In Österreich grundsätzlich unwirksam'], correct:1, exp:'Änderungskündigung = ordentliche Kündigung + gleichzeitiges Angebot der Weiterbeschäftigung zu geänderten Bedingungen. Der AN kann annehmen oder ablehnen.' },
+  { id:10, type:'mc', topic:'Weight & Balance', q:'Was passiert bei einem Forward Center of Gravity aus dem erlaubten Bereich?', opts:['Das Flugzeug ist stabiler als normal','Pitch-up Tendenz und erhöhter Auftrieb','Erhöhte Steuerkräfte nötig, möglicher Streckenstall','Bessere Kraftstoffeffizienz'], correct:2, exp:'Forward CG erhöht horizontale Stabilisator-Belastung, erfordert mehr Steuerkraft und kann die Stall-Geschwindigkeit erhöhen.' },
+  { id:11, type:'mc', topic:'Human Factors', q:'Cognitive Bias "Plan Continuation" beschreibt:', opts:['Die Tendenz neue Pläne zu erstellen','Das Festhalten an einem Plan trotz entgegenstehender Informationen','Das regelmäßige Überprüfen von Plänen','Die Dokumentation von Planänderungen'], correct:1, exp:'Plan Continuation Bias: Man hält an einem Plan fest, auch wenn neue Informationen signalisieren, dass man abbrechen oder ändern sollte. Häufig bei erfahrenen Operateuren.' },
+  { id:12, type:'mc', topic:'IROPS', q:'Bei einer IATA Weather Diversion: Was ist die erste Priorität des Ground Handlers?', opts:['Passagiere informieren über Social Media','Airline kontaktieren und Gate verfügbar machen','Catering für divertierte Flüge bestellen','Presse-Erklärung vorbereiten'], correct:1, exp:'Erste Priorität: Airline kontaktieren, operationelle Kapazität prüfen (Gate, Equipment, Personal) und Bereitschaft melden. Dann folgen Passagier-Services.' },
+  { id:13, type:'mc', topic:'Dangerous Goods', q:'Welche DG-Kategorie ist per Luftfracht grundsätzlich VERBOTEN?', opts:['Klasse 3 Flüssigkeiten (Benzin)','Klasse 2.1 Entzündbare Gase','Klasse 6.2 Infektiöse Stoffe Kategorie A','Klasse 9 Lithium-Ionen Batterien über 100Wh'], correct:2, exp:'Klasse 6.2 Kategorie A (z.B. Ebola-Erreger) ist grundsätzlich verboten auf Passagierflügen und stark eingeschränkt auf Frachtflügen.' },
+  { id:14, type:'mc', topic:'Leadership', q:'Situational Leadership nach Hersey/Blanchard empfiehlt:', opts:['Immer einen demokratischen Führungsstil','Den gleichen Stil für alle Mitarbeiter','Den Führungsstil dem Reifegrad des Mitarbeiters anpassen','Ausschließlich Aufgabenorientierung'], correct:2, exp:'Situational Leadership: Der effektive Führungsstil hängt vom Reifegrad (Fähigkeit + Motivation) des Mitarbeiters für die spezifische Aufgabe ab.' },
+  { id:15, type:'mc', topic:'Sicherheitskultur', q:'Was versteht man unter "Just Culture"?', opts:['Juristisch korrekte Dokumentation aller Vorfälle','Klare Grenze zwischen akzeptablem Fehler und vorsätzlichem Fehlverhalten','Bestrafung aller Fehler für mehr Sicherheit','Anonyme Meldungen ohne Konsequenzen'], correct:1, exp:'Just Culture = klare Grenzlinie zwischen menschlichen Fehlern (Systemoptimierung) und Fahrlässigkeit/Sabotage (Konsequenzen). Schafft psychologische Sicherheit.' },
+  { id:16, type:'mc', topic:'Arbeitsrecht', q:'Das Arbeitsverfassungsgesetz (ArbVG) § 96 regelt:', opts:['Mindestlöhne in der Luftfahrtbranche','Zustimmungspflichtige Maßnahmen des Betriebsrats','Urlaubsansprüche für Schichtarbeiter','Qualifikationsanforderungen für Ramp Agents'], correct:1, exp:'ArbVG § 96 listet Maßnahmen auf, die der Zustimmung des Betriebsrats bedürfen (Zustimmungspflichtige Maßnahmen), z.B. Einführung von Kontrollmaßnahmen.' },
+  { id:17, type:'mc', topic:'KPI Management', q:'Ein On-Time Performance (OTP) KPI von 85% bei einer Zieldefinition von 80%:', opts:['Liegt unter dem Ziel — sofortige Maßnahmen nötig','Liegt über dem Ziel — Performance ist akzeptabel','Muss mit Vormonat verglichen werden bevor man urteilt','Bedeutet immer exzellente Performance'], correct:1, exp:'85% > 80% Ziel = Ziel erreicht. Allerdings sollte Trend-Analyse und Peer-Benchmarking die Bewertung ergänzen.' },
+  { id:18, type:'mc', topic:'FOD Prevention', q:'Was ist die effektivste Maßnahme gegen FOD (Foreign Object Debris) auf dem Vorfeld?', opts:['Mehr Sicherheitskameras installieren','Tägliche FOD-Walks nach festen Routen und zu definierten Zeiten','Alle Mitarbeiter für FOD-Vorfälle bestrafen','FOD-Statistiken monatlich an Airlines melden'], correct:1, exp:'Systematische FOD-Walks mit klaren Routen, Zeiten und Verantwortlichkeiten sind die evidenzbasiert effektivste Präventionsmaßnahme.' },
+  { id:19, type:'text', topic:'Führungskompetenz', q:'Sie beobachten als Supervisor, dass ein erfahrener Ramp Agent wiederholt Sicherheitschecks überspringt. Er argumentiert: "Das mache ich seit 15 Jahren so." Beschreiben Sie Ihr Vorgehen nach der SBI-Methode (Situation-Behavior-Impact). Mindestens 100 Wörter.', opts:[], correct:-1, exp:'SBI: Konkrete Situation beschreiben (wann, wo), beobachtetes Verhalten neutral benennen (ohne Wertung), Auswirkung klar erklären (Sicherheitsrisiko, Team-Vorbildfunktion), dann gemeinsam Lösung entwickeln.' },
+  { id:20, type:'text', topic:'Krisenmanagement', q:'Ein Flugzeug hat bei der Ankunft am Gate einen Felgenbruch. Die Runway ist für 45 Minuten gesperrt. 3 Abflüge sind betroffen. Beschreiben Sie als Duty Manager Ihren vollständigen Aktionsplan in chronologischer Reihenfolge. Mindestens 150 Wörter.', opts:[], correct:-1, exp:'Korrekte Reihenfolge: 1) Sicherheitszone einrichten 2) Airlines sofort informieren 3) IOCC/Tower kontaktieren 4) Abflüge reassessieren (delay/cancel) 5) Passagiere betreuen 6) Ersatz-Equipment organisieren 7) Dokumentation 8) Nachbesprechung.' },
+];
+
+const PRICES = {
+  monthly:   { s:29, p:79, b:149 },
+  '3months': { s:26, p:71, b:134 },
+  '6months': { s:24, p:67, b:127 },
+  yearly:    { s:19, p:59, b:112 },
+  '2years':  { s:16, p:52, b:99 },
+  '5years':  { s:12, p:42, b:79 },
+};
+
+const AI_SYSTEM_PROMPTS = {
+  de: 'Du bist ein professioneller Aviation Ground Handling Trainer der CLS — Clear Leadership Systems. Du sprichst ausschließlich Deutsch. Du hilfst Mitarbeitern vom Ramp Agent bis CEO. Du analysierst Testergebnisse, erklärst Konzepte aus dem Aviation Ground Handling (Human Factors, Normalization of Deviation, Briefing-Standards, IROPS, Luftrecht, Arbeitsrecht AT, Sicherheitskultur, Just Culture, Weight & Balance, Dangerous Goods), und empfiehlst Lernpfade. Antworte präzise, professionell und direkt. Keine langen Einleitungen.',
+  en: 'You are a professional Aviation Ground Handling trainer for CLS — Clear Leadership Systems. You speak only English. You help staff from Ramp Agent to CEO level. You analyze test results, explain ground handling concepts, and recommend learning paths. Topics: Human Factors, Normalization of Deviation, Briefing Standards, IROPS, Aviation Law, Safety Culture, Just Culture. Be precise and direct.',
+  fr: 'Vous êtes un formateur professionnel en Ground Handling Aviation pour CLS. Vous parlez uniquement français. Vous aidez le personnel du Ramp Agent au CEO. Analysez les résultats des tests et expliquez les concepts de manière précise.',
+  es: 'Eres un formador profesional de Ground Handling de Aviación para CLS. Hablas solo español. Ayudas al personal desde Ramp Agent hasta CEO. Analiza resultados de pruebas y explica conceptos con precisión.',
+  ru: 'Вы профессиональный тренер по наземному обслуживанию авиации CLS. Говорите только по-русски. Помогаете персоналу от рамп-агента до CEO. Анализируйте результаты тестов и объясняйте концепции точно.',
+  ar: 'أنت مدرب احترافي في مجال المناولة الأرضية للطيران لـ CLS. تتحدث باللغة العربية فقط. تساعد الموظفين من عامل المنصة إلى المدير التنفيذي. حلل نتائج الاختبارات واشرح المفاهيم بدقة.',
+};
+
+// ═══════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════
+let STATE = {
+  user: null,
+  enrolled: new Set(),
+  attempts: [],
+  certs: [],
+  quizState: null,
+};
+let currentDur = 'monthly';
+let currentAILang = 'de';
+let aiHistory = [];
+
+// ═══════════════════════════════════════════
+// SCREEN SYSTEM
+// ═══════════════════════════════════════════
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const el = document.getElementById('screen-' + id);
+  if (el) el.classList.add('active');
+  window.scrollTo(0, 0);
+  if (id === 'pricing') { renderPricing('main'); renderPricing('app'); }
+}
+
+function smoothTo(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ═══════════════════════════════════════════
+// AUTH
+// ═══════════════════════════════════════════
+function switchLoginTab(tab, btn) {
+  document.querySelectorAll('.ltab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('login-form').style.display = tab === 'login' ? 'block' : 'none';
+  document.getElementById('register-form').style.display = tab === 'register' ? 'block' : 'none';
+}
+
+function fillDemo(email, pw) {
+  document.getElementById('li-email').value = email;
+  document.getElementById('li-pw').value = pw;
+}
+
+function doLogin() {
+  const email = document.getElementById('li-email').value.trim();
+  const pw = document.getElementById('li-pw').value;
+  if (!email || !pw) { toast('Bitte alle Felder ausfüllen', 'red'); return; }
+
+  const demo = DEMO_USERS.find(u => u.email === email && u.pw === pw);
+  if (demo) { loginUser(demo); return; }
+
+  const blockedDomains = ['gmail', 'yahoo', 'hotmail', 'gmx', 'web.de', 'outlook'];
+  if (email.includes('@') && !blockedDomains.some(d => email.includes(d))) {
+    const fn = email.split('@')[0];
+    loginUser({ id: Date.now(), email, fn, ln: '', role: 'ramp_agent', company: email.split('@')[1]?.split('.')[0] || 'Company', plan: 'Starter' });
+  } else {
+    toast('Ungültige Zugangsdaten oder bitte Firmen-E-Mail verwenden', 'red');
+  }
+}
+
+function doRegister() {
+  const fn = document.getElementById('r-fn').value.trim();
+  const ln = document.getElementById('r-ln').value.trim();
+  const role = document.getElementById('r-role').value;
+  const co = document.getElementById('r-co').value.trim();
+  const email = document.getElementById('r-email').value.trim();
+  const pw = document.getElementById('r-pw').value;
+
+  if (!fn || !co || !email || !pw) { toast('Bitte alle Pflichtfelder ausfüllen', 'red'); return; }
+  const blocked = ['gmail', 'yahoo', 'hotmail', 'gmx', 'web.de', 'outlook'];
+  if (blocked.some(d => email.includes(d))) { toast('Bitte Firmen-E-Mail verwenden', 'red'); return; }
+  if (pw.length < 8) { toast('Passwort muss min. 8 Zeichen haben', 'red'); return; }
+
+  loginUser({ id: Date.now(), email, fn, ln, role, company: co, plan: 'Starter' });
+}
+
+function loginUser(u) {
+  STATE.user = u;
+  STATE.enrolled = new Set();
+  STATE.attempts = [];
+  STATE.certs = [];
+
+  // Auto-enroll based on role
+  const roleEnrollments = {
+    ramp_agent: ['CBT-RA'],
+    loading_master: ['CBT-RA', 'CBT-LM'],
+    checkin_agent: ['CBT-CS'],
+    supervisor: ['CBT-RA', 'CBT-RS'],
+    duty_manager: ['CBT-RS', 'CBT-DM'],
+    station_manager: ['CBT-DM', 'CBT-SM'],
+    trainer: ['CBT-TR'],
+    hr_manager: ['CBT-HR'],
+    ceo: ['CBT-EX', 'CBT-LG'],
+    it: ['CBT-SC'],
+    legal: ['CBT-LG'],
+  };
+  (roleEnrollments[u.role] || ['CBT-RA']).forEach(c => STATE.enrolled.add(c));
+
+  const init = (u.fn[0] || '') + (u.ln?.[0] || '');
+  ['sb-av', 'tb-av', 'pf-av'].forEach(id => { const el = document.getElementById(id); if (el) el.textContent = init || '?'; });
+  const fullName = u.fn + (u.ln ? ' ' + u.ln : '');
+  const roleLabel = u.role.replace(/_/g, ' ').toUpperCase();
+  document.getElementById('sb-uname').textContent = fullName;
+  document.getElementById('sb-urole').textContent = roleLabel;
+  document.getElementById('sb-uplan').textContent = u.plan || 'Starter';
+  document.getElementById('tb-name').textContent = fullName;
+  document.getElementById('tb-role').textContent = roleLabel;
+
+  showScreen('app');
+  showPage('dashboard');
+  toast('Willkommen, ' + u.fn + '!', 'green');
+}
+
+function doLogout() {
+  STATE = { user: null, enrolled: new Set(), attempts: [], certs: [], quizState: null };
+  aiHistory = [];
+  showScreen('home');
+}
+
+// ═══════════════════════════════════════════
+// APP PAGES
+// ═══════════════════════════════════════════
+function showPage(id) {
+  document.querySelectorAll('.app-page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.sb-item').forEach(i => i.classList.remove('active'));
+
+  const page = document.getElementById('page-' + id);
+  if (page) page.classList.add('active');
+
+  // Highlight active sidebar item
+  const map = { dashboard: 'Dashboard', programs: 'Programme', analytics: 'Analytics', ai: 'KI-Assistent', profile: 'Mein Profil', security: 'Sicherheit', 'pricing-app': 'Tarife' };
+  document.querySelectorAll('.sb-item').forEach(item => {
+    if (map[id] && item.textContent.trim().includes(map[id])) item.classList.add('active');
+  });
+
+  const content = document.querySelector('.app-content');
+  if (content) content.scrollTop = 0;
+
+  if (!STATE.user) return;
+  if (id === 'dashboard') renderDash();
+  else if (id === 'programs') renderProgs();
+  else if (id === 'analytics') renderAna();
+  else if (id === 'profile') renderProfile();
+  else if (id === 'pricing-app') renderPricing('app');
+}
+
+// ═══════════════════════════════════════════
+// DASHBOARD
+// ═══════════════════════════════════════════
+function renderDash() {
+  const u = STATE.user;
+  const h = new Date().getHours();
+  const gr = h < 12 ? 'Guten Morgen' : h < 18 ? 'Guten Tag' : 'Guten Abend';
+  document.getElementById('dash-title').textContent = gr + ', ' + u.fn;
+  document.getElementById('dash-sub').textContent = u.role.replace(/_/g, ' ').toUpperCase() + ' · ' + u.company;
+
+  const scores = STATE.attempts.map(a => a.score);
+  const avg = scores.length ? Math.round(scores.reduce((s, v) => s + v, 0) / scores.length) : null;
+  document.getElementById('kpi-e').textContent = STATE.enrolled.size;
+  document.getElementById('kpi-p').textContent = STATE.attempts.filter(a => a.passed).length;
+  document.getElementById('kpi-c').textContent = STATE.certs.length;
+  document.getElementById('kpi-s').textContent = avg !== null ? avg + '%' : '—';
+
+  const enrolled = PROGRAMS.filter(p => STATE.enrolled.has(p.code));
+  document.getElementById('dash-progs').innerHTML = enrolled.length
+    ? enrolled.map(p => progCardHTML(p, true)).join('')
+    : '<div style="grid-column:1/-1;padding:32px;text-align:center;color:var(--t3);font-size:13px;">Noch nicht eingeschrieben. <a href="#" onclick="showPage(\'programs\')" style="color:var(--blue3);">Katalog öffnen →</a></div>';
+}
+
+// ═══════════════════════════════════════════
+// PROGRAMS
+// ═══════════════════════════════════════════
+function progCardHTML(p, isEnrolled) {
+  const lc = { op: 'lv-op', sup: 'lv-sup', mgmt: 'lv-mgmt', exec: 'lv-exec' };
+  const lt = { op: 'OPERATIONAL', sup: 'SUPERVISORY', mgmt: 'MANAGEMENT', exec: 'EXECUTIVE' };
+  const enrolled = isEnrolled !== undefined ? isEnrolled : STATE.enrolled.has(p.code);
+  return `<div class="prog-card ${p.level === 'exec' ? 'exec-card' : ''} ${enrolled ? 'enrolled' : ''}">
+    <div class="plevel ${lc[p.level]}">${lt[p.level]}</div>
+    <div class="ptitle">${p.title}</div>
+    <div class="pdesc">${p.desc}</div>
+    <div class="pfooter">
+      <div class="pmods">${p.mods} MODULE</div>
+      ${enrolled
+        ? `<button class="btn-start-quiz" onclick="startQuiz('${p.code}')">TEST STARTEN →</button>`
+        : `<button class="btn-enroll" onclick="enroll('${p.code}')">EINSCHREIBEN</button>`}
+    </div>
+  </div>`;
+}
+
+function renderProgs() {
+  document.getElementById('prog-catalog').innerHTML = PROGRAMS.map(p => progCardHTML(p)).join('');
+}
+
+function enroll(code) {
+  STATE.enrolled.add(code);
+  toast('Eingeschrieben in ' + code + '!', 'green');
+  if (document.getElementById('page-programs').classList.contains('active')) renderProgs();
+  if (document.getElementById('page-dashboard').classList.contains('active')) renderDash();
+}
+
+// ═══════════════════════════════════════════
+// QUIZ ENGINE
+// ═══════════════════════════════════════════
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function startQuiz(code) {
+  if (!STATE.enrolled.has(code)) { toast('Bitte zuerst einschreiben', 'red'); return; }
+
+  const isExec = ['CBT-EX', 'CBT-LG', 'CBT-SC'].includes(code);
+  const count = isExec ? 8 : 5;
+
+  // Shuffle and pick from pool
+  const pool = shuffle([...QUESTION_POOL]).slice(0, count).map(q => {
+    if (q.type === 'mc') {
+      const indices = shuffle([0, 1, 2, 3].slice(0, q.opts.length));
+      return { ...q, _opts: indices.map(i => q.opts[i]), _corr: indices.indexOf(q.correct) };
+    }
+    return { ...q, _opts: [], _corr: -1 };
+  });
+
+  STATE.quizState = { code, questions: pool, cur: 0, answers: {}, textAnswers: {}, revealed: false };
+  showPage('quiz');
+  document.getElementById('quiz-badge').textContent = code + ' — QUIZ';
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const qs = STATE.quizState;
+  const q = qs.questions[qs.cur];
+  const total = qs.questions.length;
+
+  document.getElementById('quiz-fill').style.width = ((qs.cur + 1) / total * 100) + '%';
+  document.getElementById('quiz-ctr').textContent = (qs.cur + 1) + ' / ' + total;
+  document.getElementById('quiz-topic').textContent = q.topic;
+  document.getElementById('quiz-q').textContent = q.q;
+
+  const optsEl = document.getElementById('quiz-opts');
+  const taEl = document.getElementById('quiz-ta');
+  const explEl = document.getElementById('quiz-expl');
+  explEl.style.display = 'none';
+
+  if (q.type === 'text') {
+    optsEl.innerHTML = '';
+    taEl.style.display = 'block';
+    taEl.value = qs.textAnswers[q.id] || '';
+    taEl.disabled = qs.revealed;
+    taEl.oninput = () => { qs.textAnswers[q.id] = taEl.value; updateQuizBtn(); };
+  } else {
+    taEl.style.display = 'none';
+    optsEl.innerHTML = q._opts.map((opt, i) => {
+      let cls = 'qopt';
+      if (qs.revealed) {
+        if (i === q._corr) cls += ' correct';
+        else if (qs.answers[q.id] === i && i !== q._corr) cls += ' wrong';
+        cls += ' locked';
+      } else if (qs.answers[q.id] === i) {
+        cls += ' selected';
+      }
+      return `<div class="${cls}" onclick="selectOpt(${q.id}, ${i})">
+        <div class="qopt-letter">${'ABCD'[i]}</div>
+        <div class="qopt-text">${opt}</div>
+      </div>`;
+    }).join('');
+  }
+
+  if (qs.revealed) {
+    explEl.style.display = 'block';
+    const ok = q.type === 'text' ? true : qs.answers[q.id] === q._corr;
+    document.getElementById('quiz-expl-lbl').textContent = (ok && q.type !== 'text') ? '✓ KORREKT' : 'ERKLÄRUNG';
+    document.getElementById('quiz-expl-txt').textContent = q.exp;
+  }
+
+  updateQuizBtn();
+}
+
+function selectOpt(qId, idx) {
+  if (STATE.quizState.revealed) return;
+  STATE.quizState.answers[qId] = idx;
+  renderQuestion();
+}
+
+function updateQuizBtn() {
+  const qs = STATE.quizState;
+  const q = qs.questions[qs.cur];
+  const btn = document.getElementById('quiz-btn');
+  const isLast = qs.cur === qs.questions.length - 1;
+
+  if (!qs.revealed) {
+    btn.textContent = 'Antwort bestätigen';
+    const hasAnswer = q.type === 'text'
+      ? (qs.textAnswers[q.id] || '').length > 20
+      : qs.answers[q.id] !== undefined;
+    btn.disabled = !hasAnswer;
+  } else {
+    btn.textContent = isLast ? 'Test abschließen ✓' : 'Nächste Frage →';
+    btn.disabled = false;
+  }
+}
+
+function quizAction() {
+  const qs = STATE.quizState;
+  if (!qs.revealed) {
+    qs.revealed = true;
+    renderQuestion();
+  } else {
+    if (qs.cur === qs.questions.length - 1) {
+      finishQuiz();
+    } else {
+      qs.cur++;
+      qs.revealed = false;
+      renderQuestion();
+    }
+  }
+}
+
+function finishQuiz() {
+  const qs = STATE.quizState;
+  let correct = 0;
+
+  const review = qs.questions.map(q => {
+    const isMC = q.type === 'mc';
+    const ok = isMC
+      ? qs.answers[q.id] === q._corr
+      : (qs.textAnswers[q.id] || '').length > 50;
+    if (ok) correct++;
+    return {
+      q: q.q,
+      ok,
+      type: q.type,
+      correctAns: isMC ? q._opts[q._corr] : 'Textantwort',
+      userAns: isMC ? (q._opts[qs.answers[q.id]] || '—') : (qs.textAnswers[q.id] || '').slice(0, 100) + '...',
+    };
+  });
+
+  const score = Math.round((correct / qs.questions.length) * 100);
+  const passed = score >= 80;
+
+  STATE.attempts.push({ code: qs.code, score, passed, date: new Date().toISOString() });
+
+  let certCode = null;
+  if (passed) {
+    certCode = 'CLS-' + qs.code + '-' + Date.now().toString(36).toUpperCase();
+    STATE.certs.push({ code: certCode, progCode: qs.code, score, issued: new Date().toISOString() });
+  }
+
+  // Render results
+  const hero = document.getElementById('result-hero');
+  hero.className = 'result-hero ' + (passed ? 'pass' : 'fail');
+  const scoreEl = document.getElementById('res-score');
+  scoreEl.textContent = score + '%';
+  scoreEl.style.color = passed ? 'var(--green)' : 'var(--red)';
+  const verdictEl = document.getElementById('res-verdict');
+  verdictEl.textContent = passed ? '✓ BESTANDEN' : '✗ NICHT BESTANDEN';
+  verdictEl.style.color = passed ? 'var(--green)' : 'var(--red)';
+  document.getElementById('res-cert').innerHTML = certCode
+    ? `<div class="result-cert"><div class="rc-lbl">ZERTIFIKAT</div><div class="rc-code">${certCode}</div></div>`
+    : '';
+
+  document.getElementById('res-review').innerHTML = review.map(r => `
+    <div class="review-item ${r.ok ? 'ok' : 'bad'}">
+      <div class="ri-q">${r.q.slice(0, 100)}${r.q.length > 100 ? '...' : ''}</div>
+      ${r.type === 'mc'
+        ? `<div class="ri-ans" style="color:${r.ok ? 'var(--green)' : 'var(--red)'};">${r.ok ? '✓' : '✗'} ${r.userAns}</div>${!r.ok ? `<div class="ri-ans" style="color:var(--green);">✓ Richtig: ${r.correctAns}</div>` : ''}`
+        : `<div class="ri-ans" style="color:var(--t3);">${r.userAns}</div>`}
+    </div>`).join('');
+
+  showPage('results');
+  if (passed) toast('🏆 Zertifikat: ' + certCode, 'green');
+  else toast('Score: ' + score + '% — 80% erforderlich für Bestehen', 'red');
+}
+
+// ═══════════════════════════════════════════
+// ANALYTICS
+// ═══════════════════════════════════════════
+function renderAna() {
+  // Score chart
+  const chartEl = document.getElementById('score-chart');
+  if (STATE.attempts.length === 0) {
+    chartEl.innerHTML = '<div style="color:var(--t3);font-size:12px;padding:20px 0;">Noch keine Tests absolviert</div>';
+  } else {
+    const maxH = 80;
+    chartEl.innerHTML = STATE.attempts.slice(-8).map(a => {
+      const h = Math.max(4, Math.round((a.score / 100) * maxH));
+      const col = a.score >= 80 ? 'var(--green)' : a.score >= 60 ? 'var(--amber)' : 'var(--red)';
+      return `<div class="chart-bar-col">
+        <div class="chart-bar-val" style="color:${col};">${a.score}%</div>
+        <div class="chart-bar-fill" style="height:${h}px;background:${col};"></div>
+        <div class="chart-bar-lbl">${a.code.replace('CBT-', '')}</div>
+      </div>`;
+    }).join('');
+  }
+
+  // Certs
+  document.getElementById('cert-ana').innerHTML = STATE.certs.length
+    ? STATE.certs.map(c => `<div style="background:rgba(255,255,255,0.03);border:1px solid var(--border);padding:8px 11px;margin-bottom:5px;"><div style="font-size:11px;font-weight:700;color:var(--t1);">${c.progCode} — ${c.score}%</div><div style="font-size:9px;font-family:'JetBrains Mono',monospace;color:var(--t3);">${c.code}</div></div>`).join('')
+    : '<div style="color:var(--t3);font-size:11px;">Keine Zertifikate — absolvieren Sie Tests</div>';
+
+  // Topic analysis (sample data)
+  const topics = [
+    { name: 'Human Factors', score: 72 },
+    { name: 'Führung & Leadership', score: 65 },
+    { name: 'Kommunikation', score: 81 },
+    { name: 'Sicherheitskultur', score: 78 },
+    { name: 'Operative Systeme', score: 68 },
+    { name: 'Recht & Compliance', score: 74 },
+  ];
+  document.getElementById('topic-ana').innerHTML = topics.map(t => {
+    const col = t.score >= 80 ? 'var(--green)' : t.score >= 65 ? 'var(--amber)' : 'var(--red)';
+    return `<div class="bar-row">
+      <div class="bar-lbl">${t.name}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${t.score}%;background:${col};"></div></div>
+      <div class="bar-val" style="color:${col};">${t.score}%</div>
+    </div>`;
+  }).join('');
+}
+
+// ═══════════════════════════════════════════
+// PROFILE
+// ═══════════════════════════════════════════
+function renderProfile() {
+  const u = STATE.user;
+  const init = (u.fn[0] || '') + (u.ln?.[0] || '');
+  document.getElementById('pf-av').textContent = init || '?';
+  document.getElementById('pf-name').textContent = u.fn + (u.ln ? ' ' + u.ln : '');
+  document.getElementById('pf-role').textContent = u.role.replace(/_/g, ' ').toUpperCase();
+  document.getElementById('pf-co').textContent = u.company;
+  document.getElementById('pf-plan').textContent = u.plan || 'Starter';
+  document.getElementById('pf-since').textContent = new Date().toLocaleDateString('de-AT');
+  document.getElementById('pf-cert-n').textContent = STATE.certs.length;
+  document.getElementById('pf-tests').textContent = STATE.attempts.length;
+
+  document.getElementById('cert-list').innerHTML = STATE.certs.length
+    ? STATE.certs.map(c => `<div class="cert-item"><div><div class="ci-t">${c.progCode}</div><div class="ci-c">${c.code}</div></div><div class="ci-s">${c.score}%</div></div>`).join('')
+    : '<div style="color:var(--t3);font-size:12px;padding:12px 0;">Absolvieren Sie Tests um Zertifikate zu erhalten.</div>';
+
+  document.getElementById('exec-box').style.display = ['ceo', 'director', 'station_manager'].includes(u.role) ? 'block' : 'none';
+}
+
+// ═══════════════════════════════════════════
+// AI TRAINER — Real Claude API
+// ═══════════════════════════════════════════
+function setAILang(lang, btn) {
+  currentAILang = lang;
+  document.querySelectorAll('.ai-lang-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  aiHistory = [];
+
+  const greetings = {
+    de: 'Sprache auf Deutsch gewechselt. Wie kann ich Ihnen helfen?',
+    en: 'Language switched to English. How can I help you?',
+    fr: 'Langue changée en français. Comment puis-je vous aider?',
+    es: 'Idioma cambiado a español. ¿Cómo puedo ayudarle?',
+    ru: 'Язык изменён на русский. Как я могу вам помочь?',
+    ar: 'تم تغيير اللغة إلى العربية. كيف يمكنني مساعدتك؟',
+  };
+
+  const msgs = document.getElementById('ai-msgs');
+  msgs.innerHTML += `<div class="ai-msg"><div class="ai-av">🤖</div><div class="ai-bubble">${greetings[lang] || greetings.de}</div></div>`;
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function quickAsk(question) {
+  document.getElementById('ai-inp').value = question;
+  sendAI();
+}
+
+async function sendAI() {
+  const inp = document.getElementById('ai-inp');
+  const btn = document.getElementById('ai-send-btn');
+  const msg = inp.value.trim();
+  if (!msg || btn.disabled) return;
+
+  const msgs = document.getElementById('ai-msgs');
+
+  // Add user message
+  msgs.innerHTML += `<div class="ai-msg user"><div class="ai-av">👤</div><div class="ai-bubble">${msg.replace(/</g,'&lt;')}</div></div>`;
+  inp.value = '';
+  inp.disabled = true;
+  btn.disabled = true;
+
+  // Add typing indicator
+  const typingId = 'typing-' + Date.now();
+  msgs.innerHTML += `<div class="ai-msg ai-typing" id="${typingId}"><div class="ai-av">🤖</div><div class="ai-bubble">...</div></div>`;
+  msgs.scrollTop = msgs.scrollHeight;
+
+  // Update history
+  aiHistory.push({ role: 'user', content: msg });
+  if (aiHistory.length > 12) aiHistory = aiHistory.slice(-12);
+
+  try {
+    let system = AI_SYSTEM_PROMPTS[currentAILang] || AI_SYSTEM_PROMPTS.de;
+
+    // Add user context
+    if (STATE.user) {
+      system += `\n\nNutzer-Kontext: ${STATE.user.fn} ${STATE.user.ln || ''}, Rolle: ${STATE.user.role}, Unternehmen: ${STATE.user.company}, Plan: ${STATE.user.plan}. Absolvierte Tests: ${STATE.attempts.length}. Bestandene Tests: ${STATE.attempts.filter(a => a.passed).length}. Zertifikate: ${STATE.certs.length}. Eingeschriebene Programme: ${[...STATE.enrolled].join(', ')}.`;
+    }
+
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 800,
+        system,
+        messages: aiHistory,
+      }),
+    });
+
+    const data = await response.json();
+    const reply = data.content?.[0]?.text || 'Entschuldigung — keine Antwort erhalten.';
+
+    aiHistory.push({ role: 'assistant', content: reply });
+
+    // Remove typing, add reply
+    const typingEl = document.getElementById(typingId);
+    if (typingEl) typingEl.remove();
+
+    msgs.innerHTML += `<div class="ai-msg"><div class="ai-av">🤖</div><div class="ai-bubble">${reply.replace(/\n/g, '<br>').replace(/</g, '&lt;').replace(/&lt;br>/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')}</div></div>`;
+
+  } catch (err) {
+    const typingEl = document.getElementById(typingId);
+    if (typingEl) typingEl.remove();
+    msgs.innerHTML += `<div class="ai-msg"><div class="ai-av">🤖</div><div class="ai-bubble" style="color:var(--red);">Verbindungsfehler. Bitte erneut versuchen.</div></div>`;
+  }
+
+  inp.disabled = false;
+  btn.disabled = false;
+  inp.focus();
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+// ═══════════════════════════════════════════
+// LANGUAGE (topbar)
+// ═══════════════════════════════════════════
+function setLang(l, btn) {
+  document.querySelectorAll('.tlang').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  applyLang(l);
+}
+
+// ═══════════════════════════════════════════
+// PRICING
+// ═══════════════════════════════════════════
+function setDur(d, btn, ctx) {
+  currentDur = d;
+  const tabsId = ctx === 'main' ? 'dur-tabs-main' : 'dur-tabs-app';
+  const tabsEl = document.getElementById(tabsId);
+  if (tabsEl) tabsEl.querySelectorAll('.dur-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderPricing(ctx);
+}
+
+function renderPricing(ctx) {
+  const p = PRICES[currentDur] || PRICES.monthly;
+  const periods = {
+    monthly: '/ Nutzer / Monat',
+    '3months': '/ Nutzer / Monat (3 Mon.)',
+    '6months': '/ Nutzer / Monat (6 Mon.)',
+    yearly: '/ Nutzer / Monat (jährlich)',
+    '2years': '/ Nutzer / Monat (2 Jahre)',
+    '5years': '/ Nutzer / Monat (5 Jahre)',
+  };
+  const plans = [
+    { name: 'Starter', price: p.s, badge: null, feats: ['1 CBT-Programm','5 Module inklusive','Basis-Zertifikat','E-Mail-Support','DE + EN'] },
+    { name: 'Professional', price: p.p, badge: 'EMPFOHLEN', feats: ['Alle 14 Programme','Unbegrenzte Module','Premium-Zertifikate','Analytics Dashboard','KI-Assistent (Claude AI)','Alle 6 Sprachen','Prioritäts-Support'], feat: true },
+    { name: 'Business', price: p.b, badge: null, feats: ['Alles aus Professional','Firmen-Dashboard','SCORM-Export','Compliance-Berichte','SLA-Garantie','Telefon-Support'] },
+  ];
+  const id = ctx === 'main' ? 'price-cards-main' : 'price-cards-app';
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.innerHTML = plans.map(plan => `
+    <div class="price-card ${plan.feat ? 'feat' : ''}">
+      ${plan.badge ? `<div class="pc-badge">${plan.badge}</div>` : ''}
+      <div class="pc-name">${plan.name}</div>
+      <div class="pc-price"><sup>€</sup>${plan.price}</div>
+      <div class="pc-period">${periods[currentDur]}</div>
+      <ul class="pc-feats">${plan.feats.map(f => `<li>${f}</li>`).join('')}</ul>
+      <button class="btn-pc" onclick="openPayModal('${plan.name}', '€${plan.price} ${periods[currentDur]}')">JETZT STARTEN →</button>
+    </div>`).join('');
+}
+
+// ═══════════════════════════════════════════
+// PAYMENT
+// ═══════════════════════════════════════════
+function openPayModal(name, price) {
+  document.getElementById('pm-title').textContent = name + ' Plan';
+  document.getElementById('pm-price').textContent = price;
+  document.getElementById('pay-overlay').classList.add('open');
+}
+function closePayModal() { document.getElementById('pay-overlay').classList.remove('open'); }
+function selPM(el) { document.querySelectorAll('.pm').forEach(m => m.classList.remove('active')); el.classList.add('active'); }
+function processPayment() { closePayModal(); toast('Zahlung erfolgreich! Zugang aktiv.', 'green'); }
+
+// ═══════════════════════════════════════════
+// CONTACT FORM
+// ═══════════════════════════════════════════
+function submitContact(btn) {
+  const orig = btn.textContent;
+  btn.textContent = 'ANFRAGE GESENDET ✓';
+  btn.style.background = 'var(--green)';
+  btn.disabled = true;
+  setTimeout(() => { btn.textContent = orig; btn.style.background = ''; btn.disabled = false; }, 4000);
+}
+
+// ═══════════════════════════════════════════
+// TOAST
+// ═══════════════════════════════════════════
+function toast(msg, type = '') {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'toast show' + (type ? ' ' + type : '');
+  setTimeout(() => el.classList.remove('show'), 3200);
+}
+
+// ═══════════════════════════════════════════
+// SMOOTH SCROLL FOR WEBSITE LINKS
+// ═══════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    });
+  });
+  renderPricing('main');
+  renderPricing('app');
+});
+</script>
+</body>
+</html>
