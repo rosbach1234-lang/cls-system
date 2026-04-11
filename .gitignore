@@ -1,0 +1,6 @@
+node_modules/
+server/cls.db
+*.db
+.env
+cls-platform/dist/
+cls-platform/node_modules/
