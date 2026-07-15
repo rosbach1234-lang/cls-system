@@ -1388,7 +1388,7 @@ async function sendAI(){
   STATE.aiMsgs.push(loadMsg);renderAI();
   try{
     var msgs=STATE.aiMsgs.filter(function(m){return!m.lid;}).map(function(m){return{role:m.r==='u'?'user':'assistant',content:m.t};});
-    var res=await fetch('/ai',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:msgs})});
+    var res=await fetch('/api/ai',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:msgs})});
     var d=await res.json();
     var reply=d.content?d.content.map(function(b){return b.text||'';}).join(''):'';
     if(!reply)reply=STATE.lang==='en'?'Error loading response.':'Fehler beim Laden.';
