@@ -1512,10 +1512,7 @@ async function runGenerator(){
   qDiv.innerHTML = '<div style="text-align:center;padding:40px;color:#3BB5F0;">⏳ KI generiert Fragen...<br><small style="color:#6A8FC0;">Bei 100+ Fragen ca. 30-60 Sekunden</small></div>';
 
   const levelTxt = level === 'mixed' ? 'Mix all three levels (beginner/intermediate/advanced) evenly.' : 'All questions at level: ' + level;
-  const ctxBlock = context ? '
-
-SOURCE TEXT FOR QUESTIONS:
-' + context.substring(0, 8000) : '';
+  const ctxBlock = context ? '\n\nSOURCE TEXT FOR QUESTIONS:\n' + context.substring(0, 8000) : '';
   const topicBlock = topic ? 'Specific topic/section: "' + topic + '"' : 'General ' + mod + ' content';
 
   const prompt = `Create exactly ${count} professional quiz questions for module "${mod}".
